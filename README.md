@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ReactStarter
 ====
 
@@ -26,3 +27,7 @@ Click [here](https://github.com/StephenGrider/ReactStarter/releases) then downlo
 	> npm install
 	> gulp
 ```
+=======
+# trailmix
+I'm finally making it.
+>>>>>>> ad7f2c642c3c601c5b79b322e486d0547f3155ef
