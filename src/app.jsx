@@ -1,5 +1,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
+var ReactFire = require('reactfire');
+var Firebase = require('firebase');
 
 var Hello = React.createClass({
   render: function() {
