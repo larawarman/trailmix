@@ -20,8 +20,11 @@
     "node-notifier": "^4.2.1",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
+    "react-geosuggest": "^1.19.0",
     "reactfire": "^0.6.0",
     "reactify": "^1.1.0",
+    "reflux": "^0.4.0",
+    "reflux-state-mixin": "^0.7.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^2.4.0"
   },

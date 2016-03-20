@@ -1,0 +1,34 @@
+@import '../variables';
+.make-mix {
+  input, select {
+    width: 100%;
+    min-height: 60px;
+    font-size: 24px;
+    padding: 10px;
+  }
+  .geosuggest {
+    background-color: $tm-green;
+    ul {
+      height:0;
+      transform: all 0.3s ease-out;
+      padding:0;
+      margin:0;
+      opacity:0;
+    }
+    &.open {
+      ul {
+        opacity: 1.0;
+        height: auto;
+        transform: all 0.3s ease-out;
+        list-style: none;
+        li {
+          padding: 19px 10px;
+          border-bottom: 1px solid $light-grayH;
+          &:last-child {
+            border-bottom:none;
+          }
+        }
+      }
+    }
+  }
+}

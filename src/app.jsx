@@ -2,14 +2,40 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var ReactFire = require('reactfire');
 var Firebase = require('firebase');
+var Geosuggest = require('react-geosuggest');
 
-var Hello = React.createClass({
+var LocationDrop = require('./components/make-mix/location-drop');
+var LocationTitle = require('./components/make-mix/location-title')
+
+var fireUrl = 'https://trailmix0.firebaseio.com/';
+
+var App = React.createClass({
+  mixins: [ ReactFire ],
+  componentWillMount: function() {
+    //this.fb = new Firebase(fireUrl + 'mixes/');
+    //this.bindAsObject(this.fb, 'mixes');
+    //this.fb.on('value', this.handleDataLoaded);
+  },
+  getInitialState: function(){
+    return {
+      loaded: false
+    }
+  },
   render: function() {
-    return <h1 className="red">
-      Hello!
-    </h1>
+    return <div className="row make-mix">
+      <div className="col-md-12">
+        <h1 className="text-center">
+          Make Ur Mix
+        </h1>
+        <hr />
+      </div>
+      <div className="col-md-6 col-md-offset-3">
+        <LocationTitle />
+        <LocationDrop />
+      </div>
+    </div>
   }
 });
 
-var element = React.createElement(Hello, {});
+var element = React.createElement(App, {});
 ReactDOM.render(element, document.querySelector('.container'));
