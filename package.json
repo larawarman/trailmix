@@ -26,7 +26,8 @@
     "reflux": "^0.4.0",
     "reflux-state-mixin": "^0.7.0",
     "vinyl-source-stream": "^1.1.0",
-    "watchify": "^2.4.0"
+    "watchify": "^2.4.0",
+    "whatwg-fetch": "^0.11.0"
   },
   "devDependencies": {}
 }
