@@ -7,6 +7,8 @@ var Geosuggest = require('react-geosuggest');
 var LocationDrop = require('./components/make-mix/location-drop');
 var LocationTitle = require('./components/make-mix/location-title');
 var Hashtags = require('./components/make-mix/hashtag-add');
+var SearchBox = require('./components/make-mix/search-box');
+var SearchResults = require('./components/make-mix/search-result');
 
 var fireUrl = 'https://trailmix0.firebaseio.com/';
 
@@ -40,6 +42,12 @@ var App = React.createClass({
         <div className="col-md-6 col-md-offset-3">
           <h4>#'s</h4>
           <Hashtags />
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-md-6 col-md-offset-3">
+          <h4>Add a track</h4>
+          <SearchBox />
         </div>
       </div>
     </div>
