@@ -9,7 +9,6 @@ module.exports = React.createClass({
     };
   },
   render: function() {
-    //var text = this.state.songPlay ? 'pause' : 'play';
     return <div onClick={this.handleAudioControlClick}  className={"song-preview " + (this.state.songPlay ? 'nowplaying' : '')}>
       {this.renderArt()}
       <div className = "audio-buttons">
@@ -30,9 +29,7 @@ module.exports = React.createClass({
     </div>
   },
   handleAudioControlClick: function() {
-    console.log('handleAudioControlClick');
     var elems = document.querySelectorAll(".song-preview.nowplaying");
-
     [].forEach.call(elems, function(el) {
       el.classList.remove("nowplaying");
     });   
