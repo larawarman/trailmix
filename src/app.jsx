@@ -8,7 +8,6 @@ var LocationDrop = require('./components/make-mix/location-drop');
 var LocationTitle = require('./components/make-mix/location-title');
 var Hashtags = require('./components/make-mix/hashtag-add');
 var SearchBox = require('./components/make-mix/search-box');
-var SearchResults = require('./components/make-mix/search-result');
 
 var fireUrl = 'https://trailmix0.firebaseio.com/';
 
