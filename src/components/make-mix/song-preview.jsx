@@ -5,19 +5,18 @@ module.exports = React.createClass({
     return {
       songUrl: '',
       imgUrl: '',
-      isplaying: false
+      songPlay: false
     };
   },
-  componentWillMount: function() {
-  },
   render: function() {
-    var text = this.state.isplaying ? 'pause' : 'play';
-    return <div onClick={this.handleControlClick}  className={"song-preview " + (this.state.isplaying ? 'playing' : '')}>
+    //var text = this.state.songPlay ? 'pause' : 'play';
+    return <div onClick={this.handleAudioControlClick}  className={"song-preview " + (this.state.songPlay ? 'nowplaying' : '')}>
       {this.renderArt()}
       <div className = "audio-buttons">
-        {text}
+        <span className="playButton">play</span>
+        <span className="pauseButton">pause</span>
       </div>
-      {this.state.isplaying ? this.renderAudio() : null}
+      {this.state.songPlay ? this.renderAudio() : null}
     </div>
   },
   renderArt: function() {
@@ -30,7 +29,13 @@ module.exports = React.createClass({
       </audio>
     </div>
   },
-  handleControlClick: function() {
-    this.setState({isplaying: !this.state.isplaying});      
+  handleAudioControlClick: function() {
+    console.log('handleAudioControlClick');
+    var elems = document.querySelectorAll(".song-preview.nowplaying");
+
+    [].forEach.call(elems, function(el) {
+      el.classList.remove("nowplaying");
+    });   
+    this.setState({songPlay: !this.state.songPlay});
   }
 });

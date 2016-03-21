@@ -36,5 +36,23 @@
       width: 100px;
       height: 100px;
     }
+    .audio-buttons {
+      .playButton {
+        display:block;
+      }
+      .pauseButton {
+        display:none;
+      }
+    }
+    &.nowplaying {
+      .audio-buttons {
+        .playButton {
+          display:none;
+        }
+        .pauseButton {
+          display:block;
+        }
+      }
+    }
   }
 }

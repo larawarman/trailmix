@@ -38,6 +38,15 @@ module.exports = React.createClass({
     this.setState({
       songResults: songResults
     });
+    //pause all audio players if search changes, if user tries to play multiple
+    document.addEventListener('play', function(e){
+        var audios = document.getElementsByTagName('audio');
+        for(var i = 0, len = audios.length; i < len;i++){
+            if(audios[i] != e.target){
+                audios[i].pause();
+            }
+        }
+    }, true);
   },
   renderResults: function() {
     return this.state.songResults.slice(0,20).map(function(result){
