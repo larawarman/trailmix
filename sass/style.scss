@@ -1,3 +1,5 @@
+@import './variables';
+@import './mixins';
 
 .black {
   color: black
@@ -6,4 +8,23 @@
 body, html {
   font-family: 'Anonymous Pro', ;
   font-size: 16px;
+}
+
+a, button {
+  @include transition(all 0.3s);
+  &:hover {
+    @include transition(all 0.3s);
+  }
+}
+a {
+  text-decoration: none;
+  &:hover, &:focus, &:active {
+    text-decoration: none;
+  }
+}
+.icon-right {
+  margin-left: 5px;
+}
+.icon-left {
+  margin-right: 5px;
 }

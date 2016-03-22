@@ -4,15 +4,31 @@ var StateMixin = require('reflux-state-mixin');
 var LocationStore = require('../../stores/make-mix/location-store');
 var Actions = require('../../actions');
 var Geosuggest = require('react-geosuggest');
+var ReactFire = require('reactfire');
+var Firebase = require('firebase');
+var fireUrl = 'https://trailmix0.firebaseio.com/';
 
 
 module.exports = React.createClass({
-  mixins:[Reflux.ListenerMixin],
+  mixins:[
+    Reflux.ListenerMixin,
+    ReactFire
+  ],
+  componentWillMount: function() {
+    this.fbloc = new Firebase(fireUrl + '/mixes/mix/location');
+    this.bindAsObject(this.fbloc, 'location');
+    LocationStore.getLocation();;
+  },
   getInitialState: function (){
     return({
         localLat: LocationStore.state.localLat,
         localLng: LocationStore.state.localLng,
-        open: false
+        open: false,
+        lat: '',
+        lng: '',
+        gmaps_place_id: '',
+        types: '',
+        label: ''
     })
   },
   componentDidMount: function(){
@@ -24,9 +40,6 @@ module.exports = React.createClass({
               localLng:state.localLng
           })
       });
-  },
-  componentWillMount: function() {
-    LocationStore.getLocation();;
   },
   render: function() {
     var fixtures = [
@@ -52,8 +65,39 @@ module.exports = React.createClass({
     if( this.state.localLat === null && this.state.localLng === null && suggest.placeId.includes('Drop It Here')) {
       console.log("Error getting location. Please select a specific place");
     } else {
-      console.log('success!');
-      console.log(suggest);
+      if (suggest.gmaps) {
+        this.setState({
+          lat: suggest.location.lat,
+          lng: suggest.location.lng,
+          label: suggest.label, 
+          gmaps_place_id: suggest.gmaps.place_id,
+          types: suggest.gmaps.types
+        }, function() {
+          this.fbloc.update({
+            lat: this.state.lat,
+            lng: this.state.lng,
+            label: this.state.label,
+            gmaps_place_id: this.state.gmaps_place_id,
+            types: this.state.types
+          });
+        });
+      } else {
+        this.setState({
+          lat: suggest.location.lat,
+          lng: suggest.location.lng,
+          label: suggest.label,
+          gmaps_place_id: null,
+          types: null
+        }, function() {
+          this.fbloc.update({
+            lat: this.state.lat,
+            lng: this.state.lng,
+            label: this.state.label,
+            gmaps_place_id: null,
+            types: null
+          });
+        });
+      }
       this.setState({open: false})
     }
   },

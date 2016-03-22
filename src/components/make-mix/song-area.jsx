@@ -2,27 +2,41 @@ var React = require('react');
 var Reflux = require('reflux');
 var QueryTracksStore = require('../../stores/make-mix/queryTracks-store');
 var Actions = require('../../actions');
-
+var ReactFire = require('reactfire');
+var Firebase = require('firebase');
 var SearchResult = require('./search-result');
+var MixList = require('./mix-list');
+
+var fireUrl = 'https://trailmix0.firebaseio.com/';
 
 module.exports = React.createClass({
   mixins: [
+    ReactFire,
     Reflux.listenTo(QueryTracksStore, 'onChange')
   ],
+  componentWillMount: function() {
+    this.fbtags = new Firebase(fireUrl + '/mixes/mix/songs');
+    this.bindAsObject(this.fbtags, 'songs');
+  },
   getInitialState: function(){
     return {
       songResults: [],
-      query: ''
+      query: '',
+      // songs: {},
+      loaded: false
     }
   },
   render: function() {
-    return <div className='search-area'>
+    return <div className='mix-area'>
+      <div className = {"content " + (this.state.loaded ? 'loaded' : '')}>
+        <MixList items={this.state.items} />
+      </div>
       <input 
         type="text" 
         ref="searchInput" 
         value={this.state.query} 
         onChange={this.setQuery} 
-        placeholder="Search by artist" /> 
+        placeholder="Search artist, album, or track" /> 
       <div className='results-area'>
         {this.renderResults()}
       </div>
@@ -52,5 +66,8 @@ module.exports = React.createClass({
     return this.state.songResults.slice(0,20).map(function(result){
       return <SearchResult key={result.id} {...result} />
     });
-  }   
+  }
+  // handleDataLoaded: function() {
+  //   this.setState({loaded: true});
+  // }
 });

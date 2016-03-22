@@ -12,8 +12,8 @@ module.exports = React.createClass({
     return <div onClick={this.handleAudioControlClick}  className={"song-preview " + (this.state.songPlay ? 'nowplaying' : '')}>
       {this.renderArt()}
       <div className = "audio-buttons">
-        <span className="playButton">play</span>
-        <span className="pauseButton">pause</span>
+        <span className="playButton"><i className="icon ion-ios-play-outline"></i>play</span>
+        <span className="pauseButton"><i className="icon ion-ios-pause-outline"></i>pause</span>
       </div>
       {this.state.songPlay ? this.renderAudio() : null}
     </div>

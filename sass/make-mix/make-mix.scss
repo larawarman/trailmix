@@ -1,10 +1,13 @@
 @import '../variables';
+@import '../mixins';
+
 .make-mix {
   input, select {
     width: 100%;
     min-height: 60px;
     font-size: 24px;
     padding: 10px;
+    border: 1px $lightest-gray solid;
   }
   .geosuggest {
     background-color: $tm-green;
@@ -31,28 +34,56 @@
       }
     }
   }
-  .song-preview {
-    img {
-      width: 100px;
-      height: 100px;
-    }
-    .audio-buttons {
-      .playButton {
-        display:block;
+  .results-area {
+    max-height: 400px;
+    overflow: scroll;
+    .search-result {
+      display: flex;
+      align-items: center;
+      margin: 5px 0;
+      background-color: white;
+      border: 1px $lightest-gray solid;
+      @include transition(background-color 0.3s);
+      &:hover {
+        @include transition(background-color 0.3s);
+        background-color: $lightest-gray;
       }
-      .pauseButton {
-        display:none;
-      }
-    }
-    &.nowplaying {
-      .audio-buttons {
-        .playButton {
-          display:none;
+      .song-preview {
+        width: 100px;
+        height: 100px;
+        position: relative;
+        cursor: pointer;
+        img {
+          height: 100%;
         }
-        .pauseButton {
-          display:block;
+        .audio-buttons {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform:translate(-50%, -50%);
+          background-color: white;
+          .playButton {
+            display:block;
+          }
+          .pauseButton {
+            display:none;
+          }
+        }
+        &.nowplaying {
+          .audio-buttons {
+            .playButton {
+              display:none;
+            }
+            .pauseButton {
+              display:block;
+            }
+          }
         }
       }
+      .song-meta {
+        padding: 10px;
+        cursor:pointer;
+      }    
     }
   }
 }
