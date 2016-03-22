@@ -50,7 +50,6 @@ module.exports = React.createClass({
     });
   },
   handleClick: function(){
-    console.log(this.props.name);
     this.setState({
       track_name: this.props.name,
       artists_arr: this.props.artists,

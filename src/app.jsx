@@ -1,7 +1,5 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var ReactFire = require('reactfire');
-var Firebase = require('firebase');
 var Geosuggest = require('react-geosuggest');
 
 var LocationDrop = require('./components/make-mix/location-drop');
@@ -10,21 +8,14 @@ var Hashtags = require('./components/make-mix/hashtag-add');
 var SongArea = require('./components/make-mix/song-area');
 var MixList = require('./components/make-mix/mix-list');
 
-var fireUrl = 'https://trailmix0.firebaseio.com/';
 
 var App = React.createClass({
-  mixins: [ ReactFire ],
-  componentWillMount: function() {
-    this.fb = new Firebase(fireUrl + '/mixes/mix/');
-    this.bindAsObject(this.fb, 'mix');
-    this.fb.on('value', this.handleDataLoaded);
-  },
-  getInitialState: function(){
-    return {
-      mixes: {},
-      loaded: false
-    }
-  },
+
+  // getInitialState: function(){
+  //   return {
+
+  //   }
+  // },
   render: function() {
     return <div className="row make-mix">
       <div className="col-md-12">
@@ -52,10 +43,8 @@ var App = React.createClass({
         </div>
       </div>
     </div>
-  },
-  handleDataLoaded: function() {
-    this.setState({loaded: true});
   }
+
 });
 
 var element = React.createElement(App, {});
