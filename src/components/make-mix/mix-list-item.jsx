@@ -20,7 +20,6 @@ module.exports = React.createClass({
     </li>
   },
   handleDelete:function() {
-    console.log('delete clicked');
     this.fbsong.remove();
   }
 });
