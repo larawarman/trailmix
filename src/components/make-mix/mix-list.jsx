@@ -1,5 +1,6 @@
 var React = require('react');
-var Reflux = require('reflux');
+
+var MixListItem = require('./mix-list-item');
 
 module.exports = React.createClass({
 
@@ -17,17 +18,15 @@ module.exports = React.createClass({
       return null
     } else {
       var songs = [];
-      console.log(this.props.songs);
       for (var key in this.props.songs)  {
         var song = this.props.songs[key];
         song.key = key;
         
         songs.push(
-          <li
+          <MixListItem
             song={song}
-            key={key} >
-          {song.track_name}
-          </li>
+            key={key}
+          />
         )
       }
       return songs;
