@@ -1,26 +1,29 @@
 var React = require('react');
 var SongPreview = require('./song-preview');
-var Actions = require('../../actions');
-//var Reflux = require('reflux');
+var ReactFire = require('reactfire');
+var Firebase = require('firebase');
 
+var fireUrl = 'https://trailmix0.firebaseio.com/';
 
 module.exports = React.createClass({
-  // mixins: [Reflux.connect()],
+  mixins: [ ReactFire ],
+  componentWillMount: function() {
+    this.fbsongs = new Firebase(fireUrl + '/mixes/mix/songs');
+    this.bindAsObject(this.fbsongs, 'songs');
+    this.artistNames();
+  },
   getInitialState: function() {
     return {
-      artists: ''
-      //spotify_id: '',
-      //track_name: '',
-      // artists_arr: [],
-      // images: [],
-      // external_ids: [],
-      // spotify_href: '',
-      // spotify_popularity: '',
-      // spotify_uri: ''
+      track_name: '',
+      artists_arr: [],
+      artistJoined: '',
+      images: [],
+      external_ids: [],
+      spotify_id: '',
+      spotify_href: '',
+      spotify_popularity: '',
+      spotify_uri: ''
     }
-  },
-  componentWillMount: function() {
-    this.artistNames();
   },
   render: function() {
     return <div className="search-result">
@@ -30,7 +33,7 @@ module.exports = React.createClass({
           {this.props.name}
         </div>
         <div className="artist-name">
-          {this.state.artists}
+          {this.state.artistJoined}
         </div>
       </div>
     </div>
@@ -43,13 +46,32 @@ module.exports = React.createClass({
     }
     var artists = artistArr.join(' + ');
     this.setState({
-      artists: artists
-    });     
+      artistJoined: artists
+    });
   },
   handleClick: function(){
     console.log(this.props.name);
-    this.props.songsStore.push({
-      track_name: this.props.name
+    this.setState({
+      track_name: this.props.name,
+      artists_arr: this.props.artists,
+      images: this.props.album.images,
+      external_ids: this.props.external_ids,
+      spotify_id: this.props.id,
+      spotify_href: this.props.href,
+      spotify_popularity: this.props.popularity,
+      spotify_uri: this.props.uri
+    }, function() {
+      this.fbsongs.push({
+        track_name: this.state.track_name,
+        artists_arr: this.state.artists_arr,
+        artistJoined: this.state.artistJoined,
+        images: this.state.images,
+        external_ids: this.state.external_ids,
+        spotify_id: this.state.spotify_id,
+        spotify_href: this.state.spotify_href,
+        spotify_popularity: this.state.spotify_popularity,
+        spotify_uri: this.state.spotify_uri
+      });      
     });
   }
 });

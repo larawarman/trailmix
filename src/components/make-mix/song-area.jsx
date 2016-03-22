@@ -2,8 +2,6 @@ var React = require('react');
 var Reflux = require('reflux');
 var QueryTracksStore = require('../../stores/make-mix/queryTracks-store');
 var Actions = require('../../actions');
-var ReactFire = require('reactfire');
-var Firebase = require('firebase');
 var SearchResult = require('./search-result');
 var MixList = require('./mix-list');
 
@@ -11,13 +9,8 @@ var fireUrl = 'https://trailmix0.firebaseio.com/';
 
 module.exports = React.createClass({
   mixins: [
-    ReactFire,
     Reflux.listenTo(QueryTracksStore, 'onChange')
   ],
-  componentWillMount: function() {
-    this.fbtags = new Firebase(fireUrl + '/mixes/mix/songs');
-    this.bindAsObject(this.fbtags, 'songs');
-  },
   getInitialState: function(){
     return {
       songResults: [],
@@ -67,7 +60,4 @@ module.exports = React.createClass({
       return <SearchResult key={result.id} {...result} />
     });
   }
-  // handleDataLoaded: function() {
-  //   this.setState({loaded: true});
-  // }
 });
