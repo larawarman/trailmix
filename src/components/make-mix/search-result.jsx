@@ -2,13 +2,14 @@ var React = require('react');
 var SongPreview = require('./song-preview');
 var ReactFire = require('reactfire');
 var Firebase = require('firebase');
+var Actions = require('../../actions');
 
 var fireUrl = 'https://trailmix0.firebaseio.com/';
 
 module.exports = React.createClass({
   mixins: [ ReactFire ],
   componentWillMount: function() {
-    this.fbsongs = new Firebase(fireUrl + '/mixes/mix/songs');
+    this.fbsongs = new Firebase(fireUrl + '/mixes/mix/songs/');
     this.bindAsObject(this.fbsongs, 'songs');
     this.artistNames();
   },
@@ -19,10 +20,12 @@ module.exports = React.createClass({
       artistJoined: '',
       images: [],
       external_ids: [],
+      spotify_preview_url: '',
       spotify_id: '',
       spotify_href: '',
       spotify_popularity: '',
-      spotify_uri: ''
+      spotify_uri: '',
+      place_in_mix: 0,
     }
   },
   render: function() {
@@ -55,10 +58,12 @@ module.exports = React.createClass({
       artists_arr: this.props.artists,
       images: this.props.album.images,
       external_ids: this.props.external_ids,
+      spotify_preview_url: this.props.preview_url,
       spotify_id: this.props.id,
       spotify_href: this.props.href,
       spotify_popularity: this.props.popularity,
-      spotify_uri: this.props.uri
+      spotify_uri: this.props.uri,
+      place_in_mix: this.state.place_in_mix + 1
     }, function() {
       this.fbsongs.push({
         track_name: this.state.track_name,
@@ -66,11 +71,14 @@ module.exports = React.createClass({
         artistJoined: this.state.artistJoined,
         images: this.state.images,
         external_ids: this.state.external_ids,
+        spotify_preview_url: this.state.spotify_preview_url,
         spotify_id: this.state.spotify_id,
         spotify_href: this.state.spotify_href,
         spotify_popularity: this.state.spotify_popularity,
-        spotify_uri: this.state.spotify_uri
+        spotify_uri: this.state.spotify_uri,
+        place_in_mix: this.state.place_in_mix
       });      
     });
+    Actions.closeQuery();
   }
 });

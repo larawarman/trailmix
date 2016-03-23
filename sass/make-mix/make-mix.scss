@@ -61,8 +61,10 @@
         height: 100px;
         position: relative;
         cursor: pointer;
+        overflow: hidden;
         img {
           height: 100%;
+          width: 100%;
         }
         .audio-buttons {
           position: absolute;
@@ -93,5 +95,10 @@
         cursor:pointer;
       }    
     }
+  }
+  .mix-art-container {
+    // width: 200px;
+    // height: 200px;
+    // background: $tm-pink;
   }
 }

@@ -29,6 +29,14 @@ module.exports = React.createClass({
     }
   },
   render: function() {
+    document.addEventListener('play', function(e){
+        var audios = document.getElementsByTagName('audio');
+        for(var i = 0, len = audios.length; i < len;i++){
+            if(audios[i] != e.target){
+                audios[i].pause();
+            }
+        }
+    }, true);
     return <div className='mix-area'>
       <div className = {"content " + (this.state.loaded ? 'loaded' : '')}>
         <MixList songs={this.state.mixSongs} />
@@ -38,8 +46,9 @@ module.exports = React.createClass({
         ref="searchInput" 
         value={this.state.query} 
         onChange={this.setQuery} 
-        placeholder="Search artist, album, or track" /> 
-      <div className='results-area'>
+        placeholder="Search artist, album, or track" 
+        id="search-query-input" /> 
+      <div className='results-area' id="query-results">
         {this.renderResults()}
       </div>
     </div>
@@ -47,7 +56,7 @@ module.exports = React.createClass({
   setQuery: function(event) {
     this.setState({query: event.target.value}, function() {
       var query = this.state.query;
-      Actions.queryTracks(query);
+      Actions.queryTracks(query);        
     });
   },
   onChange: function(event, songResults) {
@@ -55,14 +64,6 @@ module.exports = React.createClass({
       songResults: songResults
     });
     //pause all audio players if search changes, if user tries to play multiple
-    document.addEventListener('play', function(e){
-        var audios = document.getElementsByTagName('audio');
-        for(var i = 0, len = audios.length; i < len;i++){
-            if(audios[i] != e.target){
-                audios[i].pause();
-            }
-        }
-    }, true);
   },
   renderResults: function() {
     return this.state.songResults.slice(0,20).map(function(result){

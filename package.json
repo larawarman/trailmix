@@ -19,6 +19,7 @@
     "gulp-watch": "^4.2.4",
     "node-notifier": "^4.2.1",
     "react": "^0.14.7",
+    "react-addons-update": "^0.14.7",
     "react-dom": "^0.14.7",
     "react-geosuggest": "^1.19.0",
     "reactfire": "^0.4.0",

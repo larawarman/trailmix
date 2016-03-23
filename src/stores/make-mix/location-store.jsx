@@ -23,7 +23,7 @@ var LocationStore = module.exports = Reflux.createStore({
     var crd = pos.coords;
 
     this.setState({localLat: pos.coords.latitude, localLng: pos.coords.longitude});
-    console.log(this.state.localLat + " / " + this.state.localLng);
+    // console.log(this.state.localLat + " / " + this.state.localLng);
   },
   getLocError: function(err) {
     console.warn('ERROR(' + err.code + '): ' + err.message);
