@@ -49,60 +49,82 @@
       }       
     }
   }
-  .results-area {
-    max-height: 400px;
-    overflow: scroll;
-    .search-result {
-      display: flex;
-      align-items: center;
-      margin: 5px 0;
-      background-color: white;
-      border: 1px $lightest-gray solid;
-      @include transition(background-color 0.3s);
-      &:hover {
-        @include transition(background-color 0.3s);
-        background-color: $lightest-gray;
-      }
-      .song-preview {
-        width: 100px;
-        height: 100px;
-        position: relative;
+  .song-area {
+    .input-area {
+      position: relative;
+      .clear-input {
+        position: absolute;
+        top:50%;
+        right:5px;
+        transform: translateY(-50%);
         cursor: pointer;
-        overflow: hidden;
-        img {
-          height: 100%;
-          width: 100%;
+        opacity: 1.0;
+        @include transition(opacity 0.3s);
+        &:hover {
+          @include transition(opacity 0.3s);
+          opacity: 0.7;
         }
-        .audio-buttons {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform:translate(-50%, -50%);
-          background-color: white;
-          .playButton {
-            display:block;
-          }
-          .pauseButton {
-            display:none;
-          }
+      }
+    }
+    .results-area {
+      max-height: 400px;
+      overflow: scroll;
+      &.hide-results{
+        display: none;
+      }
+      .search-result {
+        display: flex;
+        align-items: center;
+        margin: 5px 0;
+        background-color: white;
+        border: 1px $lightest-gray solid;
+        @include transition(background-color 0.3s);
+        &:hover {
+          @include transition(background-color 0.3s);
+          background-color: $lightest-gray;
         }
-        &.nowplaying {
+        .song-preview {
+          width: 100px;
+          height: 100px;
+          position: relative;
+          cursor: pointer;
+          overflow: hidden;
+          img {
+            height: 100%;
+            width: 100%;
+          }
           .audio-buttons {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform:translate(-50%, -50%);
+            background-color: white;
             .playButton {
-              display:none;
-            }
-            .pauseButton {
               display:block;
             }
+            .pauseButton {
+              display:none;
+            }
+          }
+          &.nowplaying {
+            .audio-buttons {
+              .playButton {
+                display:none;
+              }
+              .pauseButton {
+                display:block;
+              }
+            }
           }
         }
+        .song-meta {
+          padding: 10px;
+          cursor:pointer;
+        }    
       }
-      .song-meta {
-        padding: 10px;
-        cursor:pointer;
-      }    
     }
   }
+  
   .mix-art-container {
     ul {
       list-style: none;

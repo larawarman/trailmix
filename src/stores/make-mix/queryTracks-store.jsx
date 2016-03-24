@@ -5,7 +5,6 @@ var Api = require('../../utils/api');
 var SearchResultsStore = module.exports = Reflux.createStore({
   listenables: [Actions],
   queryTracks: function(query) {
-    document.getElementById('query-results').style.display = 'block';
     Api.get('q=' + query + '&type=track')
       .then(function(json){
         this.songResults = json.tracks.items;

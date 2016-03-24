@@ -24,6 +24,7 @@ module.exports = React.createClass({
     return {
       songResults: [],
       query: '',
+      queryResults: false,
       loaded: false,
       mixSongs: {}
     }
@@ -39,22 +40,32 @@ module.exports = React.createClass({
     }, true);
     return <div className='song-area'>
       <h4>Add a track</h4>
-      <input 
-        type="text" 
-        ref="searchInput" 
-        value={this.state.query} 
-        onChange={this.setQuery} 
-        placeholder="Search artist, album, or track" 
-        id="search-query-input" /> 
-      <div className='results-area' id="query-results">
+      <div className="input-area">
+        <input 
+          type="text" 
+          ref="searchInput" 
+          value={this.state.query} 
+          onChange={this.setQuery} 
+          placeholder="Search artist, album, or track" 
+          id="search-query-input" 
+          onFocus={this.clearInput}/> 
+        <div onClick={this.clearInput} className="clear-input">[ x ]</div>
+      </div>
+      <div className={'results-area ' + (this.state.queryResults ? '' : 'hide-results')}id="query-results">
         {this.renderSearchResults()}
       </div>
     </div>
   },
   setQuery: function(event) {
-    this.setState({query: event.target.value}, function() {
+    this.setState({query: event.target.value, queryResults:true}, function() {
       var query = this.state.query;
-      Actions.queryTracks(query);        
+      Actions.queryTracks(query);       
+    });
+  },
+  clearInput: function() {
+    this.setState({
+      query: '',
+      queryResults: false
     });
   },
   onChange: function(event, songResults) {
