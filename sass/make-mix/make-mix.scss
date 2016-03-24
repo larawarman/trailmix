@@ -35,13 +35,14 @@
     }
   }
   .mix-area {
+    list-style: none;
     .content{
       display:none;
       &.loaded {
         display:block;
       }
     }
-    .list-item{
+    .list-item, .SortableItem{
        padding: 20px 0;
       .delete {
         float: right;
