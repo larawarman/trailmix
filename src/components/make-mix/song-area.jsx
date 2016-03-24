@@ -67,6 +67,11 @@ module.exports = React.createClass({
       query: '',
       queryResults: false
     });
+    //pause if the input is cleared while still previewing
+    var audios = document.getElementsByTagName('audio');
+      for(var i = 0, len = audios.length; i < len;i++){
+        audios[i].pause();
+      }
   },
   onChange: function(event, songResults) {
     this.setState({

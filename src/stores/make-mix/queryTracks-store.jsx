@@ -11,10 +11,6 @@ var SearchResultsStore = module.exports = Reflux.createStore({
         this.triggerChange();
       }.bind(this));
   },
-  closeQuery: function() {
-    document.getElementById('query-results').style.display = 'none';
-    // document.getElementById('search-query-input').value = '';
-  },
   triggerChange: function() {
     this.trigger('change', this.songResults);
   }
