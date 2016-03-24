@@ -1,8 +1,11 @@
 var React = require('react');
 var Firebase = require('firebase');
 var fireUrl = 'https://trailmix0.firebaseio.com/';
+// var Sortable = require('react-sortable-items');
+// var SortableMixin = require('react-sortable-items/SortableItemMixin');
 
 module.exports = React.createClass({
+  // mixins: [SortableMixin],
   componentWillMount: function() {
     this.fbsong = new Firebase(fireUrl + 'mixes/mix/songs/' + this.props.song.key);
   },
@@ -14,10 +17,10 @@ module.exports = React.createClass({
     }
   },
   render: function() {
-    return <li key={this.props.id}>
+    return <div key={this.props.id} className="list-item">
       {this.state.track_name} by {this.state.artistJoined}
       <span onClick={this.handleDelete} className="delete">DELETE</span>
-    </li>
+    </div>
   },
   handleDelete:function() {
     this.fbsong.remove();

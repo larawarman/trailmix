@@ -46,7 +46,11 @@ var App = React.createClass({
       </div>
       <div className="row">
         <div className="col-md-6 col-md-offset-3">
-          <h4>Add a track</h4>
+          <MixList /> 
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-md-6 col-md-offset-3">
           <SongArea />
         </div>
       </div>

@@ -2,8 +2,6 @@ var React = require('react');
 var ReactFire = require('reactfire');
 var Firebase = require('firebase');
 
-var update = require('react-addons-update');
-
 var fireUrl = 'https://trailmix0.firebaseio.com/';
 
 module.exports = React.createClass({
@@ -62,10 +60,5 @@ module.exports = React.createClass({
   },
   handleDataLoaded: function(snapshot) {
     this.setState({loaded: true});
-  },
-  handleSongsAdded: function(snapshot, prevChildKey) {
-    var newSong = snapshot.val();
-    var initialArray = this.state.mixSongs;
-    var newArray = update(initialArray, {$push: [newSong.images[1].url]});
   }
 });

@@ -37,10 +37,8 @@ module.exports = React.createClass({
             }
         }
     }, true);
-    return <div className='mix-area'>
-      <div className = {"content " + (this.state.loaded ? 'loaded' : '')}>
-        <MixList songs={this.state.mixSongs} />
-      </div>
+    return <div className='song-area'>
+      <h4>Add a track</h4>
       <input 
         type="text" 
         ref="searchInput" 
@@ -49,7 +47,7 @@ module.exports = React.createClass({
         placeholder="Search artist, album, or track" 
         id="search-query-input" /> 
       <div className='results-area' id="query-results">
-        {this.renderResults()}
+        {this.renderSearchResults()}
       </div>
     </div>
   },
@@ -65,7 +63,7 @@ module.exports = React.createClass({
     });
     //pause all audio players if search changes, if user tries to play multiple
   },
-  renderResults: function() {
+  renderSearchResults: function() {
     return this.state.songResults.slice(0,20).map(function(result){
       return <SearchResult key={result.id} {...result} />
     });
