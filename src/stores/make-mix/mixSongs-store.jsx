@@ -8,10 +8,5 @@ var MixSongsStore = module.exports = Reflux.createStore({
     return{
       mixSongs: {}
     }
-  },
-  getSongsFromMix: function() {
-    this.fbsonglist = new Firebase(fireUrl + '/mixes/mix/songs');
-    this.bindAsObject(this.fbsonglist, 'mixSongs');
-    this.fbsonglist.on('value', this.handleDataLoaded);
   }
 });

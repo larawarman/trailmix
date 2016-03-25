@@ -1,12 +1,13 @@
 var React = require('react');
 var ReactFire = require('reactfire');
 var Firebase = require('firebase');
-var update = require('react-addons-update');
+// var ReactDND = require('react-dnd');
+// var HTML5Backend = require('react-dnd-html5-backend');
+///touch might be necessary https://github.com/yahoo/react-dnd-touch-backend
 
 var MixListItem = require('./mix-list-item');
 
 var fireUrl = 'https://trailmix0.firebaseio.com/';
-
 
 module.exports = React.createClass({
   mixins: [ ReactFire ],
@@ -14,24 +15,25 @@ module.exports = React.createClass({
     this.fbsonglist = new Firebase(fireUrl + '/mixes/mix/songs');
     this.bindAsObject(this.fbsonglist, 'mixSongs');
     this.fbsonglist.on('value', this.handleDataLoaded);
-    //this.fbsonglist.on('child_added', this.handleSongsAdded);
+    //this.fbsonglist.on('child_changed', this.handleSongsAdded);
   },
   getInitialState: function() {
     return {
       loaded: false,
-      mixSongs: {},
-      list: []
+      mixSongs: {}
     }
   },
   render: function() {
-    //console.log(this.state.mixSongs);
     return  <div className={"mix-area " + (this.state.loaded ? 'loaded' : '')}>
       <h4>Mix Songs</h4>
-      {this.renderMixSongs()}
+      <ul>
+        {this.renderMixSongs()}
+      </ul>
     </div>
   },
   renderMixSongs: function() {
     var songs = [];
+    var index = 1;
     for (var key in this.state.mixSongs)  {
       var song = this.state.mixSongs[key];
       song.key = key;
@@ -39,8 +41,10 @@ module.exports = React.createClass({
         <MixListItem
           song={song}
           key={key}
+          index={index}
         />
       );
+      index++;
     }
     return <div className="mix-area">
       {songs}
@@ -48,5 +52,6 @@ module.exports = React.createClass({
   },
   handleDataLoaded: function(snapshot) {
     this.setState({loaded: true,});
+    console.log('loaded');
   }
 });
