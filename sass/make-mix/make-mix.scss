@@ -44,10 +44,13 @@
     }
     .list-item, .SortableItem{
        padding: 20px 0;
-      .delete {
-        float: right;
-        cursor:pointer;
-      }       
+       cursor: crosshair;
+       .list-action-buttons {
+            float: right;
+          .delete {
+            cursor:pointer;
+          }
+       }       
     }
   }
   .song-area {

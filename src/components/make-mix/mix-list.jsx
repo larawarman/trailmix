@@ -18,7 +18,7 @@ module.exports = React.createClass({
     this.fbsonglist = new Firebase(fireUrl + '/mixes/mix/songs');
     this.bindAsObject(this.fbsonglist, 'mixSongs');
     this.fbsonglist.on('value', this.handleDataLoaded);
-    //this.fbsonglist.on('child_added', this.handleSongsAdded);
+    this.fbsonglist.on('child_changed', this.handleDataChange);
   },
   getInitialState: function() {
     return {
@@ -28,7 +28,6 @@ module.exports = React.createClass({
     }
   },
   render: function() {
-    //console.log(this.state.mixSongs);
     return  <div className={"mix-area " + (this.state.loaded ? 'loaded' : '')}>
       <h4>Mix Songs</h4>
       {this.renderMixSongs()}
@@ -46,7 +45,9 @@ module.exports = React.createClass({
       var songs = this.state.songs.map(function (song, idx) {
         return <MixListItem 
           key={song.key} 
+          artist={song.artistJoined}
           title={song.track_name}
+          id={song.key}
           index={idx} 
           sortData={idx} 
           isDraggable={true} />;
@@ -60,13 +61,12 @@ module.exports = React.createClass({
   },
   handleDataLoaded: function(snapshot) {
     this.setState({loaded: true,});
+    console.log('data loaded');
   },
   handleSort: function(reorder) {
-    console.log(reorder);
-    // this.setState({
-    //   songs: reorder.map(function (idx) {
-    //     console.log(this.state.songs[idx]);
-    //   }.bind(this))
-    // });
+
+  },
+  handleDataChange:function(){
+    console.log('data changed');
   }
 });
