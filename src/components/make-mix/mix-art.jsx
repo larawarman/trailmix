@@ -1,26 +1,18 @@
 var React = require('react');
-var ReactFire = require('reactfire');
-var Firebase = require('firebase');
+// var ReactFire = require('reactfire');
+var StateMixin = require('reflux-state-mixin');
+// var Firebase = require('firebase');
 
-var fireUrl = 'https://trailmix0.firebaseio.com/';
+var Actions = require('../../actions');
+var MixSongsStore = require('../../stores/make-mix/mixSongs-store');
+
 
 module.exports = React.createClass({
-  mixins: [ ReactFire ],
-  componentWillMount: function() {
-    this.fbsonglist = new Firebase(fireUrl + '/mixes/mix/songs');
-    this.bindAsObject(this.fbsonglist, 'mixSongs');
-    this.fbsonglist.on('value', this.handleDataLoaded);
-    //this.fbsonglist.on('child_added', this.handleSongsAdded);
-  },
-  getInitialState: function() {
-    return {
-      loaded: false,
-      mixSongs: {}
-    }
-  },
+  mixins: [ 
+    StateMixin.connect(MixSongsStore)
+  ],
   render: function() {
     return  <div className={"mix-art-container " + (this.state.loaded ? 'loaded' : '')}>
-      <h4>Mix Album Art</h4>
       {this.renderAlbumArt()}
     </div>
   },
@@ -57,8 +49,5 @@ module.exports = React.createClass({
         {children}
       </ul>
     }
-  },
-  handleDataLoaded: function(snapshot) {
-    this.setState({loaded: true});
   }
 });

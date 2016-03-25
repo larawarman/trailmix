@@ -15,8 +15,9 @@ module.exports = React.createClass({
     ReactFire 
   ],
   componentWillMount: function() {
-    this.fbsongs = new Firebase(fireUrl + '/mixes/mix/songs/');
-    this.bindAsObject(this.fbsongs, 'songs');
+    this.fbsonglist = new Firebase(fireUrl + '/mixes/mix/songs/');
+    //this.bindAsObject(this.fbsonglist, 'songs');
+    //this.fbsonglist.on('value', this.handleDataLoaded);
     this.artistNames();
   },
   getInitialState: function() {
@@ -47,8 +48,7 @@ module.exports = React.createClass({
     return artists
   },
   handleClick: function(){
-    console.log(this.state.artistJoined);
-    this.fbsongs.push({
+    this.fbsonglist.push({
       track_name: this.props.name,
       artists_arr: this.props.artists,
       artistJoined: this.artistNames(),
@@ -60,6 +60,5 @@ module.exports = React.createClass({
       spotify_popularity: this.props.popularity,
       spotify_uri: this.props.uri,
     });
-    Actions.closeQuery();
   }
 });

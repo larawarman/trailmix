@@ -1,11 +1,16 @@
 var React = require('react');
 var ReactFire = require('reactfire');
 var Firebase = require('firebase');
+var StateMixin = require('reflux-state-mixin');
+
+var Actions = require('../../actions');
+var MixSongsStore = require('../../stores/make-mix/mixSongs-store');
 
 var fireUrl = 'https://trailmix0.firebaseio.com/';
 
 module.exports = React.createClass({
   mixins:[
+    StateMixin.connect(MixSongsStore),
     ReactFire
   ],
   componentWillMount: function() {
@@ -21,7 +26,6 @@ module.exports = React.createClass({
     </li>
   },
   handleDelete:function() {
-    console.log('delete');
-    //this.fbsong.remove();
+    this.fbsong.remove();
   }
 });

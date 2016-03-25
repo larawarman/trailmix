@@ -21,14 +21,8 @@ module.exports = React.createClass({
     }
   },
   render: function() {
-    document.addEventListener('play', function(e){
-        var audios = document.getElementsByTagName('audio');
-        for(var i = 0, len = audios.length; i < len;i++){
-            if(audios[i] != e.target){
-                audios[i].pause();
-            }
-        }
-    }, true);
+    Actions.playOneAudio();
+    // console.log(this.state.mixSongs);
     return <div className='song-area'>
       <h4>Add a track</h4>
       <div className="input-area">
@@ -39,29 +33,31 @@ module.exports = React.createClass({
           onChange={this.setQuery} 
           placeholder="Search artist, album, or track" 
           id="search-query-input" 
-          onFocus={this.clearInput}/> 
+          onFocus={this.handleFocus}
+          onBlur= {this.handleBlur} /> 
         <div onClick={this.clearInput} className="clear-input">[ x ]</div>
       </div>
-      <div className={'results-area ' + (this.state.queryResults ? '' : '')}id="query-results">
+      <div className='results-area' id="query-results">
         {this.renderSearchResults()}
       </div>
     </div>
   },
   setQuery: function(event) {
-    this.setState({query: event.target.value, queryResults:true}, function() {
+    this.setState({query: event.target.value}, function() {
       Actions.queryTracks(this.state.query);      
     });
   },
-  clearInput: function() {
+  handleFocus: function() {
     this.setState({
-      query: '',
-      queryResults: false
+      query: ''
     });
     //pause if the input is cleared while still previewing
-    var audios = document.getElementsByTagName('audio');
-      for(var i = 0, len = audios.length; i < len;i++){
-        audios[i].pause();
-      }
+    Actions.pauseAllAudio();
+  },
+  handleBlur: function() {
+    this.setState({
+      query: ''
+    });
   },
   renderSearchResults: function() {
     return this.state.songResults.slice(0,20).map(function(result){

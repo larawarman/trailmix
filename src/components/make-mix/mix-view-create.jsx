@@ -5,7 +5,6 @@ var Firebase = require('firebase');
 var StateMixin = require('reflux-state-mixin');
 
 var MixSongsStore = require('../../stores/make-mix/mixSongs-store');
-//var MixList = require('./mix-list');
 var SongArea = require('./song-area');
 var MixListItem = require('./mix-list-item');
 var MixArt = require('./mix-art');
@@ -69,11 +68,9 @@ module.exports = React.createClass({
     </div>
   },
   handleDataLoaded: function(snapshot) {
-    // this.setState({loaded: true});
-    // MixSongsStore.setState({mixSongs: this.state.mixSongs});
+    MixSongsStore.setState({mixSongs: snapshot.val()});
   },
   handleChildChanged: function(snapshot) {
-    console.log(snapshot);
-    MixSongsStore.setState({mixSongs: this.state.mixSongs})
+
   }
 });
