@@ -8,7 +8,14 @@ var LocationStore = module.exports = Reflux.createStore({
   getInitialState: function() {
     return {
       localLat: null,
-      localLng: null
+      localLng: null,
+
+      open: false,
+      lat: '',
+      lng: '',
+      gmaps_place_id: '',
+      types: '',
+      label: ''
     }
   },
   getLocation: function() {
@@ -21,9 +28,7 @@ var LocationStore = module.exports = Reflux.createStore({
   },
   getLocSuccess: function(pos) {
     var crd = pos.coords;
-
     this.setState({localLat: pos.coords.latitude, localLng: pos.coords.longitude});
-    // console.log(this.state.localLat + " / " + this.state.localLng);
   },
   getLocError: function(err) {
     console.warn('ERROR(' + err.code + '): ' + err.message);

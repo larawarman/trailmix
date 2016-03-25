@@ -2,44 +2,31 @@ var React = require('react');
 var Reflux = require('reflux');
 var StateMixin = require('reflux-state-mixin');
 var LocationStore = require('../../stores/make-mix/location-store');
-var Actions = require('../../actions');
-var Geosuggest = require('react-geosuggest');
+
 var ReactFire = require('reactfire');
 var Firebase = require('firebase');
 var fireUrl = 'https://trailmix0.firebaseio.com/';
 
+var Actions = require('../../actions');
+var Geosuggest = require('react-geosuggest');
+
+
 
 module.exports = React.createClass({
   mixins:[
-    Reflux.ListenerMixin,
+    StateMixin.connect(LocationStore),
     ReactFire
   ],
+  // getInitialState: function() {
+  //   return {
+  //     displayLabel: '',
+  //   }
+  // },
   componentWillMount: function() {
     this.fbloc = new Firebase(fireUrl + '/mixes/mix/location');
     this.bindAsObject(this.fbloc, 'location');
+    this.fbloc.on('value', this.handleDataLoaded);
     LocationStore.getLocation();;
-  },
-  getInitialState: function (){
-    return({
-        localLat: LocationStore.state.localLat,
-        localLng: LocationStore.state.localLng,
-        open: false,
-        lat: '',
-        lng: '',
-        gmaps_place_id: '',
-        types: '',
-        label: ''
-    })
-  },
-  componentDidMount: function(){
-   this.listenTo(
-      LocationStore,
-      (state)=>{
-          this.setState({
-              localLat:state.localLat,
-              localLng:state.localLng
-          })
-      });
   },
   render: function() {
     var fixtures = [
@@ -106,5 +93,8 @@ module.exports = React.createClass({
   },
   handleBlur: function() {
     this.setState({open: false})
+  },
+  handleDataLoaded: function(snapshot) {
+    //this.setState({displayLabel: snapshot.val().label});
   }
 });

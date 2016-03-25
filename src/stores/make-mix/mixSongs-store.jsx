@@ -10,6 +10,7 @@ var MixSongsStore = module.exports = Reflux.createStore({
     return{
       mixSongs: {}, //songs that have been added to the mix
       songResults: [], //songs that are the result of a song query
+      showresults: null //flag to show whether or not to show search results
     }
   },
   storeDidUpdate: function(prevState) {
@@ -19,16 +20,18 @@ var MixSongsStore = module.exports = Reflux.createStore({
   },
   queryTracks: function(query) {
     if (query === '') {
+      this.setState({showresults:false});
     } else {
+      this.setState({showresults:true});
       Api.get('q=' + query + '&type=track')
         .then(function(json){
           this.setState({songResults: json.tracks.items})
         }.bind(this));
     }
   },
-  closeQuery: function() {
-    console.log('close the drawer');
-    document.getElementById("search-query-input").value = '';
+  closeResults: function() {
+    Actions.pauseAllAudio();
+    this.setState({showresults:false});
   },
   pauseAllAudio: function() {
     var audios = document.getElementsByTagName('audio');

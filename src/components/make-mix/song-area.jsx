@@ -2,18 +2,14 @@ var React = require('react');
 var Reflux = require('reflux');
 var StateMixin = require('reflux-state-mixin');
 var Actions = require('../../actions');
-var ReactFire = require('reactfire');
-var Firebase = require('firebase');
 
 var MixSongsStore = require('../../stores/make-mix/mixSongs-store');
 var SearchResult = require('./search-result');
 
-var fireUrl = 'https://trailmix0.firebaseio.com/';
 
 module.exports = React.createClass({
   mixins: [
-    StateMixin.connect(MixSongsStore),
-    ReactFire
+    StateMixin.connect(MixSongsStore)
   ],
   getInitialState: function(){
     return {
@@ -22,7 +18,6 @@ module.exports = React.createClass({
   },
   render: function() {
     Actions.playOneAudio();
-    // console.log(this.state.mixSongs);
     return <div className='song-area'>
       <h4>Add a track</h4>
       <div className="input-area">
@@ -33,11 +28,10 @@ module.exports = React.createClass({
           onChange={this.setQuery} 
           placeholder="Search artist, album, or track" 
           id="search-query-input" 
-          onFocus={this.handleFocus}
-          onBlur= {this.handleBlur} /> 
-        <div onClick={this.clearInput} className="clear-input">[ x ]</div>
+          onFocus={this.handleFocus} /> 
+        <div onClick={this.closeResultsPlus} className={"clear-input " + (this.state.showresults ? '' : 'hide-clear-btn')}>[ x ]</div>
       </div>
-      <div className='results-area' id="query-results">
+      <div className={'results-area ' + (this.state.showresults ? '' : 'hide-results')} id="query-results">
         {this.renderSearchResults()}
       </div>
     </div>
@@ -47,17 +41,16 @@ module.exports = React.createClass({
       Actions.queryTracks(this.state.query);      
     });
   },
+  closeResultsPlus: function() {
+    this.setState({query:''});
+    Actions.closeResults();
+  },
   handleFocus: function() {
     this.setState({
       query: ''
     });
     //pause if the input is cleared while still previewing
     Actions.pauseAllAudio();
-  },
-  handleBlur: function() {
-    this.setState({
-      query: ''
-    });
   },
   renderSearchResults: function() {
     return this.state.songResults.slice(0,20).map(function(result){

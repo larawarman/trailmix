@@ -1,15 +1,16 @@
 var React = require('react');
 var Reflux = require('reflux');
+var StateMixin = require('reflux-state-mixin');
+
 var ReactFire = require('reactfire');
 var Firebase = require('firebase');
-var StateMixin = require('reflux-state-mixin');
+var fireUrl = 'https://trailmix0.firebaseio.com/';
 
 var MixSongsStore = require('../../stores/make-mix/mixSongs-store');
 var SongArea = require('./song-area');
 var MixListItem = require('./mix-list-item');
 var MixArt = require('./mix-art');
 
-var fireUrl = 'https://trailmix0.firebaseio.com/';
 
 module.exports = React.createClass({
   mixins:[

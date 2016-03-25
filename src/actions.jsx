@@ -4,7 +4,7 @@ module.exports = Reflux.createActions([
   'getLocation',
   'setQuery',
   'queryTracks',
-  'closeQuery',
+  'closeResults',
   'pauseAllAudio',
   'playOneAudio'
 ]);

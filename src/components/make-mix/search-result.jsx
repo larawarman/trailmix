@@ -57,6 +57,8 @@ module.exports = React.createClass({
       spotify_href: this.props.href,
       spotify_popularity: this.props.popularity,
       spotify_uri: this.props.uri,
+    }, function(){
+      Actions.closeResults();
     });
   }
 });
