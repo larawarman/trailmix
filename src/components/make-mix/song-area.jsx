@@ -1,32 +1,23 @@
 var React = require('react');
 var Reflux = require('reflux');
-var QueryTracksStore = require('../../stores/make-mix/queryTracks-store');
+var StateMixin = require('reflux-state-mixin');
 var Actions = require('../../actions');
 var ReactFire = require('reactfire');
 var Firebase = require('firebase');
 
-var fireUrl = 'https://trailmix0.firebaseio.com/';
-
+var MixSongsStore = require('../../stores/make-mix/mixSongs-store');
 var SearchResult = require('./search-result');
-var MixList = require('./mix-list');
+
+var fireUrl = 'https://trailmix0.firebaseio.com/';
 
 module.exports = React.createClass({
   mixins: [
-    Reflux.listenTo(QueryTracksStore, 'onChange'),
+    StateMixin.connect(MixSongsStore),
     ReactFire
   ],
-  componentWillMount: function() {
-    this.fbsonglist = new Firebase(fireUrl + '/mixes/mix/songs');
-    this.bindAsObject(this.fbsonglist, 'mixSongs');
-    this.fbsonglist.on('value', this.handleDataLoaded);
-  },
   getInitialState: function(){
     return {
-      songResults: [],
-      query: '',
-      queryResults: false,
-      loaded: false,
-      mixSongs: {}
+      query: '' //let's keep the query in here since it is only used in this component
     }
   },
   render: function() {
@@ -51,15 +42,14 @@ module.exports = React.createClass({
           onFocus={this.clearInput}/> 
         <div onClick={this.clearInput} className="clear-input">[ x ]</div>
       </div>
-      <div className={'results-area ' + (this.state.queryResults ? '' : 'hide-results')}id="query-results">
+      <div className={'results-area ' + (this.state.queryResults ? '' : '')}id="query-results">
         {this.renderSearchResults()}
       </div>
     </div>
   },
   setQuery: function(event) {
     this.setState({query: event.target.value, queryResults:true}, function() {
-      var query = this.state.query;
-      Actions.queryTracks(query);       
+      Actions.queryTracks(this.state.query);      
     });
   },
   clearInput: function() {
@@ -73,18 +63,9 @@ module.exports = React.createClass({
         audios[i].pause();
       }
   },
-  onChange: function(event, songResults) {
-    this.setState({
-      songResults: songResults
-    });
-    //pause all audio players if search changes, if user tries to play multiple
-  },
   renderSearchResults: function() {
     return this.state.songResults.slice(0,20).map(function(result){
       return <SearchResult key={result.id} {...result} />
     });
-  },
-  handleDataLoaded: function() {
-    this.setState({loaded: true});
   }
 });

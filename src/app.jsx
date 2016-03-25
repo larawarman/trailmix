@@ -9,9 +9,7 @@ var fireUrl = 'https://trailmix0.firebaseio.com/';
 var LocationDrop = require('./components/make-mix/location-drop');
 var LocationTitle = require('./components/make-mix/location-title');
 var Hashtags = require('./components/make-mix/hashtag-add');
-var SongArea = require('./components/make-mix/song-area');
-var MixList = require('./components/make-mix/mix-list');
-var MixArt = require('./components/make-mix/mix-art');
+var MixViewCreate = require('./components/make-mix/mix-view-create');
 
 
 var App = React.createClass({
@@ -44,21 +42,7 @@ var App = React.createClass({
           <Hashtags />
         </div>
       </div>
-      <div className="row">
-        <div className="col-md-6 col-md-offset-3">
-          <MixList /> 
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-md-6 col-md-offset-3">
-          <SongArea />
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-md-6 col-md-offset-3">
-          <MixArt />
-        </div>
-      </div>
+      <MixViewCreate />
       <div className="row">
         <div className="col-md-6 col-md-offset-3">
           <button className="publish button" onClick={this.handlePublish}>

@@ -1,11 +1,16 @@
 var React = require('react');
+var ReactFire = require('reactfire');
 var Firebase = require('firebase');
+
 var fireUrl = 'https://trailmix0.firebaseio.com/';
 
-
 module.exports = React.createClass({
+  mixins:[
+    ReactFire
+  ],
   componentWillMount: function() {
-    this.fbsong = new Firebase(fireUrl + 'mixes/mix/songs/' + this.props.song.key);
+    this.fbsong = new Firebase(fireUrl + '/mixes/mix/songs/' + this.props.song.key);
+    this.bindAsObject(this.fbsong, 'mixSongs');
   },
   render: function() {
     return <li 
@@ -16,6 +21,7 @@ module.exports = React.createClass({
     </li>
   },
   handleDelete:function() {
-    this.fbsong.remove();
+    console.log('delete');
+    //this.fbsong.remove();
   }
 });
