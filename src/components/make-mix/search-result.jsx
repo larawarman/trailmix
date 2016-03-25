@@ -16,8 +16,6 @@ module.exports = React.createClass({
   ],
   componentWillMount: function() {
     this.fbsonglist = new Firebase(fireUrl + '/mixes/mix/songs/');
-    //this.bindAsObject(this.fbsonglist, 'songs');
-    //this.fbsonglist.on('value', this.handleDataLoaded);
     this.artistNames();
   },
   getInitialState: function() {

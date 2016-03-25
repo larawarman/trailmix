@@ -1,7 +1,5 @@
 var React = require('react');
-// var ReactFire = require('reactfire');
 var StateMixin = require('reflux-state-mixin');
-// var Firebase = require('firebase');
 
 var Actions = require('../../actions');
 var MixSongsStore = require('../../stores/make-mix/mixSongs-store');

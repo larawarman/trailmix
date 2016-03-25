@@ -20,7 +20,6 @@ module.exports = React.createClass({
     this.fbsonglist = new Firebase(fireUrl + '/mixes/mix/songs');
     this.bindAsObject(this.fbsonglist, 'mixSongs');
     this.fbsonglist.on('value', this.handleDataLoaded);
-    this.fbsonglist.on('child_changed', this.handleChildChanged);
   },
   getInitialState: function() {
     return {
@@ -69,8 +68,5 @@ module.exports = React.createClass({
   },
   handleDataLoaded: function(snapshot) {
     MixSongsStore.setState({mixSongs: snapshot.val()});
-  },
-  handleChildChanged: function(snapshot) {
-
   }
 });

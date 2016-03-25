@@ -10,19 +10,6 @@ var MixSongsStore = module.exports = Reflux.createStore({
     return{
       mixSongs: {}, //songs that have been added to the mix
       songResults: [], //songs that are the result of a song query
-
-      //firebase data for each song
-      // track_name: '',
-      // artistJoined: '',
-      // artists_arr: [],
-      // images: [],
-      // external_ids: [],
-      // spotify_preview_url: '',
-      // spotify_id: '',
-      // spotify_href: '',
-      // spotify_popularity: '',
-      // spotify_uri: '',
-      // place_in_mix: 0
     }
   },
   storeDidUpdate: function(prevState) {
