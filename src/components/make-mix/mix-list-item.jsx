@@ -21,7 +21,7 @@ module.exports = React.createClass({
     return <li 
       key={this.props.key} 
       className="list-item">
-        {this.props.index}: {this.props.song.track_name} by {this.props.song.artistJoined}
+        {this.props.index}. {this.props.song.track_name} by {this.props.song.artistJoined}
         <span onClick={this.handleDelete} className="delete">DELETE</span>
     </li>
   },

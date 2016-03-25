@@ -31,7 +31,7 @@ module.exports = React.createClass({
     return <div>
       <div className="row">
         <div className="col-md-6 col-md-offset-3">
-          <ul>
+          <ul className="mix-area">
             {this.renderMixSongs()}
           </ul>
         </div>
@@ -63,9 +63,7 @@ module.exports = React.createClass({
       );
       index++;
     }
-    return <div className="mix-area">
-      {songs}
-    </div>
+    return songs
   },
   handleDataLoaded: function(snapshot) {
     MixSongsStore.setState({mixSongs: snapshot.val()});
