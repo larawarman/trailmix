@@ -1,67 +1,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var Geosuggest = require('react-geosuggest');
-var ReactFire = require('reactfire');
-var Firebase = require('firebase');
-
-var fireUrl = 'https://trailmix0.firebaseio.com/';
-
-var LocationDrop = require('./components/make-mix/location-drop');
-var LocationTitle = require('./components/make-mix/location-title');
-var Hashtags = require('./components/make-mix/hashtag-add');
-var MixViewCreate = require('./components/make-mix/mix-view-create');
+var Routes = require('./routes');
 
 
-var App = React.createClass({
-  mixins: [ ReactFire ],
-  componentWillMount: function() {
-    this.fbmix = new Firebase(fireUrl + '/mixes/mix/published');
-  },
-  getInitialState: function() {
-    return {
-      published: false
-    }
-  },
-  render: function() {
-    return <div className="row make-mix">
-      <div className="col-md-12">
-        <h1 className="text-center">
-          Make Ur Mix
-        </h1>
-        <hr />
-      </div>
-      <div className="row">
-        <div className="col-md-6 col-md-offset-3">
-          <LocationTitle />
-          <LocationDrop />
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-md-6 col-md-offset-3">
-          <h4>#'s</h4>
-          <Hashtags />
-        </div>
-      </div>
-      <MixViewCreate />
-      <div className="row">
-        <div className="col-md-6 col-md-offset-3">
-          <button className="publish button" onClick={this.handlePublish}>
-            Publish
-          </button>
-        </div>
-      </div>
-    </div>
-  },
-  handlePublish: function() {
-    this.setState({
-      published: true
-    }, function() {
-      this.fbmix.set({ 
-        published: this.state.published 
-      });
-    });
-  }
-});
-
-var element = React.createElement(App, {});
-ReactDOM.render(element, document.querySelector('.container'));
+ReactDOM.render(Routes, document.querySelector('.container'));
