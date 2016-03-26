@@ -7,7 +7,7 @@ var Actions = require('../../actions');
 var MixSongsStore = require('../../stores/make-mix/mixSongs-store');
 var SongPreview = require('./song-preview');
 
-var fireUrl = 'https://trailmix0.firebaseio.com/';
+//var fireUrl = 'https://trailmix0.firebaseio.com/';
 
 module.exports = React.createClass({
   mixins: [ 
@@ -15,13 +15,8 @@ module.exports = React.createClass({
     ReactFire 
   ],
   componentWillMount: function() {
-    this.fbsonglist = new Firebase(fireUrl + '/mixes/mix/songs/');
+    this.fbsonglist = new Firebase(this.state.mix_path + '/songs/');
     this.artistNames();
-  },
-  getInitialState: function() {
-    return {
-
-    }
   },
   render: function() {
     return <div className="search-result">

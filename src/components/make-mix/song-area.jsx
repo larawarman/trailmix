@@ -46,6 +46,7 @@ module.exports = React.createClass({
     Actions.closeResults();
   },
   handleFocus: function() {
+    MixSongsStore.setState({mix_path: this.props.mix_url})
     this.setState({
       query: ''
     });
@@ -53,7 +54,7 @@ module.exports = React.createClass({
     Actions.pauseAllAudio();
   },
   renderSearchResults: function() {
-    return this.state.songResults.slice(0,20).map(function(result){
+    return this.state.songResults.slice(0,20).map(function(result, i){
       return <SearchResult key={result.id} {...result} />
     });
   }

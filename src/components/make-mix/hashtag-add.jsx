@@ -1,19 +1,26 @@
 var React = require('react');
+
+var Reflux = require('reflux');
+var StateMixin = require('reflux-state-mixin');
+
 var ReactFire = require('reactfire');
 var Firebase = require('firebase');
-var fireUrl = 'https://trailmix0.firebaseio.com/';
+//var fireUrl = 'https://trailmix0.firebaseio.com/';
 
+var MixSongsStore = require('../../stores/make-mix/mixSongs-store');
 
 module.exports = React.createClass({
-  mixins: [ ReactFire ],
+  mixins: [ 
+    StateMixin.connect(MixSongsStore),
+    ReactFire 
+  ],
   getInitialState: function(){
     return {
-      value: '',
-      tags: []
+      value: ''
     }
   },
   componentWillMount: function() {
-    this.fbtags = new Firebase(fireUrl + '/mixes/mix/');
+    this.fbtags = new Firebase(this.props.mix_url);
     this.bindAsObject(this.fbtags, 'tags');
   },
   render: function() {
@@ -28,19 +35,17 @@ module.exports = React.createClass({
   handleTextChange: function(event) {
     this.setState({
       value: event.target.value
+    }, function() {
+      this.renderHashtags();
     });
   },
   renderHashtags:function() {
-
-  },
-  handleBlur: function() {
     var tagArr = this.state.value.split(' ');
-    this.setState({
-      tags: tagArr
-    }, function() {
-      this.fbtags.update({
-        tags: this.state.tags
-      });
+      MixSongsStore.setState({tags: tagArr});
+    },
+  handleBlur: function() {
+    this.fbtags.update({
+      tags: this.state.tags
     });
   }
 });

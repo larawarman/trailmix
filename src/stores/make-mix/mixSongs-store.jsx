@@ -10,12 +10,14 @@ var MixSongsStore = module.exports = Reflux.createStore({
     return{
       mixSongs: {}, //songs that have been added to the mix
       songResults: [], //songs that are the result of a song query
-      showresults: null //flag to show whether or not to show search results
+      showresults: null, //flag to show whether or not to show search results
+      tags: [], //hashtags as an array
+      mix_path: '' //path to the mix
     }
   },
   storeDidUpdate: function(prevState) {
     if(this.state.mixSongs !== prevState.mixSongs){
-      console.log('updated: ' + this.state.mixSongs);
+      //console.log('updated: ' + this.state.mixSongs);
     }
   },
   queryTracks: function(query) {

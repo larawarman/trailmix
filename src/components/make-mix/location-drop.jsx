@@ -5,7 +5,7 @@ var LocationStore = require('../../stores/make-mix/location-store');
 
 var ReactFire = require('reactfire');
 var Firebase = require('firebase');
-var fireUrl = 'https://trailmix0.firebaseio.com/';
+// var fireUrl = 'https://trailmix0.firebaseio.com/';
 
 var Actions = require('../../actions');
 var Geosuggest = require('react-geosuggest');
@@ -17,13 +17,8 @@ module.exports = React.createClass({
     StateMixin.connect(LocationStore),
     ReactFire
   ],
-  // getInitialState: function() {
-  //   return {
-  //     displayLabel: '',
-  //   }
-  // },
   componentWillMount: function() {
-    this.fbloc = new Firebase(fireUrl + '/mixes/mix/location');
+    this.fbloc = new Firebase(this.props.mix_url + '/location');
     this.bindAsObject(this.fbloc, 'location');
     this.fbloc.on('value', this.handleDataLoaded);
     LocationStore.getLocation();;

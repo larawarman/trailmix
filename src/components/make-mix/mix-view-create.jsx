@@ -18,14 +18,9 @@ module.exports = React.createClass({
     ReactFire
   ],
   componentWillMount: function() {
-    this.fbsonglist = new Firebase(fireUrl + '/mixes/mix/songs');
-    this.bindAsObject(this.fbsonglist, 'mixSongs');
-    this.fbsonglist.on('value', this.handleDataLoaded);
-  },
-  getInitialState: function() {
-    return {
-      // loaded: false
-    }
+    this.fb_songsRef = new Firebase(this.props.mix_url + '/songs/');
+    this.bindAsObject(this.fb_songsRef, 'mixSongs');
+    this.fb_songsRef.on('value', this.handleDataLoaded);
   },
   render: function(){
     return <div>
@@ -38,12 +33,12 @@ module.exports = React.createClass({
       </div>
       <div className="row">
         <div className="col-md-6 col-md-offset-3">
-          <SongArea />
+          <SongArea mix_url={this.props.mix_url} />
         </div>
       </div>
       <div className="row">
         <div className="col-md-6 col-md-offset-3">
-          <MixArt />
+          
         </div>
       </div>
     </div>

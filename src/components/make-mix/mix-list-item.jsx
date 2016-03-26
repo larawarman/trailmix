@@ -6,7 +6,7 @@ var StateMixin = require('reflux-state-mixin');
 var Actions = require('../../actions');
 var MixSongsStore = require('../../stores/make-mix/mixSongs-store');
 
-var fireUrl = 'https://trailmix0.firebaseio.com/';
+//var fireUrl = 'https://trailmix0.firebaseio.com/';
 
 module.exports = React.createClass({
   mixins:[
@@ -14,8 +14,8 @@ module.exports = React.createClass({
     ReactFire
   ],
   componentWillMount: function() {
-    this.fbsong = new Firebase(fireUrl + '/mixes/mix/songs/' + this.props.song.key);
-    this.bindAsObject(this.fbsong, 'mixSongs');
+    this.fb_songRef = new Firebase(this.state.mix_path + '/songs/' + this.props.song.key);
+    this.bindAsObject(this.fb_songRef, 'mixSongs');
   },
   render: function() {
     return <li 
@@ -26,6 +26,6 @@ module.exports = React.createClass({
     </li>
   },
   handleDelete:function() {
-    this.fbsong.remove();
+    this.fb_songRef.remove();
   }
 });
