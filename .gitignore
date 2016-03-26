@@ -2,3 +2,4 @@ node_modules/
 main.js
 style.css
 utils/keys.jsx
+utils/mapbox-config.jsx
