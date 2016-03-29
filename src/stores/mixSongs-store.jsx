@@ -1,7 +1,7 @@
 var Reflux = require('reflux');
-var Actions = require('../../actions');
+var Actions = require('../actions');
 var StateMixin = require('reflux-state-mixin');
-var Api = require('../../utils/api');
+var Api = require('../utils/api');
 
 var MixSongsStore = module.exports = Reflux.createStore({
   mixins: [StateMixin.store],

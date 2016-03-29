@@ -1,14 +1,14 @@
 var Reflux = require('reflux');
 var StateMixin = require('reflux-state-mixin');
-var Actions = require('../../actions');
+var Actions = require('../actions');
 
 var LocationStore = module.exports = Reflux.createStore({
   mixins: [StateMixin.store],
   listenables: [Actions],
   getInitialState: function() {
     return {
-      localLat: null,
-      localLng: null,
+      localLat: 0,
+      localLng: 0,
 
       open: false,
       lat: '',

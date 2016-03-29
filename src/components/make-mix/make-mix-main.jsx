@@ -12,7 +12,7 @@ var Firebase = require('firebase');
 
 var fireUrl = 'https://trailmix0.firebaseio.com/';
 
-var MixSongsStore = require('../../stores/make-mix/mixSongs-store');
+var MixSongsStore = require('../../stores/mixSongs-store');
 var LocationDrop = require('./location-drop');
 var LocationTitle = require('./location-title');
 var Hashtags = require('./hashtag-add');

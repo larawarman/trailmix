@@ -7,7 +7,7 @@ var ReactFire = require('reactfire');
 var Firebase = require('firebase');
 //var fireUrl = 'https://trailmix0.firebaseio.com/';
 
-var MixSongsStore = require('../../stores/make-mix/mixSongs-store');
+var MixSongsStore = require('../../stores/mixSongs-store');
 
 module.exports = React.createClass({
   mixins: [ 

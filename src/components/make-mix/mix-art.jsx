@@ -2,7 +2,7 @@ var React = require('react');
 var StateMixin = require('reflux-state-mixin');
 
 var Actions = require('../../actions');
-var MixSongsStore = require('../../stores/make-mix/mixSongs-store');
+var MixSongsStore = require('../../stores/mixSongs-store');
 
 
 module.exports = React.createClass({

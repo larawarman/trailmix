@@ -2,7 +2,7 @@ var React = require('react');
 var Reflux = require('reflux');
 
 var StateMixin = require('reflux-state-mixin');
-var LocationStore = require('../../stores/make-mix/location-store');
+var LocationStore = require('../../stores/location-store');
 
 var Actions = require('../../actions');
 

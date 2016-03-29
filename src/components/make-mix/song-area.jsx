@@ -3,7 +3,7 @@ var Reflux = require('reflux');
 var StateMixin = require('reflux-state-mixin');
 var Actions = require('../../actions');
 
-var MixSongsStore = require('../../stores/make-mix/mixSongs-store');
+var MixSongsStore = require('../../stores/mixSongs-store');
 var SearchResult = require('./search-result');
 
 

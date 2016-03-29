@@ -4,7 +4,7 @@ var StateMixin = require('reflux-state-mixin');
 var Firebase = require('firebase');
 
 var Actions = require('../../actions');
-var MixSongsStore = require('../../stores/make-mix/mixSongs-store');
+var MixSongsStore = require('../../stores/mixSongs-store');
 var SongPreview = require('./song-preview');
 
 //var fireUrl = 'https://trailmix0.firebaseio.com/';

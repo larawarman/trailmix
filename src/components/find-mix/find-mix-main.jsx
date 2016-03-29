@@ -1,4 +1,5 @@
 var React = require('react');
+var ReactDOM = require('react-dom');
 
 var Router = require('react-router');
 var Link = Router.Link;
@@ -9,7 +10,13 @@ var StateMixin = require('reflux-state-mixin');
 var ReactFire = require('reactfire');
 var Firebase = require('firebase');
 
+var LeafletMap = require('./leaflet-map');
+//import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
+//var Leaflet = require('react-leaflet');
+
 var MapboxToken = require('../../utils/mapbox-config');
+
+var LocationStore = require('../../stores/location-store');
 
 
 module.exports = React.createClass({
@@ -19,6 +26,7 @@ module.exports = React.createClass({
       <Link to="/make-mix/new" className="navbar-brand">
         make ur mix
       </Link>
+      <LeafletMap />
     </div>
   }
 });

@@ -1,7 +1,7 @@
 var React = require('react');
 var Reflux = require('reflux');
 var StateMixin = require('reflux-state-mixin');
-var LocationStore = require('../../stores/make-mix/location-store');
+var LocationStore = require('../../stores/location-store');
 
 var ReactFire = require('reactfire');
 var Firebase = require('firebase');
@@ -21,7 +21,6 @@ module.exports = React.createClass({
     this.fbloc = new Firebase(this.props.mix_url + '/location');
     this.bindAsObject(this.fbloc, 'location');
     this.fbloc.on('value', this.handleDataLoaded);
-    LocationStore.getLocation();;
   },
   render: function() {
     var fixtures = [

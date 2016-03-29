@@ -6,7 +6,7 @@ var ReactFire = require('reactfire');
 var Firebase = require('firebase');
 var fireUrl = 'https://trailmix0.firebaseio.com/';
 
-var MixSongsStore = require('../../stores/make-mix/mixSongs-store');
+var MixSongsStore = require('../../stores/mixSongs-store');
 var SongArea = require('./song-area');
 var MixListItem = require('./mix-list-item');
 var MixArt = require('./mix-art');
