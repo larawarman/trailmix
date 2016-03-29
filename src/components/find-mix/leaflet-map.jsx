@@ -38,25 +38,27 @@ module.exports = React.createClass({
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
           />
+          {this.renderMixMarkers()}
         </ReactLeaflet.Map>
       </div>
     </div>
   },
   handleDataLoaded: function(snapshot) {
-    //console.log(snapshot.val());
     PublishedMixStore.setState({all_mixes: snapshot.val()});
   },
   renderMixMarkers: function() {
     var pub_mixes = [];
     for (var key in this.state.all_mixes){
       var mix = this.state.all_mixes[key];
+      mix.key = key;
       if(mix.published === true){
+        var markerPosition = [mix.location.lat, mix.location.lng] 
         pub_mixes.push(
           <ReactLeaflet.Marker 
-          position={[mix.location.latitude, mix.location.longitude]} 
-          key={mix.key}>
-            <ReactLeaflet.Popup>
-              <span>{this.props.mix.location.label}</span>
+          position={markerPosition} 
+          key={key}>
+            <ReactLeaflet.Popup key={key}>
+              <span key={key}>{mix.location.label}</span>
             </ReactLeaflet.Popup>
           </ReactLeaflet.Marker>
         );
