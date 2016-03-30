@@ -27,6 +27,7 @@
     "react-geosuggest": "^1.19.0",
     "react-leaflet": "^0.10.2",
     "react-mapbox-components": "^0.1.1",
+    "react-mapboxmap": "0.0.3",
     "react-router": "^2.0.1",
     "react-sortable-component": "^0.4.0",
     "react-sortable-items": "0.0.12",

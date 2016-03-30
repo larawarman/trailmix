@@ -11,8 +11,7 @@ var ReactFire = require('reactfire');
 var Firebase = require('firebase');
 
 var LeafletMap = require('./leaflet-map');
-//import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
-//var Leaflet = require('react-leaflet');
+//var MapboxMap = require('./mapbox-map');
 
 var MapboxToken = require('../../utils/mapbox-config');
 

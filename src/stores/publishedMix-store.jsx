@@ -8,7 +8,8 @@ var MixSongsStore = module.exports = Reflux.createStore({
   listenables: [Actions],
   getInitialState: function(){
     return{
-      all_mixes: {}
+      all_mixes: {},
+      published_mixes: []
     }
   },
   storeDidUpdate: function(prevState) {
