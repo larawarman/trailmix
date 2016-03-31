@@ -1,8 +1,14 @@
 var React = require('react');
+var ReactDOM = require('react-dom');
+
+var Actions = require('../../actions');
 
 var Router = require('react-router');
-var Link = Router.Link;
-var browserHistory = Router.browserHistory;
+// var Link = Router.Link;
+// var browserHistory = Router.browserHistory;
+// var transitionTo = Router.transitionTo;
+// var Navigation = Router.Navigation;
+
 
 var Reflux = require('reflux');
 var StateMixin = require('reflux-state-mixin');
@@ -17,10 +23,14 @@ var ReactLeaflet = require('react-leaflet');
 
 
 module.exports = React.createClass({
+  contextTypes : {
+    router: React.PropTypes.object.isRequired
+  },
   mixins:[
     StateMixin.connect(LocationStore),
     StateMixin.connect(PublishedMixStore),
     ReactFire
+    // Navigation
   ],
   getInitialState: function() {
     return{
@@ -54,11 +64,6 @@ module.exports = React.createClass({
     PublishedMixStore.setState({all_mixes: snapshot.val()});
   },
   renderMixMarkers: function() {
-                //<ReactLeaflet.Popup key={key}>
-              //<span key={key} >
-                //{mix.location.label}
-              //</span>
-            //</ReactLeaflet.Popup>
     var pub_mixes = [];
     for (var key in this.state.all_mixes){
       var mix = this.state.all_mixes[key];
@@ -70,20 +75,21 @@ module.exports = React.createClass({
           <ReactLeaflet.Marker 
           position={markerPosition} 
           key={key}
-          // bindPopup={'<a href="http://google.com>google</a>'}
-          //onClick={browserHistory.push('/make-mix/new')}
-          onClick={this.handlePopup(key)}
           >
-
+            <ReactLeaflet.Popup>
+              <span key={key} onClick={this.handlePopupClick.bind(this, {key})} >A pretty CSS3 popup.<br/>Easily customizable.</span>
+            </ReactLeaflet.Popup>
           </ReactLeaflet.Marker>
         );
       }
     }
     return pub_mixes
   },
-  handlePopup: function(key) {
-    //this.setState({'clicked_key': key});
-    // console.log(key);
-
+  handlePopupClick: function(id, j) {
+    var mixRoute = id.key;
+    this.context.router.push({
+      pathname: '/mix/' + mixRoute,
+      id: mixRoute
+    });
   }
 });

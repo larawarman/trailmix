@@ -1,21 +1,11 @@
 var React = require('react');
-var ReactDOM = require('react-dom');
 
 var Router = require('react-router');
 var Link = Router.Link;
 
-var Reflux = require('reflux');
-var StateMixin = require('reflux-state-mixin');
-
-var ReactFire = require('reactfire');
-var Firebase = require('firebase');
-
 var LeafletMap = require('./leaflet-map');
-//var MapboxMap = require('./mapbox-map');
+var ViewSingleMix = require('../view-mix/view-single-mix');
 
-var MapboxToken = require('../../utils/mapbox-config');
-
-var LocationStore = require('../../stores/location-store');
 
 
 module.exports = React.createClass({

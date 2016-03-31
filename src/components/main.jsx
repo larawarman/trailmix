@@ -14,7 +14,7 @@ module.exports = React.createClass({
     StateMixin.connect(LocationStore)
   ],
   componentWillMount: function() {
-    LocationStore.getLocation();;
+    LocationStore.getLocation();
   },
   render: function() {
     return <div>

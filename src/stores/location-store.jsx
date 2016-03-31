@@ -37,6 +37,8 @@ var LocationStore = module.exports = Reflux.createStore({
     }
   },
   storeDidUpdate: function(prevState) {
-
+    if((this.state.localLat !== prevState.localLat) && (this.state.localLng !== prevState.localLng)){
+      // console.log('updated: ' + this.state.localLat + ', ' + this.state.localLng);
+    }
   }
 });
