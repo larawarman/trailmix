@@ -16,10 +16,11 @@ module.exports = React.createClass({
     }
   },
   componentWillMount: function() {
+    //console.log(this.props.params.id);
     this.fb_mixRef = new Firebase(fireUrl + '/mixes/' + this.props.params.id);
     this.bindAsObject(this.fb_mixRef, 'the_mix');
     this.fb_mixRef.on('value', this.handleDataLoaded);
-    console.log(this.fb_mixRef.toString());
+    //console.log(this.fb_mixRef.toString());
   },
   render: function() {
     return <div>

@@ -9,7 +9,8 @@ var MakeMix = require('./components/make-mix/make-mix-main');
 var ViewSingleMix = require('./components/view-mix/view-single-mix');
 
 module.exports = (
-  <Router history={browserHistory}>
+  // <Router history={browserHistory}>
+  <Router>
     <Route path="/" component={Main}>
       <Route path="make-mix/new" component={MakeMix} />
       <Route path="mix/:id" component={ViewSingleMix} />

@@ -4,10 +4,8 @@ var ReactDOM = require('react-dom');
 var Actions = require('../../actions');
 
 var Router = require('react-router');
-// var Link = Router.Link;
 // var browserHistory = Router.browserHistory;
-// var transitionTo = Router.transitionTo;
-// var Navigation = Router.Navigation;
+// var Link = Router.Link;
 
 
 var Reflux = require('reflux');
@@ -30,7 +28,6 @@ module.exports = React.createClass({
     StateMixin.connect(LocationStore),
     StateMixin.connect(PublishedMixStore),
     ReactFire
-    // Navigation
   ],
   getInitialState: function() {
     return{
@@ -91,5 +88,9 @@ module.exports = React.createClass({
       pathname: '/mix/' + mixRoute,
       id: mixRoute
     });
+    // browserHistory.push({
+    //   pathname: '/mix/' + mixRoute,
+    //   id: mixRoute
+    // });
   }
 });
