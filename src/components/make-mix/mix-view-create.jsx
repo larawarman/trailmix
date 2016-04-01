@@ -38,7 +38,7 @@ module.exports = React.createClass({
       </div>
       <div className="row">
         <div className="col-md-6 col-md-offset-3">
-          
+          <MixArt />
         </div>
       </div>
     </div>

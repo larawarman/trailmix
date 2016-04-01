@@ -7,14 +7,14 @@ var ReactFire = require('reactfire');
 var Firebase = require('firebase');
 var fireUrl = 'https://trailmix0.firebaseio.com/';
 
-PublishedMixStore = require('../../stores/publishedMix-store');
+MixSongsStore = require('../../stores/mixSongs-store');
 
 var MixArt = require('../make-mix/mix-art');
 
 module.exports = React.createClass({
   mixins: [
     ReactFire,
-    StateMixin.connect(PublishedMixStore)
+    StateMixin.connect(MixSongsStore)
   ],
   componentWillMount: function() {
     this.fb_mixRef = new Firebase(fireUrl + '/mixes/' + this.props.params.id);
@@ -28,17 +28,19 @@ module.exports = React.createClass({
   },
   renderContent: function() {
     return <div>
-      <ul>{this.renderHashtags()}</ul>
-      {this.renderPlaceTime()}
+      <MixArt />
+      <div className="row">
+        <div className="col-md-6 col-md-offset-3">
+          <ul>{this.renderHashtags()}</ul>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-md-6 col-md-offset-3">
+          {this.renderPlaceTime()}
+        </div>
+      </div>
     </div>
   },
-  // renderArt: function() {
-  //   var images = [];
-  //   for (var key in this.state.mix_songs) {
-  //     var song = this.state.mix_tags[key];
-
-  //   }
-  // },
   renderHashtags: function() {
     var tags = [];
     for (var key in this.state.mix_tags) {
@@ -57,11 +59,11 @@ module.exports = React.createClass({
   handleDataLoaded: function(snapshot) {
     console.log(snapshot.val());
     var mix = snapshot.val();
-    PublishedMixStore.setState({
+    MixSongsStore.setState({
       the_mix: mix,
       mix_place: mix.location.label,
       mix_tags: mix.tags,
-      mix_songs: mix.songs
+      mixSongs: mix.songs
     });
   }
 });

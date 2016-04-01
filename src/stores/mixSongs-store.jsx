@@ -8,10 +8,23 @@ var MixSongsStore = module.exports = Reflux.createStore({
   listenables: [Actions],
   getInitialState: function(){
     return{
+      //MIXES
+      all_mixes: {},
+
+      //THE MIX
+      the_mix: {},
+      mix_place: '',
+      mix_time: '',
+      mix_tags: [],
       mixSongs: {}, //songs that have been added to the mix
+
+      //MAKE MIX SEARCH
       songResults: [], //songs that are the result of a song query
       showresults: null, //flag to show whether or not to show search results
+
+      //CREATE MIX
       tags: [], //hashtags as an array
+      
       mix_path: '' //path to the mix
     }
   },
