@@ -12,7 +12,7 @@ var Firebase = require('firebase');
 
 var fireUrl = 'https://trailmix0.firebaseio.com/';
 
-var MixSongsStore = require('../../stores/mixSongs-store');
+var CreateMixStore = require('../../stores/createMix-store');
 var LocationDrop = require('./location-drop');
 var LocationTitle = require('./location-title');
 var Hashtags = require('./hashtag-add');
@@ -21,7 +21,7 @@ var MixViewCreate = require('./mix-view-create');
 
 module.exports = React.createClass({
   mixins: [ 
-    StateMixin.connect(MixSongsStore),
+    StateMixin.connect(CreateMixStore),
     ReactFire 
   ],
   componentWillMount: function() {
@@ -29,7 +29,7 @@ module.exports = React.createClass({
     this.fb_mixRef = this.fb_mixesRef.push();
     this.fb_mixRef.set({ 'published': false });
     //MixSongsStore.state.mix_path = this.fb_mixRef.toString();
-    MixSongsStore.setState({mix_path: this.fb_mixRef.toString()});
+    CreateMixStore.setState({mix_path: this.fb_mixRef.toString()});
   },
   getInitialState: function() {
     return {

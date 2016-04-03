@@ -5,14 +5,14 @@ var StateMixin = require('reflux-state-mixin');
 
 var Actions = require('../../actions');
 
-MixSongsStore = require('../../stores/mixSongs-store');
+var ViewMixStore = require('../../stores/viewMix-store');
 
 var MixArt = require('../make-mix/mix-art');
 
 module.exports = React.createClass({
   mixins: [
     // ReactFire,
-    StateMixin.connect(MixSongsStore)
+    StateMixin.connect(ViewMixStore)
   ],
   componentWillMount: function() {
     var id=this.props.params.id;

@@ -7,11 +7,11 @@ var ReactFire = require('reactfire');
 var Firebase = require('firebase');
 //var fireUrl = 'https://trailmix0.firebaseio.com/';
 
-var MixSongsStore = require('../../stores/mixSongs-store');
+var CreateMixStore = require('../../stores/createMix-store');
 
 module.exports = React.createClass({
   mixins: [ 
-    StateMixin.connect(MixSongsStore),
+    StateMixin.connect(CreateMixStore),
     ReactFire 
   ],
   getInitialState: function(){
@@ -41,7 +41,7 @@ module.exports = React.createClass({
   },
   renderHashtags:function() {
     var tagArr = this.state.value.split(' ');
-      MixSongsStore.setState({tags: tagArr});
+      CreateMixStore.setState({tags: tagArr});
     },
   handleBlur: function() {
     this.fbtags.update({

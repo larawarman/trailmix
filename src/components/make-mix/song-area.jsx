@@ -3,13 +3,13 @@ var Reflux = require('reflux');
 var StateMixin = require('reflux-state-mixin');
 var Actions = require('../../actions');
 
-var MixSongsStore = require('../../stores/mixSongs-store');
+var CreateMixStore = require('../../stores/createMix-store');
 var SearchResult = require('./search-result');
 
 
 module.exports = React.createClass({
   mixins: [
-    StateMixin.connect(MixSongsStore)
+    StateMixin.connect(CreateMixStore)
   ],
   getInitialState: function(){
     return {
@@ -46,7 +46,7 @@ module.exports = React.createClass({
     Actions.closeResults();
   },
   handleFocus: function() {
-    MixSongsStore.setState({mix_path: this.props.mix_url})
+    CreateMixStore.setState({mix_path: this.props.mix_url})
     this.setState({
       query: ''
     });

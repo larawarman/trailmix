@@ -2,12 +2,12 @@ var React = require('react');
 var StateMixin = require('reflux-state-mixin');
 
 var Actions = require('../../actions');
-var MixSongsStore = require('../../stores/mixSongs-store');
+var CreateMixStore = require('../../stores/createMix-store');
 
 
 module.exports = React.createClass({
   mixins: [ 
-    StateMixin.connect(MixSongsStore)
+    StateMixin.connect(CreateMixStore)
   ],
   render: function() {
     return  <div className={"mix-art-container " + (this.state.loaded ? 'loaded' : '')}>

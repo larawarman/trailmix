@@ -9,7 +9,7 @@ var ReactFire = require('reactfire');
 var Firebase = require('firebase');
 var fireUrl = 'https://trailmix0.firebaseio.com/';
 
-var MixSongsStore = module.exports = Reflux.createStore({
+var ViewMixStore = module.exports = Reflux.createStore({
   mixins: [StateMixin.store, ReactFire],
   listenables: [Actions],
   getInitialState: function(){
@@ -38,38 +38,6 @@ var MixSongsStore = module.exports = Reflux.createStore({
     if(this.state.mixSongs !== prevState.mixSongs){
       //console.log('updated: ' + this.state.mixSongs);
     }
-  },
-  queryTracks: function(query) {
-    if (query === '') {
-      this.setState({showresults:false});
-    } else {
-      this.setState({showresults:true});
-      Api.get('q=' + query + '&type=track')
-        .then(function(json){
-          this.setState({songResults: json.tracks.items})
-        }.bind(this));
-    }
-  },
-  closeResults: function() {
-    Actions.pauseAllAudio();
-    this.setState({showresults:false});
-  },
-  pauseAllAudio: function() {
-    var audios = document.getElementsByTagName('audio');
-    for(var i = 0, len = audios.length; i < len;i++){
-      audios[i].pause();
-    }
-  },
-  playOneAudio: function() {
-    //only play one audio at a time
-    document.addEventListener('play', function(e){
-        var audios = document.getElementsByTagName('audio');
-        for(var i = 0, len = audios.length; i < len;i++){
-            if(audios[i] != e.target){
-                audios[i].pause();
-            }
-        }
-    }, true);
   },
   getMixData: function(id) {
     this.fb_mixRef = new Firebase(fireUrl + '/mixes/' + id);

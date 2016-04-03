@@ -11,7 +11,7 @@ var Router = require('react-router');
 var Reflux = require('reflux');
 var StateMixin = require('reflux-state-mixin');
 var LocationStore = require('../../stores/location-store');
-var PublishedMixStore = require('../../stores/publishedMix-store');
+var ViewMixStore = require('../../stores/viewMix-store');
 
 var ReactFire = require('reactfire');
 var Firebase = require('firebase');
@@ -26,7 +26,7 @@ module.exports = React.createClass({
   },
   mixins:[
     StateMixin.connect(LocationStore),
-    StateMixin.connect(PublishedMixStore),
+    StateMixin.connect(ViewMixStore),
     ReactFire
   ],
   getInitialState: function() {
@@ -58,7 +58,7 @@ module.exports = React.createClass({
     </div>
   },
   handleDataLoaded: function(snapshot) {
-    PublishedMixStore.setState({all_mixes: snapshot.val()});
+    ViewMixStore.setState({all_mixes: snapshot.val()});
   },
   renderMixMarkers: function() {
     var pub_mixes = [];

@@ -6,7 +6,7 @@ var ReactFire = require('reactfire');
 var Firebase = require('firebase');
 var fireUrl = 'https://trailmix0.firebaseio.com/';
 
-var MixSongsStore = require('../../stores/mixSongs-store');
+var CreateMixStore = require('../../stores/createMix-store');
 var SongArea = require('./song-area');
 var MixListItem = require('./mix-list-item');
 var MixArt = require('./mix-art');
@@ -14,7 +14,7 @@ var MixArt = require('./mix-art');
 
 module.exports = React.createClass({
   mixins:[
-    StateMixin.connect(MixSongsStore),
+    StateMixin.connect(CreateMixStore),
     ReactFire
   ],
   componentWillMount: function() {
@@ -61,6 +61,6 @@ module.exports = React.createClass({
     return songs
   },
   handleDataLoaded: function(snapshot) {
-    MixSongsStore.setState({mixSongs: snapshot.val()});
+    CreateMixStore.setState({mixSongs: snapshot.val()});
   }
 });
