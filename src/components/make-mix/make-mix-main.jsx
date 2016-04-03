@@ -36,11 +36,11 @@ module.exports = React.createClass({
       published: false
     }
   },
-  componentWillUnmount:function() {
-    if(!this.state.published){
-      this.fb_mixRef.remove();
-    }
-  },
+  // componentWillUnmount:function() {
+  //   if(!this.state.published){
+  //     this.fb_mixRef.remove();
+  //   }
+  // },
   render: function() {
     return <div className="row make-mix">
       <div className="col-md-12">
@@ -79,7 +79,10 @@ module.exports = React.createClass({
     </div>
   },
   handlePublish: function() {
-    this.fb_mixRef.update({ published: true });
+    this.fb_mixRef.update({ 
+      published: true,
+      publish_date: Firebase.ServerValue.TIMESTAMP
+    });
   },
   handleCancel:function() {
     this.fb_mixRef.remove();
