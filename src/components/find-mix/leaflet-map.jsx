@@ -36,9 +36,10 @@ module.exports = React.createClass({
     }
   },
   componentWillMount: function() {
-    this.fb_mixesRef = new Firebase(fireUrl + '/mixes/');
-    this.bindAsObject(this.fb_mixesRef, 'all_mixes');
-    this.fb_mixesRef.on('value', this.handleDataLoaded);
+    Actions.getAllMixes();
+    // this.fb_mixesRef = new Firebase(fireUrl + '/mixes/');
+    // this.bindAsObject(this.fb_mixesRef, 'all_mixes');
+    // this.fb_mixesRef.on('value', this.handleDataLoaded);
   },
   render: function() {
     var position = [this.state.localLat, this.state.localLng];
@@ -57,9 +58,9 @@ module.exports = React.createClass({
       </div>
     </div>
   },
-  handleDataLoaded: function(snapshot) {
-    ViewMixStore.setState({all_mixes: snapshot.val()});
-  },
+  // handleDataLoaded: function(snapshot) {
+  //   ViewMixStore.setState({all_mixes: snapshot.val()});
+  // },
   renderMixMarkers: function() {
     var pub_mixes = [];
     for (var key in this.state.all_mixes){

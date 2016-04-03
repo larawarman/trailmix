@@ -31,6 +31,14 @@ var ViewMixStore = module.exports = Reflux.createStore({
       //console.log('updated: ' + this.state.mixSongs);
     }
   },
+  getAllMixes: function() {
+    this.fb_mixesRef = new Firebase(fireUrl + '/mixes/');
+    // this.bindAsObject(this.fb_mixesRef, 'all_mixes');
+    this.fb_mixesRef.on('value', this.handleAllMixesLoaded);
+  },
+  handleAllMixesLoaded:function(snapshot) {
+    ViewMixStore.setState({all_mixes: snapshot.val()});
+  },
   getMixData: function(id) {
     this.fb_mixRef = new Firebase(fireUrl + '/mixes/' + id);
     // this.bindAsObject(this.fb_mixRef, 'the_mix');
