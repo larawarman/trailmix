@@ -36,6 +36,11 @@ module.exports = React.createClass({
       published: false
     }
   },
+  componentWillUnmount:function() {
+    if(!this.state.published){
+      this.fb_mixRef.remove();
+    }
+  },
   render: function() {
     return <div className="row make-mix">
       <div className="col-md-12">
