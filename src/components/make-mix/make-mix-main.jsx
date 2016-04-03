@@ -37,7 +37,6 @@ module.exports = React.createClass({
     }
   },
   render: function() {
-    // console.log(this.state.mix_path);
     return <div className="row make-mix">
       <div className="col-md-12">
         <h1 className="text-center">
@@ -65,9 +64,19 @@ module.exports = React.createClass({
           </Link>
         </div>
       </div>
+      <div className="row">
+        <div className="col-md-6 col-md-offset-3">
+          <Link to="/" className="publish button" onClick={this.handleCancel}>
+            Cancel
+          </Link>
+        </div>
+      </div>
     </div>
   },
   handlePublish: function() {
     this.fb_mixRef.update({ published: true });
+  },
+  handleCancel:function() {
+    this.fb_mixRef.remove();
   }
 });

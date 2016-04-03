@@ -11,7 +11,6 @@ var Actions = require('../../actions');
 var Geosuggest = require('react-geosuggest');
 
 
-
 module.exports = React.createClass({
   mixins:[
     StateMixin.connect(LocationStore),
@@ -22,11 +21,15 @@ module.exports = React.createClass({
     this.bindAsObject(this.fbloc, 'location');
     this.fbloc.on('value', this.handleDataLoaded);
   },
+  componentDidUpdate: function() {
+    this.fbloc.update({name: this.state.name});
+  },
   render: function() {
     var fixtures = [
       {label: 'Drop It Here', location: {lat: this.state.localLat, lng: this.state.localLng}, className: 'drop-here'}        
     ];
     return <div className="location-drop">
+      <div id="hidemap"></div>
       <Geosuggest 
         placeholder="Drop It Here"
         fixtures={fixtures}
@@ -47,6 +50,9 @@ module.exports = React.createClass({
       console.log("Error getting location. Please select a specific place");
     } else {
       if (suggest.gmaps) {
+        Actions.getPlaceName(suggest.gmaps.place_id, function() {
+          console.log('callback');
+        });
         this.setState({
           lat: suggest.location.lat,
           lng: suggest.location.lng,
@@ -68,14 +74,16 @@ module.exports = React.createClass({
           lng: suggest.location.lng,
           label: suggest.label,
           gmaps_place_id: null,
-          types: null
+          types: null,
+          name: null
         }, function() {
           this.fbloc.update({
             lat: this.state.lat,
             lng: this.state.lng,
             label: this.state.label,
             gmaps_place_id: null,
-            types: null
+            types: null,
+            name: null
           });
         });
       }

@@ -37,9 +37,6 @@ module.exports = React.createClass({
   },
   componentWillMount: function() {
     Actions.getAllMixes();
-    // this.fb_mixesRef = new Firebase(fireUrl + '/mixes/');
-    // this.bindAsObject(this.fb_mixesRef, 'all_mixes');
-    // this.fb_mixesRef.on('value', this.handleDataLoaded);
   },
   render: function() {
     var position = [this.state.localLat, this.state.localLng];
@@ -58,9 +55,6 @@ module.exports = React.createClass({
       </div>
     </div>
   },
-  // handleDataLoaded: function(snapshot) {
-  //   ViewMixStore.setState({all_mixes: snapshot.val()});
-  // },
   renderMixMarkers: function() {
     var pub_mixes = [];
     for (var key in this.state.all_mixes){
@@ -68,7 +62,11 @@ module.exports = React.createClass({
       mix.key = key;
       if(mix.published === true){
         var markerPosition = [mix.location.lat, mix.location.lng];
-        var tags = mix.tags.join(' ');
+        if(mix.tags){
+          var tags = mix.tags.join(' ');
+        } else {
+          var tags = null
+        }
         var place = mix.location.label;
         pub_mixes.push(
           <ReactLeaflet.Marker 

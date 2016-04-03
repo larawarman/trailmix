@@ -15,7 +15,8 @@ var LocationStore = module.exports = Reflux.createStore({
       lng: '',
       gmaps_place_id: '',
       types: '',
-      label: ''
+      label: '',
+      name: ''
     }
   },
   getLocation: function() {
@@ -36,9 +37,19 @@ var LocationStore = module.exports = Reflux.createStore({
       this.getLocation();
     }
   },
+  getPlaceName: function(id) {
+    var hidemap = new google.maps.Map(document.getElementById('hidemap'));  
+    var service = new google.maps.places.PlacesService(hidemap);
+    var name='';
+    service.getDetails({ placeId: id}, function(place, status) {
+      if (status === google.maps.places.PlacesServiceStatus.OK) {
+        LocationStore.setState({name: place.name});
+      }
+    });
+  },
   storeDidUpdate: function(prevState) {
-    if((this.state.localLat !== prevState.localLat) && (this.state.localLng !== prevState.localLng)){
-      // console.log('updated: ' + this.state.localLat + ', ' + this.state.localLng);
+    if(this.state.name !== prevState.name) {
+      // console.log(this.state.name + 'updated');
     }
   }
 });

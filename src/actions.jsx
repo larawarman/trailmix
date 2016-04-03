@@ -3,6 +3,7 @@ var Reflux = require('reflux');
 module.exports = Reflux.createActions([
   //CREATE MIX
   'getLocation',
+  'getPlaceName',
   'setQuery',
   'queryTracks',
   'closeResults',
