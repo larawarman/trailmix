@@ -1,10 +1,16 @@
 var Reflux = require('reflux');
-var Actions = require('../actions');
 var StateMixin = require('reflux-state-mixin');
+
+var Actions = require('../actions');
+
 var Api = require('../utils/api');
 
+var ReactFire = require('reactfire');
+var Firebase = require('firebase');
+var fireUrl = 'https://trailmix0.firebaseio.com/';
+
 var MixSongsStore = module.exports = Reflux.createStore({
-  mixins: [StateMixin.store],
+  mixins: [StateMixin.store, ReactFire],
   listenables: [Actions],
   getInitialState: function(){
     return{
@@ -16,7 +22,7 @@ var MixSongsStore = module.exports = Reflux.createStore({
       mix_place: '',
       mix_time: '',
       mix_tags: [],
-      mixSongs: {}, //songs that have been added to the mix
+      mixSongs: {},
 
       //MAKE MIX SEARCH
       songResults: [], //songs that are the result of a song query
@@ -64,5 +70,19 @@ var MixSongsStore = module.exports = Reflux.createStore({
             }
         }
     }, true);
+  },
+  getMixData: function(id) {
+    this.fb_mixRef = new Firebase(fireUrl + '/mixes/' + id);
+    // this.bindAsObject(this.fb_mixRef, 'the_mix');
+    this.fb_mixRef.on('value', this.handleMixDataLoaded);
+  },
+  handleMixDataLoaded: function(snapshot) {
+    var mix = snapshot.val();
+    this.setState({
+      the_mix: mix,
+      mix_place: mix.location.label,
+      mix_tags: mix.tags,
+      mixSongs: mix.songs
+    });
   }
 });

@@ -6,5 +6,6 @@ module.exports = Reflux.createActions([
   'queryTracks',
   'closeResults',
   'pauseAllAudio',
-  'playOneAudio'
+  'playOneAudio',
+  'getMixData'
 ]);

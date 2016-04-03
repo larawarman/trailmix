@@ -3,9 +3,7 @@ var React = require('react');
 var Reflux = require('reflux');
 var StateMixin = require('reflux-state-mixin');
 
-var ReactFire = require('reactfire');
-var Firebase = require('firebase');
-var fireUrl = 'https://trailmix0.firebaseio.com/';
+var Actions = require('../../actions');
 
 MixSongsStore = require('../../stores/mixSongs-store');
 
@@ -13,13 +11,12 @@ var MixArt = require('../make-mix/mix-art');
 
 module.exports = React.createClass({
   mixins: [
-    ReactFire,
+    // ReactFire,
     StateMixin.connect(MixSongsStore)
   ],
   componentWillMount: function() {
-    this.fb_mixRef = new Firebase(fireUrl + '/mixes/' + this.props.params.id);
-    this.bindAsObject(this.fb_mixRef, 'the_mix');
-    this.fb_mixRef.on('value', this.handleDataLoaded);
+    var id=this.props.params.id;
+    Actions.getMixData(id);
   },
   render: function() {
     return <div>
@@ -39,6 +36,10 @@ module.exports = React.createClass({
           {this.renderPlaceTime()}
         </div>
       </div>
+      <div className="row">
+        <div className="col-md-6 col-md-offset-3">
+        </div>
+      </div>
     </div>
   },
   renderHashtags: function() {
@@ -55,15 +56,5 @@ module.exports = React.createClass({
     return <div>
       <h1>{this.state.mix_place}</h1>
     </div>
-  },
-  handleDataLoaded: function(snapshot) {
-    console.log(snapshot.val());
-    var mix = snapshot.val();
-    MixSongsStore.setState({
-      the_mix: mix,
-      mix_place: mix.location.label,
-      mix_tags: mix.tags,
-      mixSongs: mix.songs
-    });
   }
 });
