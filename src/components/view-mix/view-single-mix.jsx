@@ -7,11 +7,11 @@ var Actions = require('../../actions');
 
 var ViewMixStore = require('../../stores/viewMix-store');
 
-var MixArt = require('../make-mix/mix-art');
+var ViewMixArt = require('./view-mix-art');
+var MixSongList = require('./mix-song-list');
 
 module.exports = React.createClass({
   mixins: [
-    // ReactFire,
     StateMixin.connect(ViewMixStore)
   ],
   componentWillMount: function() {
@@ -25,7 +25,7 @@ module.exports = React.createClass({
   },
   renderContent: function() {
     return <div>
-      <MixArt />
+      <ViewMixArt />
       <div className="row">
         <div className="col-md-6 col-md-offset-3">
           <ul>{this.renderHashtags()}</ul>
@@ -38,6 +38,7 @@ module.exports = React.createClass({
       </div>
       <div className="row">
         <div className="col-md-6 col-md-offset-3">
+        <MixSongList />
         </div>
       </div>
     </div>

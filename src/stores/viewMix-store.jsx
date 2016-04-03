@@ -23,15 +23,7 @@ var ViewMixStore = module.exports = Reflux.createStore({
       mix_time: '',
       mix_tags: [],
       mixSongs: {},
-
-      //MAKE MIX SEARCH
-      songResults: [], //songs that are the result of a song query
-      showresults: null, //flag to show whether or not to show search results
-
-      //CREATE MIX
-      tags: [], //hashtags as an array
-      
-      mix_path: '' //path to the mix
+      mixImgs: []
     }
   },
   storeDidUpdate: function(prevState) {
@@ -46,11 +38,19 @@ var ViewMixStore = module.exports = Reflux.createStore({
   },
   handleMixDataLoaded: function(snapshot) {
     var mix = snapshot.val();
+    var albums = [];
+    for (var key in mix.songs){
+      var song = mix.songs[key];
+      song.key = key;
+      imageUrl = song.images[1].url;
+      albums.push(imageUrl);
+    }
     this.setState({
       the_mix: mix,
       mix_place: mix.location.label,
       mix_tags: mix.tags,
-      mixSongs: mix.songs
+      mixSongs: mix.songs,
+      mixImgs: albums
     });
   }
 });

@@ -67,14 +67,18 @@ module.exports = React.createClass({
       mix.key = key;
       if(mix.published === true){
         var markerPosition = [mix.location.lat, mix.location.lng];
-        //console.log(markerPosition);
+        var tags = mix.tags.join(' ');
+        var place = mix.location.label;
         pub_mixes.push(
           <ReactLeaflet.Marker 
           position={markerPosition} 
           key={key}
           >
             <ReactLeaflet.Popup>
-              <span key={key} onClick={this.handlePopupClick.bind(this, {key})} >A pretty CSS3 popup.<br/>Easily customizable.</span>
+              <div key={key} onClick={this.handlePopupClick.bind(this, {key})} >
+                <p>{place}</p>
+                <p>{tags}</p>
+              </div>
             </ReactLeaflet.Popup>
           </ReactLeaflet.Marker>
         );

@@ -10,5 +10,5 @@ module.exports = Reflux.createActions([
   'playOneAudio',
 
   //VIEW MIX
-  'getMixData'
+  'getMixData',
 ]);

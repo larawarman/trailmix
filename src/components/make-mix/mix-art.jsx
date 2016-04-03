@@ -1,7 +1,6 @@
 var React = require('react');
 var StateMixin = require('reflux-state-mixin');
 
-var Actions = require('../../actions');
 var CreateMixStore = require('../../stores/createMix-store');
 
 
