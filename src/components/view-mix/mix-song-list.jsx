@@ -10,9 +10,9 @@ module.exports = React.createClass({
     StateMixin.connect(ViewMixStore)
   ],
   render: function() {
-    return <ul>
+    return <ol className="mixSongList">
       {this.renderMixSong()}
-    </ul>
+    </ol>
   },
   renderMixSong(){
     var songs = [];

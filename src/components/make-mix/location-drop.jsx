@@ -75,7 +75,7 @@ module.exports = React.createClass({
           label: suggest.label,
           gmaps_place_id: null,
           types: null,
-          name: null
+          name: suggest.location.lat + ', ' + suggest.location.lng
         }, function() {
           this.fbloc.update({
             lat: this.state.lat,
@@ -83,7 +83,7 @@ module.exports = React.createClass({
             label: this.state.label,
             gmaps_place_id: null,
             types: null,
-            name: null
+            name: suggest.location.lat + ', ' + suggest.location.lng
           });
         });
       }

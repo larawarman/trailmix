@@ -45,8 +45,7 @@ module.exports = React.createClass({
       <div className='map-container'>
         <ReactLeaflet.Map center={position} zoom={this.state.zoom}>
           <ReactLeaflet.TileLayer
-            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            //url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
+            attribution="&copy; <a href='https://www.mapbox.com/map-feedback/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a>"
             url={'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=' + mb}
             id='mapbox.light'
           />
@@ -67,7 +66,7 @@ module.exports = React.createClass({
         } else {
           var tags = null
         }
-        var place = mix.location.label;
+        var place = mix.location.name;
         pub_mixes.push(
           <ReactLeaflet.Marker 
           position={markerPosition} 

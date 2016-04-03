@@ -24,11 +24,15 @@ module.exports = React.createClass({
     </div>
   },
   renderContent: function() {
-    return <div>
-      <ViewMixArt />
+    return <div className="view-mix">
       <div className="row">
         <div className="col-md-6 col-md-offset-3">
-          <ul>{this.renderHashtags()}</ul>
+          <ViewMixArt />
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-md-6 col-md-offset-3">
+          <ul className="hashtags">{this.renderHashtags()}</ul>
         </div>
       </div>
       <div className="row">

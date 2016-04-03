@@ -1,0 +1,39 @@
+@import '../variables';
+@import '../mixins';
+
+.view-mix {
+  .mix-art-container {
+    background-color: black;
+    ul {
+      width: 400px;
+      height: 400px;
+      margin: 0 auto;
+    }
+  }
+  ul.hashtags {
+    padding:0;
+    margin:0;
+    list-style: none;
+    text-align: center;
+    li {
+      display: inline-block;
+      margin: 10px 20px 0 0;
+    }
+  }
+  ol.mixSongList {
+    list-style: none;
+    padding:0;
+    margin:0;
+    li {
+      padding: 20px 0;
+      border-bottom: 1px solid $lightest-gray;
+      &:last-child {
+        border-bottom: none;
+      }
+      img {
+        margin-right: 20px;
+        float:left;
+      }
+    }
+  }
+}

@@ -50,12 +50,13 @@ var ViewMixStore = module.exports = Reflux.createStore({
     for (var key in mix.songs){
       var song = mix.songs[key];
       song.key = key;
-      imageUrl = song.images[1].url;
+      imageUrl = song.images[0].url;
       albums.push(imageUrl);
     }
+    console.log(mix.location.name);
     this.setState({
       the_mix: mix,
-      mix_place: mix.location.label,
+      mix_place: mix.location.name,
       mix_tags: mix.tags,
       mixSongs: mix.songs,
       mixImgs: albums
