@@ -82,11 +82,13 @@ module.exports = React.createClass({
   },
   locationExists: function(suggest) {
     var existsA = null;
+    var existsKey = '';
     this.loc_ref.once('value', function(snapshot){
       var existsB = snapshot.forEach(function(childSnapshot) {
         var key = childSnapshot.key();
         var childData = childSnapshot.val();
         if (childData.gmaps_place_id === suggest.gmaps.place_id) {
+          existsKey = key;
           return true;
         } else {
           return false;
@@ -101,13 +103,14 @@ module.exports = React.createClass({
       }
     });
     if (existsA) {
-      return true;
+      return existsKey;
     } else {
       return false;
     }
   },
   updateLocation: function(suggest) {
     var exists = this.locationExists(suggest);
+    console.log(exists);
     if(exists === false) {
       this.loc_ref.push({
         lat: suggest.location.lat,
@@ -115,12 +118,14 @@ module.exports = React.createClass({
         label: suggest.label,
         gmaps_place_id: suggest.gmaps.place_id,
         types: suggest.gmaps.types,
-        mixes_here: this.props.mix_key           
+        mixes_here: this.props.mix_key
       });
     } 
-    if(exists === true) {
+    if( (exists !== '') && (exists !== false) ) {
+      //console.log(exists)
       //push the mix to the mixes_here array
-      // this.addMixToLocation(suggest);
+      existing_loc_ref = this.loc_ref.child(exists + '/mixes_here');
+      existing_loc_ref.push(this.props.mix_key);
     }
   },
   handleFocus: function(){
