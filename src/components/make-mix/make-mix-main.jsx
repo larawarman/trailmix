@@ -28,7 +28,6 @@ module.exports = React.createClass({
     this.fb_mixesRef = new Firebase(fireUrl + '/mixes');
     this.fb_mixRef = this.fb_mixesRef.push();
     this.fb_mixRef.set({ 'published': false });
-    //MixSongsStore.state.mix_path = this.fb_mixRef.toString();
     CreateMixStore.setState({mix_path: this.fb_mixRef.toString()});
   },
   getInitialState: function() {
@@ -52,7 +51,7 @@ module.exports = React.createClass({
       <div className="row">
         <div className="col-md-6 col-md-offset-3">
           <LocationTitle mix_url={this.fb_mixRef.toString()} />
-          <LocationDrop mix_url={this.fb_mixRef.toString()} />
+          <LocationDrop mix_url={this.fb_mixRef.toString()} mix_key={this.fb_mixRef.key()} />
         </div>
       </div>
       <div className="row">
