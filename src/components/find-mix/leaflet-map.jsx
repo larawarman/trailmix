@@ -39,6 +39,7 @@ module.exports = React.createClass({
     Actions.getAllMixes();
   },
   render: function() {
+          // {this.renderMixMarkers()}
     var position = [this.state.localLat, this.state.localLng];
     var mb = 'pk.eyJ1IjoibGFyYXdhcm1hbiIsImEiOiJjaW05ZDc3ZHEwM21qdG5tNm1lNnc5enBiIn0.5qqJjeDHM2t7FKHoHWlu2Q';
     return <div>
@@ -49,7 +50,6 @@ module.exports = React.createClass({
             url={'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=' + mb}
             id='mapbox.light'
           />
-          {this.renderMixMarkers()}
         </ReactLeaflet.Map>
       </div>
     </div>

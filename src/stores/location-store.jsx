@@ -11,12 +11,19 @@ var LocationStore = module.exports = Reflux.createStore({
       localLng: 0,
 
       open: false,
-      lat: '',
-      lng: '',
-      gmaps_place_id: '',
-      types: '',
-      label: '',
-      name: ''
+      drop_name: '',
+      drop_lat: '',
+      drop_lng: '',
+      drop_label: '',
+      drop_gmaps_id: '',
+      drop_gmaps_types: '',
+      mixes_here: []
+      // lat: '',
+      // lng: '',
+      // gmaps_place_id: '',
+      // types: '',
+      // label: '',
+      // name: ''
     }
   },
   getLocation: function() {
@@ -43,7 +50,7 @@ var LocationStore = module.exports = Reflux.createStore({
     var name='';
     service.getDetails({ placeId: id}, function(place, status) {
       if (status === google.maps.places.PlacesServiceStatus.OK) {
-        LocationStore.setState({name: place.name});
+        LocationStore.setState({drop_name: place.name});
       }
     });
   },

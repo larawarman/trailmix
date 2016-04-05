@@ -16,21 +16,21 @@ module.exports = React.createClass({
     StateMixin.connect(LocationStore),
     ReactFire
   ],
-  getInitialState:function() {
-    return {
-      needs_to_exist: false
-    }
-  },
   componentWillMount: function() {
     this.fbloc = new Firebase(this.props.mix_url + '/location');
     //this.bindAsObject(this.fbloc, 'location');
-    //this.fbloc.on('value', this.handleDataLoaded);
     this.loc_ref = new Firebase(fireUrl + '/locations');
     this.bindAsObject(this.loc_ref, 'locations');
-    // this.loc_ref.on('value', this.handleLocRefLoaded);
   },
-  componentDidUpdate: function() {
-    this.fbloc.update({name: this.state.name});
+  componentWillUnmount: function() {
+    //UPDATE THE DB, PRESUMING MIX IS PUBLISHED? NEED TO MOVE THIS TO MAKE-MIX-MAIN PROB
+    this.addLocation();
+    this.fbloc.set({
+      drop_name: this.state.drop_name,
+      drop_lat: this.state.drop_lat,
+      drop_lng: this.state.drop_lng,
+      drop_gmaps_id: this.state.drop_gmaps_id,
+    });
   },
   render: function() {
     var fixtures = [
@@ -59,71 +59,74 @@ module.exports = React.createClass({
     } else {
       if (suggest.gmaps) {
         Actions.getPlaceName(suggest.gmaps.place_id);
-        this.updateLocation(suggest);
-        this.fbloc.update({
-          lat: suggest.location.lat,
-          lng: suggest.location.lng,
-          label: suggest.label,
-          gmaps_place_id: suggest.gmaps.place_id,
-          types: suggest.gmaps.types
+        LocationStore.setState({
+          drop_lat: suggest.location.lat,
+          drop_lng: suggest.location.lng,
+          drop_label: suggest.label,
+          drop_gmaps_id: suggest.gmaps.place_id,
+          drop_gmaps_types: suggest.gmaps.types
         });
       } else {
-        this.fbloc.update({
-          lat: suggest.location.lat,
-          lng: suggest.location.lng,
-          label: suggest.label,
-          gmaps_place_id: null,
-          types: null,
-          name: suggest.location.lat + ', ' + suggest.location.lng
+        LocationStore.setState({
+          drop_name: suggest.location.lat + ', ' + suggest.location.lng,
+          drop_lat: suggest.location.lat,
+          drop_lng: suggest.location.lng,
+          drop_label: suggest.label,
+          drop_gmaps_id: null,
+          drop_gmaps_types: null
         });
       }
       this.setState({open: false})
     }
   },
-  locationExists: function(suggest) {
+  locationExists: function() {
     var existsA = null;
     var existsKey = '';
-    this.loc_ref.once('value', function(snapshot){
-      var existsB = snapshot.forEach(function(childSnapshot) {
-        var key = childSnapshot.key();
-        var childData = childSnapshot.val();
-        if (childData.gmaps_place_id === suggest.gmaps.place_id) {
-          existsKey = key;
-          return true;
+    if(this.state.drop_gmaps_id) {
+      var curr_gmaps_id = this.state.drop_gmaps_id;
+      this.loc_ref.once('value', function(snapshot){
+        var existsB = snapshot.forEach(function(childSnapshot) {
+          var key = childSnapshot.key();
+          var childData = childSnapshot.val();
+          if (childData.drop_gmaps_id === curr_gmaps_id) {
+            existsKey = key;
+            return true;
+          } else {
+            return false;
+          }
+        });
+        if (existsB) {
+          existsA = true;
+          return existsA
         } else {
-          return false;
+          existsA = false;
+          return existsA
         }
       });
-      if (existsB) {
-        existsA = true;
-        return existsA
+      if (existsA) {
+        return existsKey;
       } else {
-        existsA = false;
-        return existsA
+        return false;
       }
-    });
-    if (existsA) {
-      return existsKey;
-    } else {
-      return false;
     }
   },
-  updateLocation: function(suggest) {
-    var exists = this.locationExists(suggest);
-    console.log(exists);
+  addLocation: function() {
+    var exists = this.locationExists();
+    // console.log(exists);
     if(exists === false) {
       this.loc_ref.push({
-        lat: suggest.location.lat,
-        lng: suggest.location.lng,
-        label: suggest.label,
-        gmaps_place_id: suggest.gmaps.place_id,
-        types: suggest.gmaps.types,
-        mixes_here: this.props.mix_key
+        drop_name: this.state.drop_name,
+        drop_lat: this.state.drop_lat,
+        drop_lng: this.state.drop_lng,
+        drop_label: this.state.drop_label,
+        drop_gmaps_id: this.state.drop_gmaps_id,
+        drop_gmaps_types: this.state.drop_gmaps_types,
+        mixes_here: {
+          mix: this.props.mix_key
+        }
       });
     } 
-    if( (exists !== '') && (exists !== false) ) {
-      //console.log(exists)
-      //push the mix to the mixes_here array
+    if( exists && (exists !== '') && (exists !== false) ) {
       existing_loc_ref = this.loc_ref.child(exists + '/mixes_here');
       existing_loc_ref.push(this.props.mix_key);
     }
@@ -133,8 +136,5 @@ module.exports = React.createClass({
   },
   handleBlur: function() {
     this.setState({open: false})
-  },
-  // handleLocRefLoaded: function(snapshot) {
-  //   //this.setState({displayLabel: snapshot.val().label});
-  // }
+  }
 });
