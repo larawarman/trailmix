@@ -11,6 +11,7 @@ var LocationStore = module.exports = Reflux.createStore({
       localLng: 0,
 
       open: false,
+      exists: '',
       drop_name: '',
       drop_lat: '',
       drop_lng: '',
