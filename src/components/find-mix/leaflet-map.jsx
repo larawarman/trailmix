@@ -50,6 +50,7 @@ module.exports = React.createClass({
             url={'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=' + mb}
             id='mapbox.light'
           />
+          {this.renderMixMarkers()}
         </ReactLeaflet.Map>
       </div>
     </div>
@@ -60,13 +61,13 @@ module.exports = React.createClass({
       var mix = this.state.all_mixes[key];
       mix.key = key;
       if(mix.published === true){
-        var markerPosition = [mix.location.lat, mix.location.lng];
+        var markerPosition = [mix.location.drop_lat, mix.location.drop_lng];
         if(mix.tags){
           var tags = mix.tags.join(' ');
         } else {
           var tags = null
         }
-        var place = mix.location.name;
+        var place = mix.location.drop_name;
         pub_mixes.push(
           <ReactLeaflet.Marker 
           position={markerPosition} 
