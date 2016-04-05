@@ -17,18 +17,19 @@ module.exports = React.createClass({
     ReactFire
   ],
   componentWillMount: function() {
-    this.fbloc = new Firebase(this.props.mix_url + '/location');
+    this.mixLocationRef = new Firebase(this.props.mix_url + '/location');
     this.locationsRef = new Firebase(fireUrl + '/locations');
     this.locationRef = this.locationsRef.push();
   },
   componentWillUnmount: function() {
     //UPDATE THE DB, PRESUMING MIX IS PUBLISHED? NEED TO MOVE THIS TO MAKE-MIX-MAIN PROB
     this.addLocation();
-    this.fbloc.set({
+    this.mixLocationRef.set({
       drop_name: this.state.drop_name,
       drop_lat: this.state.drop_lat,
       drop_lng: this.state.drop_lng,
       drop_gmaps_id: this.state.drop_gmaps_id,
+      drop_location_id: this.locationRef.key()
     });
   },
   render: function() {
