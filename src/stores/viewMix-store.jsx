@@ -25,6 +25,7 @@ var ViewMixStore = module.exports = Reflux.createStore({
       multi_mixes: [],
       single_mixes: [],
       solos_published: [],
+      multis_published: [],
 
       //THE MIX
       the_mix: {},
@@ -39,8 +40,9 @@ var ViewMixStore = module.exports = Reflux.createStore({
     if(this.state.single_mixes !== prevState.single_mixes){
       Actions.setSingleMixes();
     }
-    if(this.state.multi_mixes !== prevState.multi_mixes){
+    if(this.state.multi_mixes !== prevState.multi_mixes || this.state.all_mixes !== prevState.all_mixes){
       // console.log('updated multi: ' + this.state.multi_mixes);
+      Actions.setMultiMixes();
     }
   },
   getAllMixes: function() {
@@ -52,7 +54,7 @@ var ViewMixStore = module.exports = Reflux.createStore({
     this.locationsRef.on('value', this.handleAllLocationsLoaded);
   },
   setSingleMixes: function() {
-    var solos_published = []
+    var solos_published = [];
     for (var key in this.state.single_mixes){
       mix = this.state.single_mixes[key];
       key = mix;
@@ -78,14 +80,31 @@ var ViewMixStore = module.exports = Reflux.createStore({
     //multi mixes are always going to share a gmaps id
     //querying /mixes, for each gmaps id in multi_mixes state, return:
     //the mix count, the lat/lng, the location key (to be used for link) 
-    // this.mixes_ref = new Firebase(fireUrl + '/mixes/');
-    // this.mixes_ref.on('value')
-    // this.mixes_ref.child()
-    // for (var key in this.state.multi_mixes) {
-    //   mix = this.state.multi_mixes[key];
-    //   console.log('multi!');
-    //   this.mixes_ref.child(mix).update({solo: false});
-    // }
+    var multis_published = [];
+    for (var key in this.state.multi_mixes){
+      mix = this.state.multi_mixes[key];
+      id = mix; //gmaps_id where there is more than one mix
+      // refKey = this.locationsRef.child('drop_gmaps_id').equalTo(id).parent().toString();
+      // console.log(refKey);
+      this.fb_mixesRef.orderByChild('location/drop_gmaps_id').equalTo(id).on('value', function(mixes){
+        var mixcount = 0;
+        var loc_id = id;
+        var drop_lat;
+        var drop_lng;
+        mixes.forEach(function(themix){
+          themix = themix.val();
+          drop_lat = themix.location.drop_lat;
+          drop_lng = themix.location.drop_lng;
+          if (themix.published === true) {
+            mixcount ++;
+          }
+        })
+        multis_published.push({
+          loc_id, drop_lat, drop_lng, mixcount
+        });
+      });
+    }
+    ViewMixStore.setState({multis_published : multis_published});
   },
   handleAllMixesLoaded:function(mixes) {
     ViewMixStore.setState({all_mixes: mixes.val()});

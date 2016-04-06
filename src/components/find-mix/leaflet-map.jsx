@@ -67,6 +67,7 @@ module.exports = React.createClass({
         <ReactLeaflet.Marker 
         position={markerPosition} 
         key={key}
+        opacity={0.5}
         >
           <ReactLeaflet.Popup>
             <div key={key} onClick={this.handlePopupClick.bind(this, {key})} >
@@ -75,12 +76,32 @@ module.exports = React.createClass({
             </div>
           </ReactLeaflet.Popup>
         </ReactLeaflet.Marker>
-      )
+      );
     }
     return pub_solos;
   },
   renderMultiMarkers: function() {
-
+    // <div key={key} onClick={this.handlePopupClick.bind(this, {key})} >
+    var pub_multis = [];
+    for (var key in this.state.multis_published) {
+      //NEED TO GET LOCATION KEY FOR LINKING
+      var mix = this.state.multis_published[key];
+      var markerPosition = [mix.drop_lat, mix.drop_lng];
+      var count = mix.mixcount;
+      pub_multis.push(
+        <ReactLeaflet.Marker 
+        position={markerPosition} 
+        key={key}
+        >
+          <ReactLeaflet.Popup>
+            <div key={key} >
+              <p>{count}</p>
+            </div>
+          </ReactLeaflet.Popup>
+        </ReactLeaflet.Marker>
+      );
+    }
+    return pub_multis;
   },
   handlePopupClick: function(id, j) {
     var mixRoute = id.key;
@@ -88,9 +109,9 @@ module.exports = React.createClass({
       pathname: '/mix/' + mixRoute,
       id: mixRoute
     });
-    browserHistory.push({
-      pathname: '/mix/' + mixRoute,
-      id: mixRoute
-    });
+    // browserHistory.push({
+    //   pathname: '/mix/' + mixRoute,
+    //   id: mixRoute
+    // });
   }
 });
