@@ -37,11 +37,8 @@ module.exports = React.createClass({
   componentWillMount: function() {
     Actions.getAllMixes();
     Actions.getAllLocations();
-    // this.mixes_ref = new Firebase(fireUrl + '/mixes/');
-    // this.mixes_ref.on('value', this.handleMixesLoaded);
   },
   render: function() {
-          // {this.renderMixMarkers()}
     var position = [this.state.localLat, this.state.localLng];
     var mb = 'pk.eyJ1IjoibGFyYXdhcm1hbiIsImEiOiJjaW05ZDc3ZHEwM21qdG5tNm1lNnc5enBiIn0.5qqJjeDHM2t7FKHoHWlu2Q';
     return <div>
@@ -53,6 +50,7 @@ module.exports = React.createClass({
             id='mapbox.light'
           />
           {this.renderSingleMarkers()}
+          {this.renderMultiMarkers()}
         </ReactLeaflet.Map>
       </div>
     </div>
@@ -81,8 +79,8 @@ module.exports = React.createClass({
     }
     return pub_solos;
   },
-  handleMixesLoaded: function(mixes) {
-    // console.log(mixes.val());
+  renderMultiMarkers: function() {
+
   },
   handlePopupClick: function(id, j) {
     var mixRoute = id.key;

@@ -36,9 +36,6 @@ var ViewMixStore = module.exports = Reflux.createStore({
     }
   },
   storeDidUpdate: function(prevState) {
-    // if(this.state.mixSongs !== prevState.mixSongs){
-    //   //console.log('updated: ' + this.state.mixSongs);
-    // }
     if(this.state.single_mixes !== prevState.single_mixes){
       Actions.setSingleMixes();
     }
@@ -55,8 +52,6 @@ var ViewMixStore = module.exports = Reflux.createStore({
     this.locationsRef.on('value', this.handleAllLocationsLoaded);
   },
   setSingleMixes: function() {
-    //querying /mixes, for each key in single_mixes, return:
-    //the lat/lng, the title, the tags
     var solos_published = []
     for (var key in this.state.single_mixes){
       mix = this.state.single_mixes[key];
@@ -71,12 +66,7 @@ var ViewMixStore = module.exports = Reflux.createStore({
             var tags = null;
           }
           var place = mix.location.drop_name;
-          // console.log(key);
           solos_published.push({
-            // key: {key},
-            // place: {place},
-            // tags: {tags},
-            // markerPosition: {markerPosition}
             key, place, tags, markerPosition
           });
         }
@@ -117,15 +107,12 @@ var ViewMixStore = module.exports = Reflux.createStore({
       multi_mixes: multis,
       single_mixes: singles
     });
-    // this.setMultiMixes();
-    // this.setSingleMixes();
   },
   handleLocationsLoaded:function(snapshot) {
     ViewMixStore.setState({all_locations: snapshot.val()});
   },
   getMixData: function(id) {
     this.fb_mixRef = new Firebase(fireUrl + '/mixes/' + id);
-    // this.bindAsObject(this.fb_mixRef, 'the_mix');
     this.fb_mixRef.on('value', this.handleMixDataLoaded);
   },
   handleMixDataLoaded: function(snapshot) {
@@ -137,7 +124,6 @@ var ViewMixStore = module.exports = Reflux.createStore({
       imageUrl = song.images[0].url;
       albums.push(imageUrl);
     }
-    // console.log(mix.location.name);
     this.setState({
       the_mix: mix,
       mix_place: mix.location.drop_name,
