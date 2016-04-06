@@ -10,7 +10,7 @@ var Router = require('react-router');
 
 var Reflux = require('reflux');
 var StateMixin = require('reflux-state-mixin');
-var LocationStore = require('../../stores/location-store');
+var CreateLocationStore = require('../../stores/createLocation-store');
 var ViewMixStore = require('../../stores/viewMix-store');
 
 var ReactFire = require('reactfire');
@@ -25,7 +25,7 @@ module.exports = React.createClass({
     router: React.PropTypes.object.isRequired
   },
   mixins:[
-    StateMixin.connect(LocationStore),
+    StateMixin.connect(CreateLocationStore),
     StateMixin.connect(ViewMixStore),
     ReactFire
   ],

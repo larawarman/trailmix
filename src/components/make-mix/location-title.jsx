@@ -2,14 +2,14 @@ var React = require('react');
 var Reflux = require('reflux');
 
 var StateMixin = require('reflux-state-mixin');
-var LocationStore = require('../../stores/location-store');
+var CreateLocationStore = require('../../stores/createLocation-store');
 
 var Actions = require('../../actions');
 
 
 module.exports = React.createClass({
   mixins: [
-    StateMixin.connect(LocationStore)
+    StateMixin.connect(CreateLocationStore)
   ],
   render: function () {
       if (this.state.localLat === null || this.state.localLng === null) {

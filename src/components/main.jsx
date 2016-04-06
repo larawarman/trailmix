@@ -4,17 +4,17 @@ var Link = Router.Link;
 
 var Reflux = require('reflux');
 var StateMixin = require('reflux-state-mixin');
-var LocationStore = require('../stores/location-store');
+var CreateLocationStore = require('../stores/createLocation-store');
 
 var FindMixMain = require('./find-mix/find-mix-main');
 
 
 module.exports = React.createClass({
   mixins:[
-    StateMixin.connect(LocationStore)
+    StateMixin.connect(CreateLocationStore)
   ],
   componentWillMount: function() {
-    LocationStore.getLocation();
+    CreateLocationStore.getLocation();
   },
   render: function() {
     return <div>

@@ -1,7 +1,7 @@
 var React = require('react');
 var Reflux = require('reflux');
 var StateMixin = require('reflux-state-mixin');
-var LocationStore = require('../../stores/location-store');
+var CreateLocationStore = require('../../stores/createLocation-store');
 
 var ReactFire = require('reactfire');
 var Firebase = require('firebase');
@@ -13,7 +13,7 @@ var Geosuggest = require('react-geosuggest');
 
 module.exports = React.createClass({
   mixins:[
-    StateMixin.connect(LocationStore),
+    StateMixin.connect(CreateLocationStore),
     ReactFire
   ],
   componentWillMount: function() {
@@ -58,7 +58,7 @@ module.exports = React.createClass({
     } else {
       if (suggest.gmaps) {
         Actions.getPlaceName(suggest.gmaps.place_id);
-        LocationStore.setState({
+        CreateLocationStore.setState({
           drop_lat: suggest.location.lat,
           drop_lng: suggest.location.lng,
           drop_label: suggest.label,
@@ -67,7 +67,7 @@ module.exports = React.createClass({
         });
         this.locationExists(suggest.gmaps.place_id);
       } else {
-        LocationStore.setState({
+        CreateLocationStore.setState({
           drop_name: suggest.location.lat + ', ' + suggest.location.lng,
           drop_lat: suggest.location.lat,
           drop_lng: suggest.location.lng,
@@ -87,10 +87,10 @@ module.exports = React.createClass({
         var childData = childSnapshot.val();
         if (childData.drop_gmaps_id === gmaps_id) {
           existsKey = key;
-          LocationStore.setState({exists : existsKey});
+          CreateLocationStore.setState({exists : existsKey});
           return existsKey;
         } else {
-          LocationStore.setState({exists : ''});
+          CreateLocationStore.setState({exists : ''});
           return false;
         }
       });

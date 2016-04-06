@@ -1,7 +1,7 @@
 var Reflux = require('reflux');
 
 module.exports = Reflux.createActions([
-  //CREATE MIX
+  //CREATE MIX STORE
   'getLocation',
   'getPlaceName',
   'setQuery',
@@ -10,10 +10,9 @@ module.exports = Reflux.createActions([
   'pauseAllAudio',
   'playOneAudio',
 
-  //FIND MIXES
+  //VIEW MIX STORE
   'getAllMixesLocations',
   'setSingleMixes',
   'setMultiMixes',
-  //VIEW MIX
   'getMixData',
 ]);

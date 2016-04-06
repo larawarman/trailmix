@@ -1,12 +1,7 @@
-var React = require('react');
-var update = require('react-addons-update');
-
 var Reflux = require('reflux');
 var StateMixin = require('reflux-state-mixin');
 
 var Actions = require('../actions');
-
-var Api = require('../utils/api');
 
 var ReactFire = require('reactfire');
 var Firebase = require('firebase');
@@ -72,9 +67,6 @@ var ViewMixStore = module.exports = Reflux.createStore({
     ViewMixStore.setState({solos_published: solos_published});
   },
   setMultiMixes: function() {
-    //multi mixes are always going to share a gmaps id
-    //querying /mixes, for each gmaps id in multi_mixes state, return:
-    //the mix count, the lat/lng, the location key (to be used for link) 
     var multis_published = [];
     for (var key in this.state.multi_mixes){
       mix = this.state.multi_mixes[key];
@@ -85,7 +77,6 @@ var ViewMixStore = module.exports = Reflux.createStore({
         var drop_lat;
         var drop_lng;
         var drop_loc_tmid;
-        // console.log(this.locationsRef.orderByChild('drop_gmaps_id').equalTo(id).on)
         mixes.forEach(function(themix){
           themix = themix.val();
           drop_loc_tmid = themix.location.drop_location_id;

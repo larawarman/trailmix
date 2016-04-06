@@ -2,7 +2,7 @@ var Reflux = require('reflux');
 var StateMixin = require('reflux-state-mixin');
 var Actions = require('../actions');
 
-var LocationStore = module.exports = Reflux.createStore({
+var CreateLocationStore = module.exports = Reflux.createStore({
   mixins: [StateMixin.store],
   listenables: [Actions],
   getInitialState: function() {
@@ -18,13 +18,7 @@ var LocationStore = module.exports = Reflux.createStore({
       drop_label: '',
       drop_gmaps_id: '',
       drop_gmaps_types: '',
-      mixes_here: []
-      // lat: '',
-      // lng: '',
-      // gmaps_place_id: '',
-      // types: '',
-      // label: '',
-      // name: ''
+      mixes_here: [],
     }
   },
   getLocation: function() {
@@ -51,7 +45,7 @@ var LocationStore = module.exports = Reflux.createStore({
     var name='';
     service.getDetails({ placeId: id}, function(place, status) {
       if (status === google.maps.places.PlacesServiceStatus.OK) {
-        LocationStore.setState({drop_name: place.name});
+        CreateLocationStore.setState({drop_name: place.name});
       }
     });
   },
