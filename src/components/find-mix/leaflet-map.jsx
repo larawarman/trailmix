@@ -37,6 +37,7 @@ module.exports = React.createClass({
   },
   componentWillMount: function() {
     Actions.getAllMixes();
+    Actions.getAllLocations();
   },
   render: function() {
           // {this.renderMixMarkers()}
@@ -56,34 +57,36 @@ module.exports = React.createClass({
     </div>
   },
   renderMixMarkers: function() {
-    var pub_mixes = [];
-    for (var key in this.state.all_mixes){
-      var mix = this.state.all_mixes[key];
-      mix.key = key;
-      if(mix.published === true){
-        var markerPosition = [mix.location.drop_lat, mix.location.drop_lng];
-        if(mix.tags){
-          var tags = mix.tags.join(' ');
-        } else {
-          var tags = null
-        }
-        var place = mix.location.drop_name;
-        pub_mixes.push(
-          <ReactLeaflet.Marker 
-          position={markerPosition} 
-          key={key}
-          >
-            <ReactLeaflet.Popup>
-              <div key={key} onClick={this.handlePopupClick.bind(this, {key})} >
-                <p>{place}</p>
-                <p>{tags}</p>
-              </div>
-            </ReactLeaflet.Popup>
-          </ReactLeaflet.Marker>
-        );
-      }
-    }
-    return pub_mixes
+    console.log(this.state.multi_mixes);
+    // console.log(this.state.all_locations);
+    // var pub_mixes = [];
+    // for (var key in this.state.all_mixes){
+    //   var mix = this.state.all_mixes[key];
+    //   mix.key = key;
+    //   if(mix.published === true){
+    //     var markerPosition = [mix.location.drop_lat, mix.location.drop_lng];
+    //     if(mix.tags){
+    //       var tags = mix.tags.join(' ');
+    //     } else {
+    //       var tags = null
+    //     }
+    //     var place = mix.location.drop_name;
+    //     pub_mixes.push(
+    //       <ReactLeaflet.Marker 
+    //       position={markerPosition} 
+    //       key={key}
+    //       >
+    //         <ReactLeaflet.Popup>
+    //           <div key={key} onClick={this.handlePopupClick.bind(this, {key})} >
+    //             <p>{place}</p>
+    //             <p>{tags}</p>
+    //           </div>
+    //         </ReactLeaflet.Popup>
+    //       </ReactLeaflet.Marker>
+    //     );
+    //   }
+    // }
+    // return pub_mixes
   },
   handlePopupClick: function(id, j) {
     var mixRoute = id.key;

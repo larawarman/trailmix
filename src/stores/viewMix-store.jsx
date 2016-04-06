@@ -1,3 +1,6 @@
+var React = require('react');
+var update = require('react-addons-update');
+
 var Reflux = require('reflux');
 var StateMixin = require('reflux-state-mixin');
 
@@ -16,6 +19,11 @@ var ViewMixStore = module.exports = Reflux.createStore({
     return{
       //MIXES
       all_mixes: {},
+      all_locations: {},
+
+      //MAPPED MIXES
+      multi_mixes: [],
+      single_mixes: [],
 
       //THE MIX
       the_mix: {},
@@ -36,8 +44,39 @@ var ViewMixStore = module.exports = Reflux.createStore({
     // this.bindAsObject(this.fb_mixesRef, 'all_mixes');
     this.fb_mixesRef.on('value', this.handleAllMixesLoaded);
   },
+  getAllLocations: function() {
+    this.locationsRef = new Firebase(fireUrl + '/locations/');
+    this.locationsRef.on('value', function(locations){
+      var singles = [];
+      var multis = [];
+      locations.forEach(function(location){
+        var num_mixes = location.child('mixes_here').numChildren();
+        if (num_mixes > 1) {
+          var multi_mix = [];
+          location.child('mixes_here').forEach(function(mix){
+            multi_mix.push(mix.val());
+          });
+          multis.push({
+            location: location.key(),
+            mixes: multi_mix
+          });
+        } else {
+          location.child('mixes_here').forEach(function(mix){
+            singles.push(mix.val());
+          });
+        }
+      });
+      ViewMixStore.setState({
+        multi_mixes: multis,
+        single_mixes: singles
+      });
+    });
+  },
   handleAllMixesLoaded:function(snapshot) {
     ViewMixStore.setState({all_mixes: snapshot.val()});
+  },
+  handleLocationsLoaded:function(snapshot) {
+    ViewMixStore.setState({all_locations: snapshot.val()});
   },
   getMixData: function(id) {
     this.fb_mixRef = new Firebase(fireUrl + '/mixes/' + id);

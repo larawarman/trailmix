@@ -12,6 +12,7 @@ module.exports = Reflux.createActions([
 
   //FIND MIXES
   'getAllMixes',
+  'getAllLocations',
 
   //VIEW MIX
   'getMixData',
