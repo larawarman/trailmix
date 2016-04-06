@@ -13,7 +13,9 @@ module.exports = Reflux.createActions([
   //FIND MIXES
   'getAllMixes',
   'getAllLocations',
-
+  'setSingleMixes',
+  // 'getSingleMixesByLocation',
+  // 'setSingleMixFlag',
   //VIEW MIX
   'getMixData',
 ]);

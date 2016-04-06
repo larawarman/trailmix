@@ -32,12 +32,13 @@ module.exports = React.createClass({
   getInitialState: function() {
     return{
       zoom: 50,
-      clicked_key: ''
     }
   },
   componentWillMount: function() {
     Actions.getAllMixes();
     Actions.getAllLocations();
+    // this.mixes_ref = new Firebase(fireUrl + '/mixes/');
+    // this.mixes_ref.on('value', this.handleMixesLoaded);
   },
   render: function() {
           // {this.renderMixMarkers()}
@@ -51,42 +52,37 @@ module.exports = React.createClass({
             url={'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=' + mb}
             id='mapbox.light'
           />
-          {this.renderMixMarkers()}
+          {this.renderSingleMarkers()}
         </ReactLeaflet.Map>
       </div>
     </div>
   },
-  renderMixMarkers: function() {
-    console.log(this.state.multi_mixes);
-    // console.log(this.state.all_locations);
-    // var pub_mixes = [];
-    // for (var key in this.state.all_mixes){
-    //   var mix = this.state.all_mixes[key];
-    //   mix.key = key;
-    //   if(mix.published === true){
-    //     var markerPosition = [mix.location.drop_lat, mix.location.drop_lng];
-    //     if(mix.tags){
-    //       var tags = mix.tags.join(' ');
-    //     } else {
-    //       var tags = null
-    //     }
-    //     var place = mix.location.drop_name;
-    //     pub_mixes.push(
-    //       <ReactLeaflet.Marker 
-    //       position={markerPosition} 
-    //       key={key}
-    //       >
-    //         <ReactLeaflet.Popup>
-    //           <div key={key} onClick={this.handlePopupClick.bind(this, {key})} >
-    //             <p>{place}</p>
-    //             <p>{tags}</p>
-    //           </div>
-    //         </ReactLeaflet.Popup>
-    //       </ReactLeaflet.Marker>
-    //     );
-    //   }
-    // }
-    // return pub_mixes
+  renderSingleMarkers: function() {
+    var pub_solos = [];
+    for (var key in this.state.solos_published) {
+      var mix = this.state.solos_published[key];
+      var markerPosition = mix.markerPosition;
+      var key = mix.key;
+      var place = mix.place;
+      var tags = mix.tags;
+      pub_solos.push(
+        <ReactLeaflet.Marker 
+        position={markerPosition} 
+        key={key}
+        >
+          <ReactLeaflet.Popup>
+            <div key={key} onClick={this.handlePopupClick.bind(this, {key})} >
+              <p>{place}</p>
+              <p>{tags}</p>
+            </div>
+          </ReactLeaflet.Popup>
+        </ReactLeaflet.Marker>
+      )
+    }
+    return pub_solos;
+  },
+  handleMixesLoaded: function(mixes) {
+    // console.log(mixes.val());
   },
   handlePopupClick: function(id, j) {
     var mixRoute = id.key;
@@ -94,9 +90,9 @@ module.exports = React.createClass({
       pathname: '/mix/' + mixRoute,
       id: mixRoute
     });
-    // browserHistory.push({
-    //   pathname: '/mix/' + mixRoute,
-    //   id: mixRoute
-    // });
+    browserHistory.push({
+      pathname: '/mix/' + mixRoute,
+      id: mixRoute
+    });
   }
 });
