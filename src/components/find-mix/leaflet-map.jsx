@@ -35,8 +35,7 @@ module.exports = React.createClass({
     }
   },
   componentWillMount: function() {
-    Actions.getAllMixes();
-    Actions.getAllLocations();
+    Actions.getAllMixesLocations();
   },
   render: function() {
     var position = [this.state.localLat, this.state.localLng];
@@ -70,7 +69,7 @@ module.exports = React.createClass({
         opacity={0.5}
         >
           <ReactLeaflet.Popup>
-            <div key={key} onClick={this.handlePopupClick.bind(this, {key})} >
+            <div key={key} onClick={this.handleSinglePopupClick.bind(this, {key})} >
               <p>{place}</p>
               <p>{tags}</p>
             </div>
@@ -81,29 +80,24 @@ module.exports = React.createClass({
     return pub_solos;
   },
   renderMultiMarkers: function() {
-    // <div key={key} onClick={this.handlePopupClick.bind(this, {key})} >
     var pub_multis = [];
     for (var key in this.state.multis_published) {
-      //NEED TO GET LOCATION KEY FOR LINKING
       var mix = this.state.multis_published[key];
       var markerPosition = [mix.drop_lat, mix.drop_lng];
       var count = mix.mixcount;
+      var loc_tmid = mix.drop_loc_tmid;
       pub_multis.push(
         <ReactLeaflet.Marker 
         position={markerPosition} 
-        key={key}
+        key={loc_tmid}
+        onClick={this.handleMultiMarkerClick.bind(this, {loc_tmid})}
         >
-          <ReactLeaflet.Popup>
-            <div key={key} >
-              <p>{count}</p>
-            </div>
-          </ReactLeaflet.Popup>
         </ReactLeaflet.Marker>
       );
     }
     return pub_multis;
   },
-  handlePopupClick: function(id, j) {
+  handleSinglePopupClick: function(id, j) {
     var mixRoute = id.key;
     this.context.router.push({
       pathname: '/mix/' + mixRoute,
@@ -112,6 +106,17 @@ module.exports = React.createClass({
     // browserHistory.push({
     //   pathname: '/mix/' + mixRoute,
     //   id: mixRoute
+    // });
+  },
+  handleMultiMarkerClick:function(id, j) {
+    var locRoute = id.loc_tmid;
+    this.context.router.push({
+      pathname: '/place/' + locRoute,
+      id: locRoute
+    });
+    // browserHistory.push({
+    //   pathname: '/place/' + locRoute,
+    //   id: locRoute
     // });
   }
 });

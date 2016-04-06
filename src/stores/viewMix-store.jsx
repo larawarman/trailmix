@@ -41,17 +41,12 @@ var ViewMixStore = module.exports = Reflux.createStore({
       Actions.setSingleMixes();
     }
     if(this.state.multi_mixes !== prevState.multi_mixes || this.state.all_mixes !== prevState.all_mixes){
-      // console.log('updated multi: ' + this.state.multi_mixes);
       Actions.setMultiMixes();
     }
   },
-  getAllMixes: function() {
-    this.fb_mixesRef = new Firebase(fireUrl + '/mixes/');
-    this.fb_mixesRef.on('value', this.handleAllMixesLoaded);
-  },
-  getAllLocations: function() {
-    this.locationsRef = new Firebase(fireUrl + '/locations/');
-    this.locationsRef.on('value', this.handleAllLocationsLoaded);
+  getAllMixesLocations: function() {
+    this.mix_loc_ref = new Firebase(fireUrl);
+    this.mix_loc_ref.on('value', this.handleMixLocLoaded);
   },
   setSingleMixes: function() {
     var solos_published = [];
@@ -84,15 +79,16 @@ var ViewMixStore = module.exports = Reflux.createStore({
     for (var key in this.state.multi_mixes){
       mix = this.state.multi_mixes[key];
       id = mix; //gmaps_id where there is more than one mix
-      // refKey = this.locationsRef.child('drop_gmaps_id').equalTo(id).parent().toString();
-      // console.log(refKey);
       this.fb_mixesRef.orderByChild('location/drop_gmaps_id').equalTo(id).on('value', function(mixes){
         var mixcount = 0;
-        var loc_id = id;
+        var drop_gmaps_id = id;
         var drop_lat;
         var drop_lng;
+        var drop_loc_tmid;
+        // console.log(this.locationsRef.orderByChild('drop_gmaps_id').equalTo(id).on)
         mixes.forEach(function(themix){
           themix = themix.val();
+          drop_loc_tmid = themix.location.drop_location_id;
           drop_lat = themix.location.drop_lat;
           drop_lng = themix.location.drop_lng;
           if (themix.published === true) {
@@ -100,19 +96,25 @@ var ViewMixStore = module.exports = Reflux.createStore({
           }
         })
         multis_published.push({
-          loc_id, drop_lat, drop_lng, mixcount
+          drop_gmaps_id, drop_loc_tmid, drop_lat, drop_lng, mixcount
         });
       });
     }
     ViewMixStore.setState({multis_published : multis_published});
   },
+  handleMixLocLoaded:function(data) {
+    this.fb_mixesRef = this.mix_loc_ref.child('mixes');
+    this.fb_mixesRef.on('value', this.handleAllMixesLoaded);
+    this.locationsRef = this.mix_loc_ref.child('locations');
+    this.segmentLocations(data);
+  },
   handleAllMixesLoaded:function(mixes) {
     ViewMixStore.setState({all_mixes: mixes.val()});
   },
-  handleAllLocationsLoaded: function(locations) {
+  segmentLocations: function(data) {
     var singles = [];
     var multis = [];
-    locations.forEach(function(location){
+    data.child('locations').forEach(function(location){
       var num_mixes = location.child('mixes_here').numChildren();
       if (num_mixes > 1) {
         multis.push(location.child('drop_gmaps_id').val());
@@ -126,9 +128,6 @@ var ViewMixStore = module.exports = Reflux.createStore({
       multi_mixes: multis,
       single_mixes: singles
     });
-  },
-  handleLocationsLoaded:function(snapshot) {
-    ViewMixStore.setState({all_locations: snapshot.val()});
   },
   getMixData: function(id) {
     this.fb_mixRef = new Firebase(fireUrl + '/mixes/' + id);

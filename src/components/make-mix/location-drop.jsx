@@ -22,7 +22,6 @@ module.exports = React.createClass({
     this.locationRef = this.locationsRef.push();
   },
   componentWillUnmount: function() {
-    //UPDATE THE DB, PRESUMING MIX IS PUBLISHED? NEED TO MOVE THIS TO MAKE-MIX-MAIN PROB
     this.addLocation();
     this.mixLocationRef.set({
       drop_name: this.state.drop_name,
