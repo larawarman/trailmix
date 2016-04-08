@@ -85,12 +85,13 @@ module.exports = React.createClass({
       var mix = this.state.multis_published[key];
       var markerPosition = [mix.drop_lat, mix.drop_lng];
       var count = mix.mixcount;
-      var loc_tmid = mix.drop_loc_tmid;
+      var location_tm_key = mix.location_tm_key;
+      console.log(location_tm_key);
       pub_multis.push(
         <ReactLeaflet.Marker 
         position={markerPosition} 
-        key={loc_tmid}
-        onClick={this.handleMultiMarkerClick.bind(this, {loc_tmid})}
+        key={location_tm_key}
+        onClick={this.handleMultiMarkerClick.bind(this, {location_tm_key})}
         >
         </ReactLeaflet.Marker>
       );
@@ -109,7 +110,7 @@ module.exports = React.createClass({
     // });
   },
   handleMultiMarkerClick:function(id, j) {
-    var locRoute = id.loc_tmid;
+    var locRoute = id.location_tm_key;
     this.context.router.push({
       pathname: '/place/' + locRoute,
       id: locRoute

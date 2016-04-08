@@ -18,6 +18,7 @@ var CreateLocationStore = module.exports = Reflux.createStore({
       drop_label: '',
       drop_gmaps_id: '',
       drop_gmaps_types: '',
+      drop_location_id: '',
       mixes_here: [],
     }
   },

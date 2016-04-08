@@ -77,9 +77,10 @@ var ViewMixStore = module.exports = Reflux.createStore({
         var drop_lat;
         var drop_lng;
         var drop_loc_tmid;
+        var drop_name;
         mixes.forEach(function(themix){
           themix = themix.val();
-          drop_loc_tmid = themix.location.drop_location_id;
+          location_tm_key = themix.location.location_tm_key;
           drop_lat = themix.location.drop_lat;
           drop_lng = themix.location.drop_lng;
           if (themix.published === true) {
@@ -87,7 +88,7 @@ var ViewMixStore = module.exports = Reflux.createStore({
           }
         })
         multis_published.push({
-          drop_gmaps_id, drop_loc_tmid, drop_lat, drop_lng, mixcount
+          drop_gmaps_id, location_tm_key, drop_lat, drop_lng, mixcount
         });
       });
     }

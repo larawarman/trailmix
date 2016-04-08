@@ -30,6 +30,15 @@ module.exports = React.createClass({
       drop_gmaps_id: this.state.drop_gmaps_id,
       drop_location_id: this.locationRef.key()
     });
+    if(this.state.exists === '') {
+      this.mixLocationRef.update({
+        location_tm_key: this.locationRef.key()
+      });
+    } else {
+      this.mixLocationRef.update({
+        location_tm_key: this.state.exists
+      });
+    }
   },
   render: function() {
     var fixtures = [
