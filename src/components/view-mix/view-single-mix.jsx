@@ -16,10 +16,10 @@ module.exports = React.createClass({
   mixins: [
     StateMixin.connect(ViewMixStore)
   ],
-  componentWillMount: function() {
-    var id=this.props.params.id;
-    Actions.getMixData(id);
-  },
+  // componentWillMount: function() {
+  //   var id=this.props.params.id;
+  //   Actions.getMixData(id);
+  // },
   render: function() {
     return <div>
       {this.state.the_mix ? this.renderContent() : null}
@@ -29,7 +29,7 @@ module.exports = React.createClass({
     return <div className="view-mix">
       <div className="row">
         <div className="col-md-6 col-md-offset-3">
-          <ViewMixArt />
+          <ViewMixArt id={this.props.params.id} size={1} />
         </div>
       </div>
       <div className="row">

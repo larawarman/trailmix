@@ -5,12 +5,12 @@ var TimeAgo = require('react-timeago');
 var Router = require('react-router');
 var Link = Router.Link;
 
+var ViewMixArt = require('./view-mix-art');
+
 module.exports = React.createClass({
   render: function() {
     return <li key={this.props.id} className="mix-list-item">
-      <div className="mix-art-container">
-        {this.renderMixArt()}
-      </div>
+      <ViewMixArt id={this.props.id} size={1} />
       <div className="mix-info-container">
         {this.renderArtists()}
         <div className="publish-date">
@@ -46,27 +46,5 @@ module.exports = React.createClass({
     return  <ul className="mix-tags">
       {tags}
     </ul>
-  },
-  renderMixArt: function() {
-    var albums = [];
-    for (var key in this.props.images)  {
-      var imageUrl = this.props.images[key];
-      imageUrl.key = key;
-      albums.push(
-        <li
-        key={key}
-        >
-          <img src={imageUrl} />
-        </li>
-        )
-    }
-    var alength = albums.length;
-    if (alength === 0) {
-      return null
-    } else {
-      return <ul className={(alength === 1 ? 'one' : (alength === 2 ? 'two' : (alength === 3 ? 'three' : (alength > 3 ? 'more' : '')))) }>
-        {albums}
-      </ul>
-    }
   }
 });
