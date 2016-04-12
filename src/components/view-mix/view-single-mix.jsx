@@ -3,6 +3,8 @@ var React = require('react');
 var Reflux = require('reflux');
 var StateMixin = require('reflux-state-mixin');
 
+var TimeAgo = require('react-timeago');
+
 var Actions = require('../../actions');
 
 var ViewMixStore = require('../../stores/viewMix-store');
@@ -59,7 +61,7 @@ module.exports = React.createClass({
   },
   renderPlaceTime: function() {
     return <div>
-      <h1>{this.state.mix_place}</h1>
+      <h1>{this.state.mix_place} / <TimeAgo date={this.state.mix_time} /></h1>
     </div>
   }
 });

@@ -53,6 +53,7 @@ var LocMixesStore = module.exports = Reflux.createStore({
           var songs = mix.songs;
           var artists = [];
           var images = [];
+          var date = mix.publish_date;
           for (var key in mix.songs) {
             artists.push(mix.songs[key].artistJoined);
             images.push(mix.songs[key].images[1].url);
@@ -61,7 +62,8 @@ var LocMixesStore = module.exports = Reflux.createStore({
             id: id,
             tags: tags,
             artists: artists,
-            images: images
+            images: images,
+            date: date
           });
         } else {
           return null

@@ -1,5 +1,7 @@
 var React = require('react');
 
+var TimeAgo = require('react-timeago');
+
 var Router = require('react-router');
 var Link = Router.Link;
 
@@ -11,6 +13,9 @@ module.exports = React.createClass({
       </div>
       <div className="mix-info-container">
         {this.renderArtists()}
+        <div className="publish-date">
+          <TimeAgo date={this.props.date} />
+        </div>
         {this.renderTags()}
         <Link to={'/mix/' + this.props.id} id={this.props.id}>
           view mix

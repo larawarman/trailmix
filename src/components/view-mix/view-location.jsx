@@ -3,6 +3,7 @@ var React = require('react');
 var Reflux = require('reflux');
 var StateMixin = require('reflux-state-mixin');
 
+
 var Actions = require('../../actions');
 
 var LocMixesStore = require('../../stores/viewTMLocation-store');
@@ -31,7 +32,13 @@ module.exports = React.createClass({
     for (var key in this.state.mix_list) {
       mix = this.state.mix_list[key];
       mix_list_render.push(
-        <MixListItem key={mix.id} id={mix.id} artists={mix.artists} tags={mix.tags} images={mix.images}>
+        <MixListItem 
+        key={mix.id} 
+        id={mix.id} 
+        artists={mix.artists} 
+        tags={mix.tags} 
+        images={mix.images} 
+        date={mix.date} >
         </MixListItem>
       );
     }

@@ -140,7 +140,8 @@ var ViewMixStore = module.exports = Reflux.createStore({
       mix_place: mix.location.drop_name,
       mix_tags: mix.tags,
       mixSongs: mix.songs,
-      mixImgs: albums
+      mixImgs: albums,
+      mix_time: mix.publish_date
     });
   }
 });
