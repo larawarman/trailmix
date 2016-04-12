@@ -7,6 +7,7 @@ module.exports = Reflux.createActions([
   'setQuery',
   'queryTracks',
   'closeResults',
+  'addSong',
   'pauseAllAudio',
   'playOneAudio',
 
