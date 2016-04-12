@@ -15,4 +15,9 @@ module.exports = Reflux.createActions([
   'setSingleMixes',
   'setMultiMixes',
   'getMixData',
+
+  //VIEW TRAILMIX LOCATION STORE
+  'getDB',
+  'loadLocationDetails',
+  'getMixListItems'
 ]);
