@@ -83,12 +83,13 @@ var ViewMixStore = module.exports = Reflux.createStore({
           location_tm_key = themix.location.location_tm_key;
           drop_lat = themix.location.drop_lat;
           drop_lng = themix.location.drop_lng;
+          drop_name = themix.location.drop_name;
           if (themix.published === true) {
             mixcount ++;
           }
         })
         multis_published.push({
-          drop_gmaps_id, location_tm_key, drop_lat, drop_lng, mixcount
+          drop_gmaps_id, drop_name, location_tm_key, drop_lat, drop_lng, mixcount
         });
       });
     }

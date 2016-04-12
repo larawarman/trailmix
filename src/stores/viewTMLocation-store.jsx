@@ -13,6 +13,10 @@ var LocMixesStore = module.exports = Reflux.createStore({
   getInitialState: function(){
     return{
       location_key: '',
+      mixes_loaded: false,
+      place_name: '',
+      mix_list: [],
+
     }
   },
   storeDidUpdate: function(prevState) {

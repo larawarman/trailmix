@@ -86,19 +86,20 @@ module.exports = React.createClass({
       var markerPosition = [mix.drop_lat, mix.drop_lng];
       var count = mix.mixcount;
       var location_tm_key = mix.location_tm_key;
-      console.log(location_tm_key);
+      var place = mix.drop_name;
       pub_multis.push(
         <ReactLeaflet.Marker 
         position={markerPosition} 
         key={location_tm_key}
-        onClick={this.handleMultiMarkerClick.bind(this, {location_tm_key})}
+        place={place}
+        onClick={this.handleMultiMarkerClick.bind(this, {location_tm_key, place})}
         >
         </ReactLeaflet.Marker>
       );
     }
     return pub_multis;
   },
-  handleSinglePopupClick: function(id, j) {
+  handleSinglePopupClick: function(id) {
     var mixRoute = id.key;
     this.context.router.push({
       pathname: '/mix/' + mixRoute,
@@ -109,11 +110,14 @@ module.exports = React.createClass({
     //   id: mixRoute
     // });
   },
-  handleMultiMarkerClick:function(id, j) {
+  handleMultiMarkerClick:function(id) {
     var locRoute = id.location_tm_key;
+    var place = id.place;
+    console.log(place);
     this.context.router.push({
       pathname: '/place/' + locRoute,
-      id: locRoute
+      id: locRoute,
+      place: place
     });
     // browserHistory.push({
     //   pathname: '/place/' + locRoute,
