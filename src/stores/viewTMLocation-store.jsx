@@ -16,6 +16,7 @@ var LocMixesStore = module.exports = Reflux.createStore({
       mixes_loaded: false,
       place_name: '',
       mix_list: [],
+      num_mixes: '',
 
     }
   },
@@ -34,6 +35,7 @@ var LocMixesStore = module.exports = Reflux.createStore({
     this.mix_ref.on('value', Actions.getMixListItems);
   },
   loadLocationDetails: function(location) {
+    LocMixesStore.setState({num_mixes: location.child('mixes_here').numChildren()});
     location = location.val();
     LocMixesStore.setState({
       place_name: location.drop_name
@@ -50,13 +52,16 @@ var LocMixesStore = module.exports = Reflux.createStore({
           var tags = mix.tags;
           var songs = mix.songs;
           var artists = [];
+          var images = [];
           for (var key in mix.songs) {
             artists.push(mix.songs[key].artistJoined);
+            images.push(mix.songs[key].images[1].url);
           }            
           mix_list.push({
             id: id,
             tags: tags,
-            artists: artists
+            artists: artists,
+            images: images
           });
         } else {
           return null

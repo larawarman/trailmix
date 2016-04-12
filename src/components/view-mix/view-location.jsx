@@ -18,9 +18,10 @@ module.exports = React.createClass({
     Actions.getDB();
   },
   render: function() {
-    return <div>
-      <h1>THIS IS A LOCATION PAGE for {this.state.place_name}</h1>
-      <ul>
+    return <div className="location-mixes col-md-6 col-md-offset-3">
+      <h1>{this.state.place_name}</h1>
+      <h3>{this.state.num_mixes} mixes here</h3>
+      <ul className="mix-list">
         {this.renderMixList()}
       </ul>
     </div>
@@ -30,7 +31,7 @@ module.exports = React.createClass({
     for (var key in this.state.mix_list) {
       mix = this.state.mix_list[key];
       mix_list_render.push(
-        <MixListItem id={mix.id} artists={mix.artists} tags={mix.tags}>
+        <MixListItem key={mix.id} id={mix.id} artists={mix.artists} tags={mix.tags} images={mix.images}>
         </MixListItem>
       );
     }

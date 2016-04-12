@@ -37,3 +37,37 @@
     }
   }
 }
+
+.location-mixes {
+  ul.mix-list {
+    list-style:none;
+    padding: 0;
+    margin: 0;
+    li.mix-list-item {
+      border-bottom: 1px solid $lightest-gray;
+      min-height: 110px;
+      margin-bottom: 10px;
+    }
+  }
+  .mix-art-container {
+    float:left;
+    ul {
+      width: 100px;
+      height: 100px;
+    }
+  }
+  .mix-info-container {
+    ul.mix-artists, ul.mix-tags {
+      padding: 0 0 10px 0;
+      li {
+        display: inline-block;
+        padding: 0 20px;
+      }
+    }
+    a {
+      display:block;
+      padding: 0 0 10px 0;
+      text-align: right;
+    }
+  }
+}
