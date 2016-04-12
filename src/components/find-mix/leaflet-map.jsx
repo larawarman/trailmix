@@ -113,7 +113,6 @@ module.exports = React.createClass({
   handleMultiMarkerClick:function(id) {
     var locRoute = id.location_tm_key;
     var place = id.place;
-    console.log(place);
     this.context.router.push({
       pathname: '/place/' + locRoute,
       id: locRoute,
