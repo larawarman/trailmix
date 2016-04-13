@@ -19,11 +19,11 @@ var AudioStore = module.exports = Reflux.createStore({
         '2PlGP8KVcHZvayqR8JPLtY', //Future Islands
         '2TaUMeMnlKYhso8C8txtzl' //Amen Dunes
       ],
-      now_playing_url: '',
-      now_playing_track: '',
-      now_playing_artist: '',
-      song_queue: [],
-      song_play_num: 0
+      // now_playing_url: '',
+      // now_playing_track: '',
+      // now_playing_artist: '',
+      // song_queue: [],
+      // song_play_num: 0
     }
   },
   // getSongPreviewUrl: function(spotify_id){

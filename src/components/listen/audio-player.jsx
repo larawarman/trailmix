@@ -12,6 +12,15 @@ module.exports = React.createClass({
   mixins: [
     StateMixin.connect(AudioStore)
   ],
+  getInitialState: function() {
+    return {
+      song_queue: [],
+      song_play_num: 0,
+      now_playing_url: '',
+      now_playing_track: '',
+      now_playing_artist: ''
+    }
+  },
   componentWillMount: function() {
     this.song_ref = new Firebase(fireUrl + '/songs');
     this.song_ref.on('value', this.getInitSongQueue);
@@ -50,7 +59,7 @@ module.exports = React.createClass({
         });
       });
     }
-    AudioStore.setState({
+    this.setState({
       song_queue: songs_queue,
       song_play_num: 0,
       now_playing_url: songs_queue[0].play_url,
@@ -75,25 +84,32 @@ module.exports = React.createClass({
     var audio = document.getElementById('player-main');
     audio.pause();
     var new_num = this.state.song_play_num + 1;
-    console.log(new_num);
-    AudioStore.setState({
-      song_play_num: new_num,
-      now_playing_url: this.state.song_queue[new_num].play_url,
-      now_playing_track: this.state.song_queue[new_num].play_track,
-      now_playing_artist: this.state.song_queue[new_num].play_artist
-    });
-    //this.loadSong();
-    //audio.play();
-    // console.log(this.state.song_play_num + 1);
-    // var new_num = this.state.song_play_num + 1;
-    // console.log(new_num);
-    // AudioStore.setState({song_play_num: new_num});
-    // console.log('next');
+    if (new_num < this.state.song_queue.length) {
+      this.setState({
+        song_play_num: new_num,
+        now_playing_url: this.state.song_queue[new_num].play_url,
+        now_playing_track: this.state.song_queue[new_num].play_track,
+        now_playing_artist: this.state.song_queue[new_num].play_artist
+      }, function() {
+        audio.load();
+        audio.play();
+      });
+    }
   },
   handlePrev:function() {
     var audio = document.getElementById('player-main');
     audio.pause();
-    // Audio.setState({song_play_num: })
-    // console.log('prev');
+    var new_num = this.state.song_play_num - 1;
+    if (new_num >= 0) {
+      this.setState({
+        song_play_num: new_num,
+        now_playing_url: this.state.song_queue[new_num].play_url,
+        now_playing_track: this.state.song_queue[new_num].play_track,
+        now_playing_artist: this.state.song_queue[new_num].play_artist
+      }, function() {
+        audio.load();
+        audio.play();
+      });
+    }
   }
 });
