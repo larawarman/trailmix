@@ -20,5 +20,9 @@ module.exports = Reflux.createActions([
   //VIEW TRAILMIX LOCATION STORE
   'getDB',
   'loadLocationDetails',
-  'getMixListItems'
+  'getMixListItems',
+
+  //LISTEN TO STUFF
+  'getSongPreviewUrl',
+  'loadSong'
 ]);
