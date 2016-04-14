@@ -4,7 +4,7 @@ var Router = require('react-router');
 var Link = Router.Link;
 
 var LeafletMap = require('./leaflet-map');
-var AudioPlayer = require('../listen/audio-player');
+// var AudioPlayer = require('../listen/audio-player');
 
 
 module.exports = React.createClass({
@@ -15,7 +15,6 @@ module.exports = React.createClass({
         make ur mix
       </Link>
       <LeafletMap />
-      <AudioPlayer />
     </div>
   }
 });

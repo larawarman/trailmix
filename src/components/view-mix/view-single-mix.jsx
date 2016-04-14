@@ -8,13 +8,16 @@ var TimeAgo = require('react-timeago');
 var Actions = require('../../actions');
 
 var ViewMixStore = require('../../stores/viewMix-store');
+var AudioStore = require('../../stores/audioPlayer-store');
 
 var ViewMixArt = require('./view-mix-art');
 var MixSongList = require('./mix-song-list');
 
+
 module.exports = React.createClass({
   mixins: [
-    StateMixin.connect(ViewMixStore)
+    StateMixin.connect(ViewMixStore),
+    StateMixin.connect(AudioStore)
   ],
   componentWillMount: function() {
     var id=this.props.params.id;
@@ -30,6 +33,7 @@ module.exports = React.createClass({
       <div className="row">
         <div className="col-md-6 col-md-offset-3">
           <ViewMixArt />
+          <div className="play-mix" onClick={this.addMixToPlay}>play</div>
         </div>
       </div>
       <div className="row">
@@ -63,5 +67,15 @@ module.exports = React.createClass({
     return <div>
       <h1>{this.state.mix_place} / <TimeAgo date={this.state.mix_time} /></h1>
     </div>
+  },
+  addMixToPlay: function() {
+    var mainQueue = this.state.queue_song_ids;
+    var newQueue = this.state.mix_spotify_ids;
+    newQueue.reverse();
+    for (var key in newQueue) {
+      id = this.state.mix_spotify_ids[key];
+      mainQueue.unshift(id);
+    }
+    AudioStore.setState({queue_song_ids: mainQueue});
   }
 });

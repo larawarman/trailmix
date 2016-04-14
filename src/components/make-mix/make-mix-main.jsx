@@ -24,16 +24,16 @@ module.exports = React.createClass({
     StateMixin.connect(CreateMixStore),
     ReactFire 
   ],
+  getInitialState: function() {
+    return {
+      published: false
+    }
+  },
   componentWillMount: function() {
     this.fb_mixesRef = new Firebase(fireUrl + '/mixes');
     this.fb_mixRef = this.fb_mixesRef.push();
     this.fb_mixRef.set({ 'published': false });
     CreateMixStore.setState({mix_path: this.fb_mixRef.toString()});
-  },
-  getInitialState: function() {
-    return {
-      published: false
-    }
   },
   // componentWillUnmount:function() {
   //   if(!this.state.published){

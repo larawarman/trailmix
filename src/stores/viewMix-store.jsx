@@ -28,7 +28,8 @@ var ViewMixStore = module.exports = Reflux.createStore({
       mix_time: '',
       mix_tags: [],
       mixSongs: {},
-      mixImgs: []
+      mixImgs: [],
+      mix_spotify_ids: []
     }
   },
   storeDidUpdate: function(prevState) {
@@ -129,11 +130,14 @@ var ViewMixStore = module.exports = Reflux.createStore({
   handleMixDataLoaded: function(snapshot) {
     var mix = snapshot.val();
     var albums = [];
+    var spotify_ids = [];
     for (var key in mix.songs){
       var song = mix.songs[key];
       song.key = key;
       imageUrl = song.images[0].url;
+      // console.log(song.spotify_id);
       albums.push(imageUrl);
+      spotify_ids.push(song.spotify_id);
     }
     this.setState({
       the_mix: mix,
@@ -141,7 +145,8 @@ var ViewMixStore = module.exports = Reflux.createStore({
       mix_tags: mix.tags,
       mixSongs: mix.songs,
       mixImgs: albums,
-      mix_time: mix.publish_date
+      mix_time: mix.publish_date,
+      mix_spotify_ids: spotify_ids
     });
   }
 });

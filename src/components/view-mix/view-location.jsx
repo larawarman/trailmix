@@ -10,6 +10,7 @@ var LocMixesStore = require('../../stores/viewTMLocation-store');
 
 var MixListItem = require('./mix-list-item');
 
+
 module.exports = React.createClass({
   mixins: [
     StateMixin.connect(LocMixesStore)

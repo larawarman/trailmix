@@ -23,15 +23,22 @@ module.exports = React.createClass({
   },
   componentWillMount: function() {
     this.song_ref = new Firebase(fireUrl + '/songs');
-    this.song_ref.on('value', this.getInitSongQueue);
-    // this.getQueueSongs();
+    this.song_ref.on('value', this.getSongQueue);
   },
   componentWillUpdate: function() {
-    // console.log('update ' + this.state.song_play_num);
+    console.log('updating queue: ' + this.state.queue_song_ids);
+    this.loadSong();
+  },
+  componentWillReceiveProps: function() {
+    console.log('receiving new props: ' + this.state.queue_song_ids);
+    this.getSongQueue();
+    this.loadSong();
+  },
+  componentDidUpdate: function() {
     this.loadSong();
   },
   render: function() {
-    return <div className="main-audio-player">
+    return <div className="main-audio-player" id="main-player-container">
       <p>{this.state.now_playing_track} by {this.state.now_playing_artist}</p>
       <div className='audio-controls'>
         <div className="play-btn" onClick={this.handlePlay}>play</div>
@@ -44,13 +51,15 @@ module.exports = React.createClass({
       </audio>
     </div>
   },
-  getInitSongQueue: function(){
+  getSongQueue: function(){
+    // console.log('getInitSongQueue');
     var songs_queue = [];
     for(var key in this.state.queue_song_ids){
       songid = this.state.queue_song_ids[key];
       this.song_ref.orderByChild('spotify_id').equalTo(songid).once('value', function(songs){
         songs.forEach(function(song){
           song= song.val();
+          // console.log(song);
           songs_queue.push({
             play_url: song.spotify_preview_url,
             play_track: song.track_name,
@@ -66,6 +75,7 @@ module.exports = React.createClass({
       now_playing_track: songs_queue[0].play_track,
       now_playing_artist: songs_queue[0].play_artist
     });
+    // this.loadSong();
     // AudioStore.setState({song_queue: songs_queue});
   },
   loadSong: function() {
