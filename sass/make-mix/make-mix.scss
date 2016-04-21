@@ -197,3 +197,9 @@
     }
   }
 }
+.error-state {
+  display:none;
+  &.show-error {
+    display:block;
+  }
+}

@@ -9,6 +9,7 @@ var StateMixin = require('reflux-state-mixin');
 var Geosuggest = require('react-geosuggest');
 var ReactFire = require('reactfire');
 var Firebase = require('firebase');
+var _ = require('lodash');
 
 var fireUrl = 'https://trailmix0.firebaseio.com/';
 
@@ -26,7 +27,8 @@ module.exports = React.createClass({
   ],
   getInitialState: function() {
     return {
-      published: false
+      published: false,
+      songError: false
     }
   },
   componentWillMount: function() {
@@ -40,6 +42,9 @@ module.exports = React.createClass({
   //     this.fb_mixRef.remove();
   //   }
   // },
+  //<Link to="/" className="publish button" onClick={this.handlePublish}>
+            // Publish
+          // </Link>
   render: function() {
     return <div className="row make-mix">
       <div className="col-md-12">
@@ -60,12 +65,16 @@ module.exports = React.createClass({
           <Hashtags mix_url={this.fb_mixRef.toString()} />
         </div>
       </div>
-      <MixViewCreate mix_url={this.fb_mixRef.toString()} />
       <div className="row">
         <div className="col-md-6 col-md-offset-3">
-          <Link to="/" className="publish button" onClick={this.handlePublish}>
-            Publish
-          </Link>
+          <div className={"error-state " + (this.state.songError ? 'show-error' : '')}>Your mix needs at least 1 song to be published.</div>
+          <MixViewCreate mix_url={this.fb_mixRef.toString()} />
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-md-6 col-md-offset-3">
+          <h2 onClick = {this.locationCheck}>CHECK LOCATION</h2>
+          <h2 onClick = {this.handlePublish}>CHECK SONGS</h2>
         </div>
       </div>
       <div className="row">
@@ -77,11 +86,27 @@ module.exports = React.createClass({
       </div>
     </div>
   },
+  songsCheck: function() {
+    if(_.isEmpty(this.state.mixSongs)) {
+      return false;
+    } else {
+      return true;
+    }
+  },
+  locationCheck: function() {
+    if(_.isEmpty()) {
+      console.log('no location');
+    }
+  }, 
   handlePublish: function() {
-    this.fb_mixRef.update({ 
-      published: true,
-      publish_date: Firebase.ServerValue.TIMESTAMP
-    });
+    if (this.songsCheck() === true) {
+      this.fb_mixRef.update({ 
+        published: true,
+        publish_date: Firebase.ServerValue.TIMESTAMP
+      });
+    } else {
+      this.setState({songError: true});
+    }
   },
   handleCancel:function() {
     this.fb_mixRef.remove();
