@@ -51,7 +51,7 @@ var ViewMixStore = module.exports = Reflux.createStore({
       key = mix;
       this.fb_mixesRef.child(mix).on('value', function(mix){
         mix = mix.val();
-        if (mix.published) {
+        if (mix.published === true) {
           var markerPosition = [mix.location.drop_lat, mix.location.drop_lng]
           if(mix.tags){
             var tags = mix.tags.join(' ');
@@ -85,7 +85,7 @@ var ViewMixStore = module.exports = Reflux.createStore({
           drop_lat = themix.location.drop_lat;
           drop_lng = themix.location.drop_lng;
           drop_name = themix.location.drop_name;
-          if (themix.published) {
+          if (themix.published === true) {
             mixcount ++;
           }
         })
