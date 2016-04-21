@@ -12,74 +12,24 @@ module.exports = React.createClass({
   mixins: [
     StateMixin.connect(AudioStore)
   ],
-  getInitialState: function() {
-    return {
-      song_queue: [],
-      song_play_num: 0,
-      now_playing_url: '',
-      now_playing_track: '',
-      now_playing_artist: ''
-    }
-  },
-  componentWillMount: function() {
-    this.song_ref = new Firebase(fireUrl + '/songs');
-    this.song_ref.on('value', this.getSongQueue);
-  },
-  componentWillUpdate: function() {
-    console.log('updating queue: ' + this.state.queue_song_ids);
-    // this.loadSong();
-  },
-  componentWillReceiveProps: function() {
-    console.log('receiving new props: ' + this.state.queue_song_ids);
-    // this.getSongQueue();
-    // this.loadSong();
-  },
-  componentDidUpdate: function() {
-    console.log('did update: ' + this.state.queue_song_ids);
-    this.loadSong();
-  },
   render: function() {
-    return <div className="main-audio-player" id="main-player-container">
-      <p>{this.state.now_playing_track} by {this.state.now_playing_artist}</p>
-      <div className='audio-controls'>
-        <div className="play-btn" onClick={this.handlePlay}>play</div>
-        <div className="pause-btn" onClick={this.handlePause}>pause</div>
-        <div className="next-btn" onClick={this.handleNext}>next</div>
-        <div className="prev-btn" onClick={this.handlePrev}>prev</div>
+    var queue = this.state.queue_song_ids;
+    if (queue.length > 0) {
+      return <div className="main-audio-player" id="main-player-container">
+        <p>{this.state.now_playing_track} by {this.state.now_playing_artist}</p>
+        <div className='audio-controls'>
+          <div className="play-btn" onClick={this.handlePlay}>play</div>
+          <div className="pause-btn" onClick={this.handlePause}>pause</div>
+          <div className="next-btn" onClick={this.handleNext}>next</div>
+          <div className="prev-btn" onClick={this.handlePrev}>prev</div>
+        </div>
+        <audio id="player-main">
+          <source id="mp3-src" src={this.state.now_playing_url} type="audio/mpeg" />
+        </audio>
       </div>
-      <audio id="player-main">
-        <source id="mp3-src" src={this.state.now_playing_url} type="audio/mpeg" />
-      </audio>
-    </div>
-  },
-  getSongQueue: function(){
-    var songs_queue = [];
-    for(var key in this.state.queue_song_ids){
-      songid = this.state.queue_song_ids[key];
-      this.song_ref.orderByChild('spotify_id').equalTo(songid).once('value', function(songs){
-        songs.forEach(function(song){
-          song= song.val();
-          songs_queue.push({
-            play_url: song.spotify_preview_url,
-            play_track: song.track_name,
-            play_artist: song.artistJoined,
-          });
-        });
-      });
+    } else {
+      return null
     }
-    this.setState({
-      song_queue: songs_queue,
-      song_play_num: 0,
-      now_playing_url: songs_queue[0].play_url,
-      now_playing_track: songs_queue[0].play_track,
-      now_playing_artist: songs_queue[0].play_artist
-    }, function() {
-      this.loadSong();
-    });
-  },
-  loadSong: function() {
-    var audio = document.getElementById('player-main');
-    audio.load();
   },
   handlePlay:function() {
     var audio = document.getElementById('player-main');
