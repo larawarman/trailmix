@@ -34,7 +34,7 @@ var AudioStore = module.exports = Reflux.createStore({
       Actions.loadSong();
     }
     if(this.state.now_playing_spotify_id !== prevState.now_playing_spotify_id) {
-      console.log('now playing: ' + this.state.now_playing_spotify_id);
+      // console.log('now playing: ' + this.state.now_playing_spotify_id);
       // Actions.nowPlayingDecorator();
     }
   },

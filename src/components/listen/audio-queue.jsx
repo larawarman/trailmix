@@ -26,14 +26,15 @@ module.exports = React.createClass({
       songs.push(
         <li 
         key={key} 
-        spotify_id={s_id}>
+        spotify_id={s_id}
+        id={s_id} >
           <div className='queue-song-play' onClick={this.handleQueuePlayClick.bind(this, {s_id})}>
             {song.play_track} by {song.play_artist}
             <div>
               PLAY
             </div>
           </div>
-          <div className='queue-song-delete' onClick={this.handleQueueRemoveClick}>REMOVE</div>
+          <div className='queue-song-delete' onClick={this.handleQueueRemoveClick.bind(this, {s_id})}>REMOVE</div>
         </li>
       );
     }
@@ -54,7 +55,15 @@ module.exports = React.createClass({
       }
     }
   },
-  handleQueueRemoveClick: function() {
-    console.log('remove this track');
+  handleQueueRemoveClick: function(id) {
+    var s_id = id.s_id;
+    var queue = this.state.song_queue;
+    for (var key in queue) {
+      if(this.state.song_queue[key].play_spotify_id === s_id) {
+        queue.splice(key, 1);
+        AudioStore.setState({song_queue: queue});
+        document.getElementById(s_id).style.display = 'none';
+      }
+    }
   }
 });
