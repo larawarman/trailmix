@@ -42,9 +42,7 @@ module.exports = React.createClass({
   //     this.fb_mixRef.remove();
   //   }
   // },
-  //<Link to="/" className="publish button" onClick={this.handlePublish}>
-            // Publish
-          // </Link>
+
   render: function() {
     return <div className="row make-mix">
       <div className="col-md-12">
@@ -74,7 +72,9 @@ module.exports = React.createClass({
       <div className="row">
         <div className="col-md-6 col-md-offset-3">
           <h2 onClick = {this.locationCheck}>CHECK LOCATION</h2>
-          <h2 onClick = {this.handlePublish}>CHECK SONGS</h2>
+          <Link to="/" className="publish button" onClick={this.handlePublish}>
+            Publish
+          </Link>
         </div>
       </div>
       <div className="row">

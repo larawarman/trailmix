@@ -21,6 +21,19 @@ module.exports = React.createClass({
     this.locationsRef = new Firebase(fireUrl + '/locations');
     this.locationRef = this.locationsRef.push();
   },
+  componentDidUpdate:function() {
+    if(this.state.drop_name === '') {
+      CreateLocationStore.setState({
+        drop_name: this.state.localLat + ', ' + this.state.localLng,
+        drop_lat: this.state.localLat,
+        drop_lng: this.state.localLng,
+        drop_label: 'Drop It Here',
+        drop_gmaps_id: null,
+        drop_gmaps_types: null,
+        exists: ''
+      });
+    }
+  },
   componentWillUnmount: function() {
     this.addLocation();
     this.mixLocationRef.set({
