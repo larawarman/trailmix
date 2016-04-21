@@ -7,6 +7,8 @@ var Actions = require('../../actions');
 var AudioStore = require('../../stores/audioPlayer-store');
 var fireUrl = 'https://trailmix0.firebaseio.com/';
 
+var AudioQueue = require('./audio-queue');
+
 
 module.exports = React.createClass({
   mixins: [
@@ -16,6 +18,7 @@ module.exports = React.createClass({
     var queue = this.state.queue_song_ids;
     if (queue.length > 0) {
       return <div className="main-audio-player" id="main-player-container">
+        <AudioQueue />
         <p>{this.state.now_playing_track} by {this.state.now_playing_artist}</p>
         <div className='audio-controls'>
           <div className="play-btn" onClick={this.handlePlay}>play</div>
@@ -40,34 +43,26 @@ module.exports = React.createClass({
     audio.pause();
   },
   handleNext:function() {
-    var audio = document.getElementById('player-main');
-    audio.pause();
     var new_num = this.state.song_play_num + 1;
     if (new_num < this.state.song_queue.length) {
-      this.setState({
+      AudioStore.setState({
         song_play_num: new_num,
         now_playing_url: this.state.song_queue[new_num].play_url,
         now_playing_track: this.state.song_queue[new_num].play_track,
-        now_playing_artist: this.state.song_queue[new_num].play_artist
-      }, function() {
-        audio.load();
-        audio.play();
+        now_playing_artist: this.state.song_queue[new_num].play_artist,
+        now_playing_spotify_id: this.state.song_queue[new_num].play_spotify_id
       });
     }
   },
   handlePrev:function() {
-    var audio = document.getElementById('player-main');
-    audio.pause();
     var new_num = this.state.song_play_num - 1;
     if (new_num >= 0) {
-      this.setState({
+      AudioStore.setState({
         song_play_num: new_num,
         now_playing_url: this.state.song_queue[new_num].play_url,
         now_playing_track: this.state.song_queue[new_num].play_track,
-        now_playing_artist: this.state.song_queue[new_num].play_artist
-      }, function() {
-        audio.load();
-        audio.play();
+        now_playing_artist: this.state.song_queue[new_num].play_artist,
+        now_playing_spotify_id: this.state.song_queue[new_num].play_spotify_id
       });
     }
   }

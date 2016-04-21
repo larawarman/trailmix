@@ -21,15 +21,21 @@ var AudioStore = module.exports = Reflux.createStore({
       song_play_num: 0,
       now_playing_url: '',
       now_playing_track: '',
-      now_playing_artist: ''
+      now_playing_artist: '',
+      now_playing_spotify_id: '',
+      // now_playing_decorator: false
     }
   },
   storeDidUpdate: function(prevState) {
     if(this.state.queue_song_ids !== prevState.queue_song_ids){
       Actions.getSongsFromDB();
     }
-    if(this.state.song_queue !== prevState.song_queue) {
+    if(this.state.song_queue !== prevState.song_queue || this.state.song_play_num !== prevState.song_play_num) {
       Actions.loadSong();
+    }
+    if(this.state.now_playing_spotify_id !== prevState.now_playing_spotify_id) {
+      console.log('now playing: ' + this.state.now_playing_spotify_id);
+      // Actions.nowPlayingDecorator();
     }
   },
   loadSong: function() {
@@ -52,6 +58,7 @@ var AudioStore = module.exports = Reflux.createStore({
             play_url: song.spotify_preview_url,
             play_track: song.track_name,
             play_artist: song.artistJoined,
+            play_spotify_id: song.spotify_id
           });
         });
       });
@@ -61,7 +68,11 @@ var AudioStore = module.exports = Reflux.createStore({
       song_play_num: 0,
       now_playing_url: songs_queue[0].play_url,
       now_playing_track: songs_queue[0].play_track,
-      now_playing_artist: songs_queue[0].play_artist
+      now_playing_artist: songs_queue[0].play_artist,
+      now_playing_spotify_id: songs_queue[0].play_spotify_id
     });
   },
+  // nowPlayingDecorator: function() {
+    
+  // }
 });
