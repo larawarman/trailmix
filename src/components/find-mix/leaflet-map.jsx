@@ -7,7 +7,6 @@ var Router = require('react-router');
 // var browserHistory = Router.browserHistory;
 // var Link = Router.Link;
 
-
 var Reflux = require('reflux');
 var StateMixin = require('reflux-state-mixin');
 var CreateLocationStore = require('../../stores/createLocation-store');

@@ -2,6 +2,8 @@ var React = require('react');
 
 var Router = require('react-router');
 var Link = Router.Link;
+// var browserHistory = Router.browserHistory;
+
 
 var Reflux = require('reflux');
 var StateMixin = require('reflux-state-mixin');
@@ -14,6 +16,7 @@ var _ = require('lodash');
 var fireUrl = 'https://trailmix0.firebaseio.com/';
 
 var CreateMixStore = require('../../stores/createMix-store');
+var CreateLocationStore = require('../../stores/createLocation-store');
 var LocationDrop = require('./location-drop');
 var LocationTitle = require('./location-title');
 var Hashtags = require('./hashtag-add');
@@ -21,6 +24,9 @@ var MixViewCreate = require('./mix-view-create');
 
 
 module.exports = React.createClass({
+  contextTypes : {
+    router: React.PropTypes.object.isRequired
+  },
   mixins: [ 
     StateMixin.connect(CreateMixStore),
     ReactFire 
@@ -28,7 +34,8 @@ module.exports = React.createClass({
   getInitialState: function() {
     return {
       published: false,
-      songError: false
+      songError: false,
+      locationError: false
     }
   },
   componentWillMount: function() {
@@ -42,7 +49,6 @@ module.exports = React.createClass({
   //     this.fb_mixRef.remove();
   //   }
   // },
-
   render: function() {
     return <div className="row make-mix">
       <div className="col-md-12">
@@ -53,6 +59,7 @@ module.exports = React.createClass({
       </div>
       <div className="row">
         <div className="col-md-6 col-md-offset-3">
+          <div className={"locationerr error-state " + (this.state.locationError ? 'show-error' : '')}>You must select a location for your mix.</div>
           <LocationTitle mix_url={this.fb_mixRef.toString()} />
           <LocationDrop mix_url={this.fb_mixRef.toString()} mix_key={this.fb_mixRef.key()} />
         </div>
@@ -65,16 +72,15 @@ module.exports = React.createClass({
       </div>
       <div className="row">
         <div className="col-md-6 col-md-offset-3">
-          <div className={"error-state " + (this.state.songError ? 'show-error' : '')}>Your mix needs at least 1 song to be published.</div>
+          <div className={"songerr error-state " + (this.state.songError ? 'show-error' : '')}>Your mix needs at least 1 song to be published.</div>
           <MixViewCreate mix_url={this.fb_mixRef.toString()} />
         </div>
       </div>
       <div className="row">
         <div className="col-md-6 col-md-offset-3">
-          <h2 onClick = {this.locationCheck}>CHECK LOCATION</h2>
-          <Link to="/" className="publish button" onClick={this.handlePublish}>
+          <div className="publish button" onClick={this.handlePublish}>
             Publish
-          </Link>
+          </div>
         </div>
       </div>
       <div className="row">
@@ -100,10 +106,17 @@ module.exports = React.createClass({
   }, 
   handlePublish: function() {
     if (this.songsCheck() === true) {
-      this.fb_mixRef.update({ 
-        published: true,
-        publish_date: Firebase.ServerValue.TIMESTAMP
-      });
+      if (CreateLocationStore.state.drop_name !== '') {
+        this.fb_mixRef.update({ 
+          published: true,
+          publish_date: Firebase.ServerValue.TIMESTAMP
+        });
+        this.context.router.push('/');
+      }
+      else {
+        console.log('no location');
+        this.setState({locationError: true});
+      }
     } else {
       this.setState({songError: true});
     }
