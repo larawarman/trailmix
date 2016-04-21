@@ -16,16 +16,6 @@ module.exports = React.createClass({
       </ul>
     </div>
   },
-  componentWillReceiveProps: function() {
-    // console.log('component will receive props');
-  },
-  componenetWillUpdate: function() {
-    // console.log('component will update');
-  },
-  componentDidUpdate: function() {
-    // console.log('component did update');
-    console.log(this.state.song_queue);
-  },
   renderQueueSongs: function() {
     var songs = [];
     var nowPlaying = this.state.now_playing_spotify_id;
@@ -67,13 +57,22 @@ module.exports = React.createClass({
   },
   handleQueueRemoveClick: function(id) {
     var s_id = id.s_id;
-    var queue = this.state.song_queue;
-    newQueue = [];
-    for (var key in queue) {
-      if (queue[key].play_spotify_id !== s_id) {
-        newQueue.push(queue[key]);
+    var song_queue = this.state.song_queue;
+    var queue_song_ids = this.state.queue_song_ids;
+    var new_song_queue = [];
+    var new_queue_song_ids = [];
+    for (var key in song_queue) {
+      if (song_queue[key].play_spotify_id !== s_id) {
+        new_song_queue.push(song_queue[key]);
       }
     }
-    AudioStore.setState({song_queue: newQueue});
+    for (var key in queue_song_ids) {
+      // console.log(queue_song_ids[key]);
+      if(queue_song_ids[key] !== s_id) {
+        new_queue_song_ids.push(queue_song_ids[key]);
+      }
+    }
+    AudioStore.setState({song_queue: new_song_queue});
+    AudioStore.setState({queue_song_ids: new_queue_song_ids});
   }
 });
