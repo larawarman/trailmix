@@ -29,7 +29,7 @@ var AudioStore = module.exports = Reflux.createStore({
   storeDidUpdate: function(prevState) {
     if(this.state.queue_song_ids !== prevState.queue_song_ids){
       console.log('queue_song_ids state update');
-      Actions.loadSong();
+      // Actions.loadSong();
       Actions.getSongsFromDB();
     }
     if(this.state.song_queue !== prevState.song_queue) {
@@ -70,10 +70,11 @@ var AudioStore = module.exports = Reflux.createStore({
     });
   },
   // addSongToPlay:function() {
+  //   console.log('addSongToPlay clicked');
   //   var theQueue = this.state.queue_song_ids;
   //   // var songToAdd = spotify_id;
   //   theQueue.unshift(spotify_id);
-  //   console.log('single play clicked: ' + theQueue);
-  //   this.setState({queue_song_ids: theQueue});
+  //   //console.log('single play clicked: ' + theQueue);
+  //   //this.setState({queue_song_ids: theQueue});
   // }
 });
