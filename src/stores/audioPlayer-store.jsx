@@ -24,6 +24,9 @@ var AudioStore = module.exports = Reflux.createStore({
       now_playing_artist: '',
       now_playing_spotify_id: '',
       // now_playing_decorator: false
+
+      //timing stuff
+      poll_interval: 0
     }
   },
   storeDidUpdate: function(prevState) {
@@ -34,7 +37,6 @@ var AudioStore = module.exports = Reflux.createStore({
       Actions.loadSong();
     }
     if(this.state.now_playing_spotify_id !== prevState.now_playing_spotify_id) {
-      // console.log('now playing: ' + this.state.now_playing_spotify_id);
       // Actions.nowPlayingDecorator();
     }
   },
@@ -42,6 +44,46 @@ var AudioStore = module.exports = Reflux.createStore({
     var audio = document.getElementById('player-main');
     audio.load();
     audio.play();
+    audio.addEventListener('ended', function(){
+      console.log('song ended after reload');
+      Actions.handleNext();
+    });
+  },
+  handlePlay:function() {
+    var audio = document.getElementById('player-main');
+    audio.play();
+    audio.addEventListener('ended', function(){
+      console.log('song ended initial play');
+      Actions.handleNext();
+    });
+  },
+  handlePause:function() {
+    var audio = document.getElementById('player-main');
+    audio.pause();
+  },
+  handleNext:function() {
+    var new_num = this.state.song_play_num + 1;
+    if (new_num < this.state.song_queue.length) {
+      AudioStore.setState({
+        song_play_num: new_num,
+        now_playing_url: this.state.song_queue[new_num].play_url,
+        now_playing_track: this.state.song_queue[new_num].play_track,
+        now_playing_artist: this.state.song_queue[new_num].play_artist,
+        now_playing_spotify_id: this.state.song_queue[new_num].play_spotify_id
+      });
+    }
+  },
+  handlePrev:function() {
+    var new_num = this.state.song_play_num - 1;
+    if (new_num >= 0) {
+      AudioStore.setState({
+        song_play_num: new_num,
+        now_playing_url: this.state.song_queue[new_num].play_url,
+        now_playing_track: this.state.song_queue[new_num].play_track,
+        now_playing_artist: this.state.song_queue[new_num].play_artist,
+        now_playing_spotify_id: this.state.song_queue[new_num].play_spotify_id
+      });
+    }
   },
   getSongsFromDB: function() {
     this.song_ref = new Firebase(fireUrl + '/songs');
@@ -73,6 +115,6 @@ var AudioStore = module.exports = Reflux.createStore({
     });
   },
   // nowPlayingDecorator: function() {
-    
+
   // }
 });

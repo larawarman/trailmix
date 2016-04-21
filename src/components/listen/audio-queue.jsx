@@ -4,6 +4,8 @@ var Reflux = require('reflux');
 var StateMixin = require('reflux-state-mixin');
 var AudioStore = require('../../stores/audioPlayer-store');
 
+var Actions = require('../../actions');
+
 
 module.exports = React.createClass({
   mixins: [
@@ -51,7 +53,6 @@ module.exports = React.createClass({
           now_playing_artist: this.state.song_queue[key].play_artist,
           now_playing_spotify_id: this.state.song_queue[key].play_spotify_id
         });
-        return false
       }
     }
   },
