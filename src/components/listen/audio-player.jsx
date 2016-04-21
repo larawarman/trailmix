@@ -27,14 +27,15 @@ module.exports = React.createClass({
   },
   componentWillUpdate: function() {
     console.log('updating queue: ' + this.state.queue_song_ids);
-    this.loadSong();
+    // this.loadSong();
   },
   componentWillReceiveProps: function() {
     console.log('receiving new props: ' + this.state.queue_song_ids);
-    this.getSongQueue();
-    this.loadSong();
+    // this.getSongQueue();
+    // this.loadSong();
   },
   componentDidUpdate: function() {
+    console.log('did update: ' + this.state.queue_song_ids);
     this.loadSong();
   },
   render: function() {
@@ -52,14 +53,12 @@ module.exports = React.createClass({
     </div>
   },
   getSongQueue: function(){
-    // console.log('getInitSongQueue');
     var songs_queue = [];
     for(var key in this.state.queue_song_ids){
       songid = this.state.queue_song_ids[key];
       this.song_ref.orderByChild('spotify_id').equalTo(songid).once('value', function(songs){
         songs.forEach(function(song){
           song= song.val();
-          // console.log(song);
           songs_queue.push({
             play_url: song.spotify_preview_url,
             play_track: song.track_name,
@@ -74,9 +73,9 @@ module.exports = React.createClass({
       now_playing_url: songs_queue[0].play_url,
       now_playing_track: songs_queue[0].play_track,
       now_playing_artist: songs_queue[0].play_artist
+    }, function() {
+      this.loadSong();
     });
-    // this.loadSong();
-    // AudioStore.setState({song_queue: songs_queue});
   },
   loadSong: function() {
     var audio = document.getElementById('player-main');

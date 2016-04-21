@@ -69,13 +69,24 @@ module.exports = React.createClass({
     </div>
   },
   addMixToPlay: function() {
-    var mainQueue = this.state.queue_song_ids;
+    var oldQueue = this.state.queue_song_ids;
+    var mainQueue = [];
+    for (var key in oldQueue) {
+      var id = oldQueue[key];
+      mainQueue.push(id)
+    } 
+    var finalQueue = this.createNewQueueArr(mainQueue);
+    AudioStore.setState({
+      queue_song_ids: finalQueue
+    });
+  },
+  createNewQueueArr: function(mainQueue) {
     var newQueue = this.state.mix_spotify_ids;
     newQueue.reverse();
     for (var key in newQueue) {
-      id = this.state.mix_spotify_ids[key];
+      var id = this.state.mix_spotify_ids[key];
       mainQueue.unshift(id);
     }
-    AudioStore.setState({queue_song_ids: mainQueue});
+    return mainQueue;
   }
 });
