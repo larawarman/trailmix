@@ -26,5 +26,4 @@ module.exports = Reflux.createActions([
   'loadSong',
   'getSongsFromDB',
   'getNewSongQueue',
-  // 'addSongToPlay'
 ]);

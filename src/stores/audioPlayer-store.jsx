@@ -14,9 +14,7 @@ var AudioStore = module.exports = Reflux.createStore({
   getInitialState: function(){ 
     return {
       //create new queue of just spotify ids
-      queue_song_ids: [
-        // '2PlGP8KVcHZvayqR8JPLtY', //Future Islands
-      ],
+      queue_song_ids: [],
 
       //find song info for all ids
       song_queue: [],
@@ -28,12 +26,9 @@ var AudioStore = module.exports = Reflux.createStore({
   },
   storeDidUpdate: function(prevState) {
     if(this.state.queue_song_ids !== prevState.queue_song_ids){
-      console.log('queue_song_ids state update');
-      // Actions.loadSong();
       Actions.getSongsFromDB();
     }
     if(this.state.song_queue !== prevState.song_queue) {
-      console.log('song_queue state update');
       Actions.loadSong();
     }
   },
@@ -69,12 +64,4 @@ var AudioStore = module.exports = Reflux.createStore({
       now_playing_artist: songs_queue[0].play_artist
     });
   },
-  // addSongToPlay:function() {
-  //   console.log('addSongToPlay clicked');
-  //   var theQueue = this.state.queue_song_ids;
-  //   // var songToAdd = spotify_id;
-  //   theQueue.unshift(spotify_id);
-  //   //console.log('single play clicked: ' + theQueue);
-  //   //this.setState({queue_song_ids: theQueue});
-  // }
 });
