@@ -11,10 +11,20 @@ module.exports = React.createClass({
   ],
   render: function() {
     return <div className="queue-view">
-      <ul className = "queue-view-songs">
+      <ul className = "queue-view-songs" id="song-queue">
         {this.renderQueueSongs()}
       </ul>
     </div>
+  },
+  componentWillReceiveProps: function() {
+    // console.log('component will receive props');
+  },
+  componenetWillUpdate: function() {
+    // console.log('component will update');
+  },
+  componentDidUpdate: function() {
+    // console.log('component did update');
+    console.log(this.state.song_queue);
   },
   renderQueueSongs: function() {
     var songs = [];
@@ -58,12 +68,12 @@ module.exports = React.createClass({
   handleQueueRemoveClick: function(id) {
     var s_id = id.s_id;
     var queue = this.state.song_queue;
+    newQueue = [];
     for (var key in queue) {
-      if(this.state.song_queue[key].play_spotify_id === s_id) {
-        queue.splice(key, 1);
-        AudioStore.setState({song_queue: queue});
-        document.getElementById(s_id).style.display = 'none';
+      if (queue[key].play_spotify_id !== s_id) {
+        newQueue.push(queue[key]);
       }
     }
+    AudioStore.setState({song_queue: newQueue});
   }
 });

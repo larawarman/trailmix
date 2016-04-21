@@ -18,7 +18,7 @@ module.exports = React.createClass({
     var queue = this.state.queue_song_ids;
     if (queue.length > 0) {
       return <div className="main-audio-player" id="main-player-container">
-        <AudioQueue />
+        <AudioQueue queue={this.state.song_queue} />
         <p>{this.state.now_playing_track} by {this.state.now_playing_artist}</p>
         <div className='audio-controls'>
           <div className="play-btn" onClick={this.handlePlay}>play</div>
