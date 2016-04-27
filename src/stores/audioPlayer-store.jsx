@@ -51,6 +51,9 @@ var AudioStore = module.exports = Reflux.createStore({
     audio.addEventListener('ended', function(){
       Actions.handleControlsNext();
     });
+    audio.ontimeupdate = function() {
+      document.getElementById('seekbar').value = this.currentTime / this.duration;
+    }
   },
   getSongPlayInfo: function(track_num) {
     var queue = this.state.song_queue;

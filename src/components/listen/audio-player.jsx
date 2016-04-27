@@ -32,6 +32,7 @@ module.exports = React.createClass({
         <audio id="player-main">
           <source id="mp3-src" src={this.state.now_playing_url} type="audio/mpeg" />
         </audio>
+        <progress id="seekbar" value="0" max="1"></progress>
       </div>
     } else {
       return null
