@@ -29,7 +29,8 @@ module.exports = React.createClass({
         <li 
         key={key} 
         spotify_id={s_id}
-        id={s_id} >
+        id={s_id} 
+        className={(s_id==this.state.now_playing_spotify_id ? 'active-playing' : '')}>
           <div className='queue-song-play' onClick={this.handleQueuePlayClick.bind(this, {s_id})}>
             {song.play_track} by {song.play_artist}
             <div>

@@ -8,3 +8,9 @@
   // height: 150px;
   background: $tm-green;
 }
+
+#song-queue {
+  li.active-playing{
+    background: $tm-blue;
+  }
+}
