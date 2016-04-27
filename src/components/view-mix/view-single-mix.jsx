@@ -19,10 +19,10 @@ module.exports = React.createClass({
     StateMixin.connect(ViewMixStore),
     StateMixin.connect(AudioStore)
   ],
-  // componentWillMount: function() {
-  //   var id=this.props.params.id;
-  //   Actions.getMixData(id);
-  // },
+  componentWillMount: function() {
+    var id=this.props.params.id;
+    Actions.getMixData(id);
+  },
   render: function() {
     return <div>
       {this.state.the_mix ? this.renderContent() : null}
