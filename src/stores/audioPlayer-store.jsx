@@ -31,18 +31,15 @@ var AudioStore = module.exports = Reflux.createStore({
   },
   storeDidUpdate: function(prevState) {
     if(this.state.queue_song_ids !== prevState.queue_song_ids){
-      console.log('queue_song_ids updated');
       Actions.getSongsFromDB();
     }
     if(this.state.song_queue !== prevState.song_queue) {
-      console.log('song_queue updated');
       if (this.state.now_playing_spotify_id == '') {
         Actions.getSongPlayInfo(this.state.song_play_num);
         Actions.loadSong();
       }
     }
     if(this.state.song_play_num !== prevState.song_play_num) {
-      console.log('song_play_num updated');
       Actions.getSongPlayInfo(this.state.song_play_num);      
       Actions.loadSong();
     }
@@ -51,17 +48,15 @@ var AudioStore = module.exports = Reflux.createStore({
     var audio = document.getElementById('player-main');
     audio.load();
     audio.play();
-    // audio.addEventListener('ended', function(){
-    //   console.log('queue_song_ids: ' + this.state.song_queue + ' / song_play_num: ' + this.state.song_play_num);
-    //   Actions.handleNext();
-    // });
+    audio.addEventListener('ended', function(){
+      Actions.handleControlsNext();
+    });
   },
   getSongPlayInfo: function(track_num) {
     var queue = this.state.song_queue;
     AudioStore.setState({song_play_num: track_num});
     for (var key in queue) {
       if (key == track_num) {
-        console.log(track_num);
         AudioStore.setState({
           now_playing_url: queue[track_num].play_url,
           now_playing_track: queue[track_num].play_track,
