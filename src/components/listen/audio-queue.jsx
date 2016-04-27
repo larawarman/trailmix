@@ -45,35 +45,30 @@ module.exports = React.createClass({
   handleQueuePlayClick:function(id) {
     var s_id = id.s_id;
     for (var key in this.state.song_queue) {
-      if(this.state.song_queue[key].play_spotify_id === s_id) {
-        AudioStore.setState({
-          song_play_num: key,
-          now_playing_url: this.state.song_queue[key].play_url,
-          now_playing_track: this.state.song_queue[key].play_track,
-          now_playing_artist: this.state.song_queue[key].play_artist,
-          now_playing_spotify_id: this.state.song_queue[key].play_spotify_id
-        });
+      if(this.state.song_queue[key].play_spotify_id == s_id) {
+        Actions.getSongPlayInfo(key);
       }
     }
   },
   handleQueueRemoveClick: function(id) {
     var s_id = id.s_id;
-    var song_queue = this.state.song_queue;
-    var queue_song_ids = this.state.queue_song_ids;
     var new_song_queue = [];
+    for (var key in this.state.song_queue) {
+      new_song_queue.push(this.state.song_queue[key]);
+    }
+    var removeKey = '';
+    for (var key in new_song_queue) {
+      if (new_song_queue[key].play_spotify_id == s_id) {
+        removeKey = key;
+      }
+    }
     var new_queue_song_ids = [];
-    for (var key in song_queue) {
-      if (song_queue[key].play_spotify_id !== s_id) {
-        new_song_queue.push(song_queue[key]);
-      }
+    for (var key in this.state.queue_song_ids){
+      new_queue_song_ids.push(this.state.queue_song_ids[key]);
     }
-    for (var key in queue_song_ids) {
-      // console.log(queue_song_ids[key]);
-      if(queue_song_ids[key] !== s_id) {
-        new_queue_song_ids.push(queue_song_ids[key]);
-      }
-    }
+    new_song_queue.splice(removeKey, 1);
     AudioStore.setState({song_queue: new_song_queue});
+    new_queue_song_ids.splice(removeKey, 1);
     AudioStore.setState({queue_song_ids: new_queue_song_ids});
   }
 });

@@ -135,7 +135,6 @@ var ViewMixStore = module.exports = Reflux.createStore({
       var song = mix.songs[key];
       song.key = key;
       imageUrl = song.images[0].url;
-      // console.log(song.spotify_id);
       albums.push(imageUrl);
       spotify_ids.push(song.spotify_id);
     }

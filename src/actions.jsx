@@ -23,11 +23,12 @@ module.exports = Reflux.createActions([
   'getMixListItems',
 
   //LISTEN TO STUFF
+  'getSongPlayInfo',
   'loadSong',
-  'handlePlay',
-  'handlePause',
-  'handleNext',
-  'handlePrev',
+  'handleControlsPlay',
+  'handleControlsPause',
+  'handleControlsNext',
+  'handleControlsPrev',
   'getSongsFromDB',
   'getNewSongQueue',
 ]);

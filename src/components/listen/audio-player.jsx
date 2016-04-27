@@ -21,13 +21,13 @@ module.exports = React.createClass({
     var queue = this.state.queue_song_ids;
     if (queue.length > 0) {
       return <div className="main-audio-player" id="main-player-container">
-        <AudioQueue queue={this.state.song_queue} />
+        <AudioQueue />
         <p>{this.state.now_playing_track} by {this.state.now_playing_artist}</p>
         <div className='audio-controls'>
-          <div className="play-btn" onClick={Actions.handlePlay}>play</div>
-          <div className="pause-btn" onClick={Actions.handlePause}>pause</div>
-          <div className="next-btn" onClick={Actions.handleNext}>next</div>
-          <div className="prev-btn" onClick={Actions.handlePrev}>prev</div>
+          <div className="play-btn" onClick={Actions.handleControlsPlay}>play</div>
+          <div className="pause-btn" onClick={Actions.handleControlsPause}>pause</div>
+          <div className="next-btn" onClick={Actions.handleControlsNext}>next</div>
+          <div className="prev-btn" onClick={Actions.handleControlsPrev}>prev</div>
         </div>
         <audio id="player-main">
           <source id="mp3-src" src={this.state.now_playing_url} type="audio/mpeg" />
