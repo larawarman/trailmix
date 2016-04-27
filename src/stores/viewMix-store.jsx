@@ -27,12 +27,9 @@ var ViewMixStore = module.exports = Reflux.createStore({
       mix_place: '',
       mix_time: '',
       mix_tags: [],
-      mixSongs: {},      
-      //MIX IMAGE ART
+      mixSongs: {},
       mixImgs: [],
-      songs_for_art: {}
-      //mixImgs: [],
-      //mix_spotify_ids: []
+      mix_spotify_ids: []
     }
   },
   storeDidUpdate: function(prevState) {
