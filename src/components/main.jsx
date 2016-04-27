@@ -5,8 +5,10 @@ var Link = Router.Link;
 var Reflux = require('reflux');
 var StateMixin = require('reflux-state-mixin');
 var CreateLocationStore = require('../stores/createLocation-store');
+// var AudioPlayerStore = require('../stores/audioPlayer-store');
 
 var FindMixMain = require('./find-mix/find-mix-main');
+var AudioPlayer = require('./listen/audio-player');
 
 
 module.exports = React.createClass({
@@ -19,6 +21,7 @@ module.exports = React.createClass({
   render: function() {
     return <div>
       {this.content()}
+      <AudioPlayer />
     </div>
   },
   content: function() {

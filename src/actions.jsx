@@ -7,6 +7,7 @@ module.exports = Reflux.createActions([
   'setQuery',
   'queryTracks',
   'closeResults',
+  'addSong',
   'pauseAllAudio',
   'playOneAudio',
 
@@ -19,5 +20,15 @@ module.exports = Reflux.createActions([
   //VIEW TRAILMIX LOCATION STORE
   'getDB',
   'loadLocationDetails',
-  'getMixListItems'
+  'getMixListItems',
+
+  //LISTEN TO STUFF
+  'getSongPlayInfo',
+  'loadSong',
+  'handleControlsPlay',
+  'handleControlsPause',
+  'handleControlsNext',
+  'handleControlsPrev',
+  'getSongsFromDB',
+  'getNewSongQueue',
 ]);

@@ -25,19 +25,19 @@ module.exports = React.createClass({
   render: function(){
     return <div>
       <div className="row">
-        <div className="col-md-6 col-md-offset-3">
+        <div className="col-md-12">
           <ul className="mix-area">
             {this.renderMixSongs()}
           </ul>
         </div>
       </div>
       <div className="row">
-        <div className="col-md-6 col-md-offset-3">
+        <div className="col-md-12">
           <SongArea mix_url={this.props.mix_url} />
         </div>
       </div>
       <div className="row">
-        <div className="col-md-6 col-md-offset-3">
+        <div className="col-md-12">
           <MixArt />
         </div>
       </div>

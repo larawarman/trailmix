@@ -1,0 +1,19 @@
+@import '../variables';
+@import '../mixins';
+
+.main-audio-player {
+  position: fixed;
+  bottom: 0;
+  // width: 100%;
+  // height: 150px;
+  background: $tm-green;
+}
+
+#song-queue {
+  li.active-playing{
+    background: $tm-blue;
+  }
+}
+#seekbar {
+  width: 400px;
+}

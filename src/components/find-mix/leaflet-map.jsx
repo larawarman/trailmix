@@ -7,15 +7,10 @@ var Router = require('react-router');
 // var browserHistory = Router.browserHistory;
 // var Link = Router.Link;
 
-
 var Reflux = require('reflux');
 var StateMixin = require('reflux-state-mixin');
 var CreateLocationStore = require('../../stores/createLocation-store');
 var ViewMixStore = require('../../stores/viewMix-store');
-
-var ReactFire = require('reactfire');
-var Firebase = require('firebase');
-var fireUrl = 'https://trailmix0.firebaseio.com/';
 
 var ReactLeaflet = require('react-leaflet');
 
@@ -27,7 +22,6 @@ module.exports = React.createClass({
   mixins:[
     StateMixin.connect(CreateLocationStore),
     StateMixin.connect(ViewMixStore),
-    ReactFire
   ],
   getInitialState: function() {
     return{
@@ -36,6 +30,15 @@ module.exports = React.createClass({
   },
   componentWillMount: function() {
     Actions.getAllMixesLocations();
+  },
+  componentWillUpdate: function() {
+    console.log('map component will update');
+  },
+  componentDidUpdate: function() {
+    console.log('map component did update');
+  },
+  componentWillUnmount:function() {
+    console.log('map component will unmount');
   },
   render: function() {
     var position = [this.state.localLat, this.state.localLng];

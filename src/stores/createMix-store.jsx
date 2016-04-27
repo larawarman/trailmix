@@ -26,14 +26,40 @@ var CreateMixStore = module.exports = Reflux.createStore({
 
       //CREATE MIX
       tags: [], //hashtags as an array
-      
-      mix_path: '' //path to the mix
+      mix_path: '', //path to the mix
+
+      //CREATE SONG
+      track_name: '',
+      artists_arr: '',
+      artistJoined: '',
+      images: '',
+      external_ids: '',
+      spotify_preview_url: '',
+      spotify_id: '',
+      spotify_href: '',
+      spotify_popularity: '',
+      spotify_uri: '',
     }
   },
   storeDidUpdate: function(prevState) {
-    if(this.state.mixSongs !== prevState.mixSongs){
-      //console.log('updated: ' + this.state.mixSongs);
+    if(this.state.spotify_id !== prevState.spotify_id){
+      Actions.addSong();
     }
+  },
+  addSong: function(spotify_id) {
+    this.songs_ref = new Firebase(fireUrl + '/songs');
+    this.songs_ref.push({
+      track_name: this.state.track_name,
+      artists_arr: this.state.artists_arr,
+      artistJoined: this.state.artistJoined,
+      images: this.state.images,
+      external_ids: this.state.external_ids,
+      spotify_preview_url: this.state.spotify_preview_url,
+      spotify_id: this.state.spotify_id,
+      spotify_href: this.state.spotify_href,
+      spotify_popularity: this.state.spotify_popularity,
+      spotify_uri: this.state.spotify_uri,
+    });
   },
   //SEARCH
   queryTracks: function(query) {

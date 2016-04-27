@@ -4,8 +4,7 @@ var Router = require('react-router');
 var Link = Router.Link;
 
 var LeafletMap = require('./leaflet-map');
-var ViewSingleMix = require('../view-mix/view-single-mix');
-
+// var AudioPlayer = require('../listen/audio-player');
 
 
 module.exports = React.createClass({

@@ -10,6 +10,7 @@
   "dependencies": {
     "browserify": "^9.0.3",
     "firebase": "^2.4.1",
+    "geofire": "^4.0.0",
     "gulp": "^3.8.11",
     "gulp-concat": "^2.5.2",
     "gulp-react": "^3.0.1",
