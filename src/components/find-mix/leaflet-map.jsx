@@ -32,13 +32,13 @@ module.exports = React.createClass({
     Actions.getAllMixesLocations();
   },
   componentWillUpdate: function() {
-    console.log('map component will update');
+    // console.log('map component will update');
   },
   componentDidUpdate: function() {
-    console.log('map component did update');
+    // console.log('map component did update');
   },
   componentWillUnmount:function() {
-    console.log('map component will unmount');
+    // console.log('map component will unmount');
   },
   render: function() {
     var position = [this.state.localLat, this.state.localLng];
