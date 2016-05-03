@@ -9,6 +9,7 @@ var fireUrl = 'https://trailmix0.firebaseio.com/';
 
 var Actions = require('../../actions');
 var Geosuggest = require('react-geosuggest');
+var GeoFire = require('geofire');
 
 
 module.exports = React.createClass({
@@ -20,6 +21,8 @@ module.exports = React.createClass({
     this.mixLocationRef = new Firebase(this.props.mix_url + '/location');
     this.locationsRef = new Firebase(fireUrl + '/locations');
     this.locationRef = this.locationsRef.push();
+    this.geofireRef = new Firebase(fireUrl + '/geofire');
+    this.geoFire = new GeoFire(this.geofireRef);
   },
   componentDidUpdate:function() {
     if(this.state.drop_name === '') {
@@ -129,6 +132,10 @@ module.exports = React.createClass({
         drop_gmaps_types: this.state.drop_gmaps_types,
       });
       this.locationRef.child('mixes_here').push(this.props.mix_key);
+      this.geoFire.set(this.state.drop_gmaps_id, [this.state.drop_lat, this.state.drop_lng]).then(function() {
+      }, function(error) {
+        console.log("Error: " + error);
+      });
     } else {
       this.locationRef.remove();
       existing_locationRef = this.locationsRef.child(this.state.exists + '/mixes_here');
