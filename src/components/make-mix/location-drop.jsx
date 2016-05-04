@@ -24,6 +24,9 @@ module.exports = React.createClass({
     this.geofireRef = new Firebase(fireUrl + '/geofire');
     this.geoFire = new GeoFire(this.geofireRef);
   },
+  componentWillReceiveProps: function() {
+    console.log('componentWillReceiveProps');
+  },
   componentDidUpdate:function() {
     if(this.state.drop_name === '') {
       CreateLocationStore.setState({
@@ -132,10 +135,12 @@ module.exports = React.createClass({
         drop_gmaps_types: this.state.drop_gmaps_types,
       });
       this.locationRef.child('mixes_here').push(this.props.mix_key);
-      this.geoFire.set(this.state.drop_gmaps_id, [this.state.drop_lat, this.state.drop_lng]).then(function() {
-      }, function(error) {
-        console.log("Error: " + error);
-      });
+      if(this.state.drop_gmaps_id) {
+        this.geoFire.set(this.state.drop_gmaps_id, [this.state.drop_lat, this.state.drop_lng]).then(function() {
+        }, function(error) {
+          console.log("Error: " + error);
+        });
+      }
     } else {
       this.locationRef.remove();
       existing_locationRef = this.locationsRef.child(this.state.exists + '/mixes_here');

@@ -58,13 +58,10 @@ var ViewMixStore = module.exports = Reflux.createStore({
       this.locationsRef.orderByChild('drop_gmaps_id').equalTo(placeid).once('value', function(places) {
         var singles = ViewMixStore.state.single_mixes;
         var multis = ViewMixStore.state.multi_mixes;
-        // var multis = [];
         places.forEach(function(place) {
           var num_mixes = place.child('mixes_here').numChildren();
-          // console.log(num_mixes);
           var drop_gmaps_id = place.val().drop_gmaps_id;
           if (num_mixes > 1) {
-            // console.log(place.val().drop_gmaps_id);
             if(multis.indexOf(drop_gmaps_id) === -1) {
               ViewMixStore.setState({
                 multi_mixes: ViewMixStore.state.multi_mixes.concat([place.val().drop_gmaps_id])
@@ -141,6 +138,7 @@ var ViewMixStore = module.exports = Reflux.createStore({
     this.fb_mixRef.on('value', this.handleMixDataLoaded);
   },
   handleMixDataLoaded: function(snapshot) {
+    console.log('handleMixDataLoaded');
     var mix = snapshot.val();
     var albums = [];
     var spotify_ids = [];
@@ -151,6 +149,7 @@ var ViewMixStore = module.exports = Reflux.createStore({
       albums.push(imageUrl);
       spotify_ids.push(song.spotify_id);
     }
+    console.log(albums);
     this.setState({
       the_mix: mix,
       mix_place: mix.location.drop_name,
