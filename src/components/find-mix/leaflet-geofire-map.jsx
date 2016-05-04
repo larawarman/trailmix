@@ -37,6 +37,7 @@ module.exports = React.createClass({
     }
   },
   componentWillMount: function() {
+    console.log('map component will mount');
     this.geofireRef = new Firebase(fireUrl + '/geofire');
     this.geoFire = new GeoFire(this.geofireRef);
     Actions.getAllMixesLocations();
@@ -46,16 +47,12 @@ module.exports = React.createClass({
     this.position = [this.state.localLat, this.state.localLng];
     this.geoQuery = this.geoFire.query({
       center: this.position,
-      radius: 10
+      radius: 0.5
     });
-    // this.geoQuery.on('ready', function() {
-    //   console.log('geoquery ready');
-    // });
     this.getLocalLocations();
   },
   componentDidUpdate: function() {
-    console.log('map component did update');
-    
+    console.log('map component did update');  
   },
   componentWillUnmount:function() {
     console.log('map component will unmount');
@@ -70,6 +67,8 @@ module.exports = React.createClass({
             url={'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=' + mb}
             id='mapbox.light'
           />
+          {this.renderSingleMarkers()}
+          {this.renderMultiMarkers()}
         </ReactLeaflet.Map>
       </div>
     </div>
@@ -81,73 +80,73 @@ module.exports = React.createClass({
       });
     });
   },
-  // renderSingleMarkers: function() {
-  //   var pub_solos = [];
-  //   for (var key in this.state.solos_published) {
-  //     var mix = this.state.solos_published[key];
-  //     var markerPosition = mix.markerPosition;
-  //     var key = mix.key;
-  //     var place = mix.place;
-  //     var tags = mix.tags;
-  //     pub_solos.push(
-  //       <ReactLeaflet.Marker 
-  //       position={markerPosition} 
-  //       key={key}
-  //       opacity={0.5}
-  //       >
-  //         <ReactLeaflet.Popup>
-  //           <div key={key} onClick={this.handleSinglePopupClick.bind(this, {key})} >
-  //             <p>{place}</p>
-  //             <p>{tags}</p>
-  //           </div>
-  //         </ReactLeaflet.Popup>
-  //       </ReactLeaflet.Marker>
-  //     );
-  //   }
-  //   return pub_solos;
-  // },
-  // renderMultiMarkers: function() {
-  //   var pub_multis = [];
-  //   for (var key in this.state.multis_published) {
-  //     var mix = this.state.multis_published[key];
-  //     var markerPosition = [mix.drop_lat, mix.drop_lng];
-  //     var count = mix.mixcount;
-  //     var location_tm_key = mix.location_tm_key;
-  //     var place = mix.drop_name;
-  //     pub_multis.push(
-  //       <ReactLeaflet.Marker 
-  //       position={markerPosition} 
-  //       key={location_tm_key}
-  //       place={place}
-  //       onClick={this.handleMultiMarkerClick.bind(this, {location_tm_key, place})}
-  //       >
-  //       </ReactLeaflet.Marker>
-  //     );
-  //   }
-  //   return pub_multis;
-  // },
-  // handleSinglePopupClick: function(id) {
-  //   var mixRoute = id.key;
-  //   this.context.router.push({
-  //     pathname: '/mix/' + mixRoute,
-  //     id: mixRoute
-  //   });
-  //   // browserHistory.push({
-  //   //   pathname: '/mix/' + mixRoute,
-  //   //   id: mixRoute
-  //   // });
-  // },
-  // handleMultiMarkerClick:function(id) {
-  //   var locRoute = id.location_tm_key;
-  //   var place = id.place;
-  //   this.context.router.push({
-  //     pathname: '/place/' + locRoute,
-  //     id: locRoute,
-  //     place: place
-  //   });
-  //   // browserHistory.push({
-  //   //   pathname: '/place/' + locRoute,
-  //   //   id: locRoute
-  //   // });
-  // }
+  renderSingleMarkers: function() {
+    var pub_solos = [];
+    for (var key in this.state.solos_published) {
+      var mix = this.state.solos_published[key];
+      var markerPosition = mix.markerPosition;
+      var key = mix.key;
+      var place = mix.place;
+      var tags = mix.tags;
+      pub_solos.push(
+        <ReactLeaflet.Marker 
+        position={markerPosition} 
+        key={key}
+        opacity={0.5}
+        >
+          <ReactLeaflet.Popup>
+            <div key={key} onClick={this.handleSinglePopupClick.bind(this, {key})} >
+              <p>{place}</p>
+              <p>{tags}</p>
+            </div>
+          </ReactLeaflet.Popup>
+        </ReactLeaflet.Marker>
+      );
+    }
+    return pub_solos;
+  },
+  renderMultiMarkers: function() {
+    var pub_multis = [];
+    for (var key in this.state.multis_published) {
+      var mix = this.state.multis_published[key];
+      var markerPosition = [mix.drop_lat, mix.drop_lng];
+      var count = mix.mixcount;
+      var location_tm_key = mix.location_tm_key;
+      var place = mix.drop_name;
+      pub_multis.push(
+        <ReactLeaflet.Marker 
+        position={markerPosition} 
+        key={location_tm_key}
+        place={place}
+        onClick={this.handleMultiMarkerClick.bind(this, {location_tm_key, place})}
+        >
+        </ReactLeaflet.Marker>
+      );
+    }
+    return pub_multis;
+  },
+  handleSinglePopupClick: function(id) {
+    var mixRoute = id.key;
+    this.context.router.push({
+      pathname: '/mix/' + mixRoute,
+      id: mixRoute
+    });
+    // browserHistory.push({
+    //   pathname: '/mix/' + mixRoute,
+    //   id: mixRoute
+    // });
+  },
+  handleMultiMarkerClick:function(id) {
+    var locRoute = id.location_tm_key;
+    var place = id.place;
+    this.context.router.push({
+      pathname: '/place/' + locRoute,
+      id: locRoute,
+      place: place
+    });
+    // browserHistory.push({
+    //   pathname: '/place/' + locRoute,
+    //   id: locRoute
+    // });
+  }
 });

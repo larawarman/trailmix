@@ -38,11 +38,9 @@ var ViewMixStore = module.exports = Reflux.createStore({
       Actions.sortLocalMixes();
     }
     if(this.state.single_mixes !== prevState.single_mixes){
-      console.log(this.state.single_mixes);
       Actions.setSingleMixes();
     }
-    if(this.state.multi_mixes !== prevState.multi_mixes || this.state.all_mixes !== prevState.all_mixes){
-      console.log(this.state.multi_mixes);
+    if(this.state.multi_mixes !== prevState.multi_mixes){
       Actions.setMultiMixes();
     }
   },
@@ -52,9 +50,7 @@ var ViewMixStore = module.exports = Reflux.createStore({
   },
   handleMixLocLoaded:function(data) {
     this.fb_mixesRef = this.mix_loc_ref.child('mixes');
-    // this.fb_mixesRef.on('value', this.handleAllMixesLoaded);
     this.locationsRef = this.mix_loc_ref.child('locations');
-    // this.segmentLocations(data);
   },
   sortLocalMixes: function() {
     for (var key in this.state.local_mix_locations){

@@ -14,9 +14,6 @@ module.exports = React.createClass({
   mixins: [
     StateMixin.connect(AudioStore)
   ],
-  componentDidMount:function() {
-    // this.secondInterval();
-  },
   render: function() {
     var queue = this.state.queue_song_ids;
     if (queue.length > 0) {
@@ -37,16 +34,5 @@ module.exports = React.createClass({
     } else {
       return null
     }
-  },
-  secondInterval: function() {
-    var interval = setInterval(this.getPlayhead, 1000);
-  },
-  getPlayhead:function() {
-    // var newInterval = this.state.poll_interval + 1;
-    var audio = document.getElementById('player-main');
-    console.log('duration: ' + audio.duration);
-    console.log('currentTime: ' + audio.currentTime);
-    // AudioStore.setState({poll_interval: newInterval})
-    // console.log(newInterval);
   }
 });

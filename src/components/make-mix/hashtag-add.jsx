@@ -5,7 +5,6 @@ var StateMixin = require('reflux-state-mixin');
 
 var ReactFire = require('reactfire');
 var Firebase = require('firebase');
-//var fireUrl = 'https://trailmix0.firebaseio.com/';
 
 var CreateMixStore = require('../../stores/createMix-store');
 
