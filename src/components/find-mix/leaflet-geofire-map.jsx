@@ -34,44 +34,44 @@ module.exports = React.createClass({
   getInitialState: function() {
     return{
       zoom: 50,
+      position: [0,0]
     }
   },
   componentWillMount: function() {
-    console.log('map component will mount');
+    this.state.position = [this.state.localLat, this.state.localLng]
     this.geofireRef = new Firebase(fireUrl + '/geofire');
     this.geoFire = new GeoFire(this.geofireRef);
     Actions.getAllMixesLocations();
   },
   componentWillReceiveProps: function() {
-    console.log('map component will update');
-    this.position = [this.state.localLat, this.state.localLng];
+    this.state.position = [this.state.localLat, this.state.localLng];
     this.geoQuery = this.geoFire.query({
-      center: this.position,
+      center: this.state.position,
       radius: 0.5
     });
     this.getLocalLocations();
   },
-  componentDidUpdate: function() {
-    console.log('map component did update');  
-  },
-  componentWillUnmount:function() {
-    console.log('map component will unmount');
-  },
   render: function() {
     var mb = 'pk.eyJ1IjoibGFyYXdhcm1hbiIsImEiOiJjaW05ZDc3ZHEwM21qdG5tNm1lNnc5enBiIn0.5qqJjeDHM2t7FKHoHWlu2Q';
-    return <div>
-      <div className='map-container'>
-        <ReactLeaflet.Map center={this.position} zoom={this.state.zoom}>
-          <ReactLeaflet.TileLayer
-            attribution="&copy; <a href='https://www.mapbox.com/map-feedback/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a>"
-            url={'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=' + mb}
-            id='mapbox.light'
-          />
-          {this.renderSingleMarkers()}
-          {this.renderMultiMarkers()}
-        </ReactLeaflet.Map>
+    if (this.state.localLat === 0 && this.state.localLng === 0) {
+      return <div>
+        <h1>Loading location...</h1>
       </div>
-    </div>
+    } else {
+      return <div>
+        <div className='map-container'>
+          <ReactLeaflet.Map center={this.state.position} zoom={this.state.zoom}>
+            <ReactLeaflet.TileLayer
+              attribution="&copy; <a href='https://www.mapbox.com/map-feedback/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a>"
+              url={'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=' + mb}
+              id='mapbox.light'
+            />
+            {this.renderSingleMarkers()}
+            {this.renderMultiMarkers()}
+          </ReactLeaflet.Map>
+        </div>
+      </div>
+    }
   },
   getLocalLocations: function() {
     this.geoQuery.on("key_entered", function(key, location, distance) {
