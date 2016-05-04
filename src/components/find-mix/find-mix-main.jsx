@@ -4,6 +4,7 @@ var Router = require('react-router');
 var Link = Router.Link;
 
 var LeafletMap = require('./leaflet-map');
+var LeafletGeofireMap = require('./leaflet-geofire-map');
 // var AudioPlayer = require('../listen/audio-player');
 
 
@@ -14,7 +15,7 @@ module.exports = React.createClass({
       <Link to="/make-mix/new" className="navbar-brand">
         make ur mix
       </Link>
-      <LeafletMap />
+      <LeafletGeofireMap />
     </div>
   }
 });

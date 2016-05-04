@@ -12,6 +12,7 @@ module.exports = Reflux.createActions([
   'playOneAudio',
 
   //VIEW MIX STORE
+  'sortLocalMixes',
   'getAllMixesLocations',
   'setSingleMixes',
   'setMultiMixes',
