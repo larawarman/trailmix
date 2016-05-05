@@ -1,22 +1,45 @@
 var React = require('react');
-var StateMixin = require('reflux-state-mixin');
 
-var ViewMixStore = require('../../stores/viewMix-store');
+var ReactFire = require('reactfire');
+var Firebase = require('firebase');
+var fireUrl = 'https://trailmix0.firebaseio.com/';
+
 
 
 module.exports = React.createClass({
   mixins: [ 
-    StateMixin.connect(ViewMixStore)
+    ReactFire
   ],
+  getInitialState: function() {
+    return {
+      mix_images : [],
+    }
+  },
+  componentWillMount: function() {
+    var id=this.props.mixid;
+    this.fb_mixRef = new Firebase(fireUrl + '/mixes/' + id);
+    this.fb_mixRef.on('value', this.handleMixDataLoaded);
+  },
   render: function() {
     return  <div className={"mix-art-container " + (this.state.loaded ? 'loaded' : '')}>
       {this.renderAlbumArt()}
     </div>
   },
+  handleMixDataLoaded: function(mixdata) {
+    mixdata = mixdata.val();
+    var images = [];
+    for (var key in mixdata.songs){
+      var song = mixdata.songs[key];
+      imageUrl = song.images[0].url;
+      images.push(imageUrl);
+    }
+    this.setState({mix_images: images});
+  },
   renderAlbumArt: function() {
+    var mixImgs = this.state.mix_images;
     var albums = [];
-    for (var key in this.state.mixImgs)  {
-      var imageUrl = this.state.mixImgs[key];
+    for (var key in mixImgs)  {
+      var imageUrl = mixImgs[key];
       imageUrl.key = key;
       albums.push(
         <li

@@ -40,7 +40,6 @@ module.exports = React.createClass({
     }
   },
   componentWillMount: function() {
-    console.log('map will mount');
     this.state.position = [this.state.localLat, this.state.localLng]
     this.geofireRef = new Firebase(fireUrl + '/geofire');
     this.geoFire = new GeoFire(this.geofireRef);
@@ -50,7 +49,6 @@ module.exports = React.createClass({
     Actions.getLocation();
   },
   componentWillReceiveProps: function() {
-    console.log('map will receive props');
     this.state.position = [this.state.localLat, this.state.localLng];
     this.geoQuery = this.geoFire.query({
       center: this.state.position,

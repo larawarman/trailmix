@@ -10,7 +10,7 @@ var ViewMixArt = require('./view-mix-art');
 module.exports = React.createClass({
   render: function() {
     return <li key={this.props.id} className="mix-list-item">
-      <ViewMixArt id={this.props.id} size={1} />
+      <ViewMixArt mixid={this.props.id} size={1} />
       <div className="mix-info-container">
         {this.renderArtists()}
         <div className="publish-date">

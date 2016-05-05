@@ -32,7 +32,7 @@ module.exports = React.createClass({
     return <div className="view-mix">
       <div className="row">
         <div className="col-md-6 col-md-offset-3">
-          <ViewMixArt />
+          <ViewMixArt mixid={this.props.params.id} size={1} />
           <div className="play-mix" onClick={this.addMixToPlay}>play</div>
         </div>
       </div>
