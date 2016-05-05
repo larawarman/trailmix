@@ -86,9 +86,12 @@ module.exports = React.createClass({
   },
   getLocalLocations: function() {
     this.geoQuery.on("key_entered", function(key, location, distance) {
-      ViewMixStore.setState({
-        local_mix_locations: ViewMixStore.state.local_mix_locations.concat([key])
-      });
+      var local_mixes = ViewMixStore.state.local_mix_locations;
+      if(local_mixes.indexOf(key) === -1){
+        ViewMixStore.setState({
+          local_mix_locations: ViewMixStore.state.local_mix_locations.concat([key])
+        });
+      }
     });
   },
   renderSingleMarkers: function() {

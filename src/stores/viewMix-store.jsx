@@ -38,11 +38,9 @@ var ViewMixStore = module.exports = Reflux.createStore({
       Actions.sortLocalMixes();
     }
     if(this.state.single_mixes !== prevState.single_mixes){
-      console.log(this.state.single_mixes);
       Actions.setSingleMixes();
     }
     if(this.state.multi_mixes !== prevState.multi_mixes){
-      console.log(this.state.multi_mixes);
       Actions.setMultiMixes();
     }
   },
@@ -57,35 +55,27 @@ var ViewMixStore = module.exports = Reflux.createStore({
   sortLocalMixes: function() {
     for (var key in this.state.local_mix_locations){
       placeid = this.state.local_mix_locations[key];
-      // console.log(placeid);
-      this.locationsRef.child(placeid).once('value', function(places) {
-        // console.log(places.val());
+      this.locationsRef.child(placeid).once('value', function(place) {
         var singles = ViewMixStore.state.single_mixes;
         var multis = ViewMixStore.state.multi_mixes;
-        var num_mixes = places.child('mixes_here').numChildren();
-        // console.log(num_mixes);
-        places.forEach(function(place) {
-          // console.log(place.val());
-          var num_mixes = place.child('mixes_here').numChildren();
-          console.log(num_mixes);
-          var drop_gmaps_id = place.val().drop_gmaps_id;
-          if (num_mixes > 1) {
-            if(multis.indexOf(drop_gmaps_id) === -1) {
-              ViewMixStore.setState({
-                multi_mixes: ViewMixStore.state.multi_mixes.concat([place.val().drop_gmaps_id])
-              });              
-            }
-          } else {
-            place.child('mixes_here').forEach(function(mix){
-              mixid = mix.val();
-              if(singles.indexOf(mixid) === -1) {
-                ViewMixStore.setState({
-                  single_mixes: ViewMixStore.state.single_mixes.concat([mixid])
-                });
-              }
-            });
+        var num_mixes = place.child('mixes_here').numChildren();
+        var drop_gmaps_id = place.val().drop_gmaps_id;
+        if (num_mixes > 1) {
+          if(multis.indexOf(drop_gmaps_id) === -1) {
+            ViewMixStore.setState({
+              multi_mixes: ViewMixStore.state.multi_mixes.concat([place.val().drop_gmaps_id])
+            });              
           }
-        });
+        } else {
+          place.child('mixes_here').forEach(function(mix){
+            mixid = mix.val();
+            if(singles.indexOf(mixid) === -1) {
+              ViewMixStore.setState({
+                single_mixes: ViewMixStore.state.single_mixes.concat([mixid])
+              });
+            }
+          });
+        }
       });
     }
   },
@@ -146,7 +136,6 @@ var ViewMixStore = module.exports = Reflux.createStore({
     this.fb_mixRef.on('value', this.handleMixDataLoaded);
   },
   handleMixDataLoaded: function(snapshot) {
-    console.log('handleMixDataLoaded');
     var mix = snapshot.val();
     var albums = [];
     var spotify_ids = [];
@@ -157,7 +146,6 @@ var ViewMixStore = module.exports = Reflux.createStore({
       albums.push(imageUrl);
       spotify_ids.push(song.spotify_id);
     }
-    console.log(albums);
     this.setState({
       the_mix: mix,
       mix_place: mix.location.drop_name,
