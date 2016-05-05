@@ -27,22 +27,10 @@ module.exports = React.createClass({
         </li>
         )
     }
-    if (children.length === 0){
+    if (children.length === 0) {
       return null
-    } else if (children.length === 1) {
-      return <ul className = 'one'>
-        {children}
-      </ul>
-    } else if (children.length === 2) {
-      return <ul className = 'two'>
-        {children}
-      </ul>
-    } else if (children.length === 3) {
-      return <ul className = 'three'>
-        {children}
-      </ul>
-    } else if (children.length > 3) {
-      return <ul className = 'more'>
+    } else {
+      return <ul className={(children.length === 1 ? 'one' : (children.length === 2 ? 'two' : (children.length === 3 ? 'three' : (children.length > 3 ? 'more' : '')))) }>
         {children}
       </ul>
     }
