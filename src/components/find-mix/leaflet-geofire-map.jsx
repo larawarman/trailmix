@@ -33,6 +33,8 @@ module.exports = React.createClass({
   ],
   getInitialState: function() {
     return{
+      minzoom: 16,
+      maxzoom: 20,
       zoom: 16,
       position: [0,0],
     }
@@ -66,12 +68,12 @@ module.exports = React.createClass({
       return <div className='map-container'>
           <ReactLeaflet.Map 
           center={this.state.position} 
-          zoom={this.state.zoom} 
+          zoom={this.state.zoom}
+          minZoom={this.state.minzoom}
+          maxZoom={this.state.maxzoom} 
           zoomControl={false}
-          dragging={false}
-          touchzoom={false}
-          scrollWheelZoom={false}
-          doubleClickZoom={false}>
+          dragging={true}
+          >
             <ReactLeaflet.TileLayer
               attribution="&copy; <a href='https://www.mapbox.com/map-feedback/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a>"
               url={'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=' + mb}
