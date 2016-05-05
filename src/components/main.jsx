@@ -9,6 +9,7 @@ var CreateLocationStore = require('../stores/createLocation-store');
 
 var FindMixMain = require('./find-mix/find-mix-main');
 var AudioPlayer = require('./listen/audio-player');
+var LeafletGeofireMap = require('./find-mix/leaflet-geofire-map');
 
 
 module.exports = React.createClass({
@@ -20,7 +21,10 @@ module.exports = React.createClass({
   },
   render: function() {
     return <div>
-      {this.content()}
+      <LeafletGeofireMap />
+      <div className="container">
+        {this.content()}
+      </div>
       <AudioPlayer />
     </div>
   },

@@ -33,8 +33,8 @@ module.exports = React.createClass({
   ],
   getInitialState: function() {
     return{
-      zoom: 50,
-      position: [0,0]
+      zoom: 16,
+      position: [0,0],
     }
   },
   componentWillMount: function() {
@@ -54,22 +54,28 @@ module.exports = React.createClass({
   render: function() {
     var mb = 'pk.eyJ1IjoibGFyYXdhcm1hbiIsImEiOiJjaW05ZDc3ZHEwM21qdG5tNm1lNnc5enBiIn0.5qqJjeDHM2t7FKHoHWlu2Q';
     if (this.state.localLat === 0 && this.state.localLng === 0) {
-      return <div>
+      return <div className="map-container">
         <h1>Loading location...</h1>
       </div>
     } else {
-      return <div>
-        <div className='map-container'>
-          <ReactLeaflet.Map center={this.state.position} zoom={this.state.zoom}>
+      return <div className='map-container'>
+          <ReactLeaflet.Map 
+          center={this.state.position} 
+          zoom={this.state.zoom} 
+          zoomControl={false}
+          dragging={false}
+          touchzoom={false}
+          scrollWheelZoom={false}
+          doubleClickZoom={false}>
             <ReactLeaflet.TileLayer
               attribution="&copy; <a href='https://www.mapbox.com/map-feedback/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a>"
               url={'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=' + mb}
               id='mapbox.light'
             />
+            <ReactLeaflet.Circle center={this.state.position} radius={500} color={'rgba(193,202,86,0.0)'} fillColor = {'rgba(223,79,88,1.0)'}/>
             {this.renderSingleMarkers()}
             {this.renderMultiMarkers()}
           </ReactLeaflet.Map>
-        </div>
       </div>
     }
   },
