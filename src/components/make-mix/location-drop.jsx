@@ -18,14 +18,15 @@ module.exports = React.createClass({
     ReactFire
   ],
   componentWillMount: function() {
-    this.mixLocationRef = new Firebase(this.props.mix_url + '/location');
-    this.locationsRef = new Firebase(fireUrl + '/locations');
-    this.locationRef = this.locationsRef.push();
-    this.geofireRef = new Firebase(fireUrl + '/geofire');
+    this.fbRef = new Firebase(fireUrl);
+    this.locationsRef = this.fbRef.child('locations');
+    this.geofireRef = this.fbRef.child('geofire');
     this.geoFire = new GeoFire(this.geofireRef);
+
+    this.mixLocationRef = new Firebase(this.props.mix_url + '/location');
+    this.locationRef = new Firebase(this.props.loc_url);
   },
   componentWillReceiveProps: function() {
-    console.log('componentWillReceiveProps');
   },
   componentDidUpdate:function() {
     if(this.state.drop_name === '') {
@@ -135,12 +136,10 @@ module.exports = React.createClass({
         drop_gmaps_types: this.state.drop_gmaps_types,
       });
       this.locationRef.child('mixes_here').push(this.props.mix_key);
-      if(this.state.drop_gmaps_id) {
-        this.geoFire.set(this.state.drop_gmaps_id, [this.state.drop_lat, this.state.drop_lng]).then(function() {
-        }, function(error) {
-          console.log("Error: " + error);
-        });
-      }
+      this.geoFire.set(this.locationRef.key(), [this.state.drop_lat, this.state.drop_lng]).then(function() {
+      }, function(error) {
+        console.log("Error: " + error);
+      });
     } else {
       this.locationRef.remove();
       existing_locationRef = this.locationsRef.child(this.state.exists + '/mixes_here');

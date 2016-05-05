@@ -12,6 +12,7 @@ var Geosuggest = require('react-geosuggest');
 var ReactFire = require('reactfire');
 var Firebase = require('firebase');
 var _ = require('lodash');
+var GeoFire = require('geofire');
 
 var fireUrl = 'https://trailmix0.firebaseio.com/';
 
@@ -28,6 +29,7 @@ module.exports = React.createClass({
     router: React.PropTypes.object.isRequired
   },
   mixins: [ 
+    StateMixin.connect(CreateLocationStore),
     StateMixin.connect(CreateMixStore),
     ReactFire 
   ],
@@ -39,9 +41,20 @@ module.exports = React.createClass({
     }
   },
   componentWillMount: function() {
-    this.fb_mixesRef = new Firebase(fireUrl + '/mixes');
+    this.firebaseRef = new Firebase(fireUrl);
+    this.fb_mixesRef = this.firebaseRef.child('mixes');
     this.fb_mixRef = this.fb_mixesRef.push();
     this.fb_mixRef.set({ 'published': false });
+    
+    this.locationsRef = this.firebaseRef.child('locations');
+    this.locationRef = this.locationsRef.push();
+    this.locationRef.set({ 'verfied': false });
+    this.locationKey = this.locationRef.key();
+    console.log(this.locationKey);
+
+    this.geofireRef = this.firebaseRef.child('geofire');
+    this.geoFire = new GeoFire(this.geofireRef);
+
     CreateMixStore.setState({mix_path: this.fb_mixRef.toString()});
   },
   // componentWillUnmount:function() {
@@ -53,7 +66,7 @@ module.exports = React.createClass({
     return <div className="row make-mix">
       <div className="col-md-12">
         <h1 className="text-center">
-          Make Ur Mix
+          Drop A New Mix
         </h1>
         <hr />
       </div>
@@ -61,7 +74,7 @@ module.exports = React.createClass({
         <div className="col-md-6 col-md-offset-3">
           <div className={"locationerr error-state " + (this.state.locationError ? 'show-error' : '')}>You must select a location for your mix.</div>
           <LocationTitle mix_url={this.fb_mixRef.toString()} />
-          <LocationDrop mix_url={this.fb_mixRef.toString()} mix_key={this.fb_mixRef.key()} />
+          <LocationDrop loc_url={this.locationRef.toString()} mix_url={this.fb_mixRef.toString()} mix_key={this.fb_mixRef.key()} />
         </div>
       </div>
       <div className="row">
@@ -122,6 +135,8 @@ module.exports = React.createClass({
     }
   },
   handleCancel:function() {
+    this.geoFire.remove(this.locationRef.key());
     this.fb_mixRef.remove();
+    this.locationRef.remove();
   }
 });
