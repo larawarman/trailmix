@@ -17,6 +17,7 @@ var Firebase = require('firebase');
 var fireUrl = 'https://trailmix0.firebaseio.com/';
 var GeoFire = require('geofire');
 
+var Leaflet = require('leaflet');
 var ReactLeaflet = require('react-leaflet');
 
 var update = require('react-addons-update');
@@ -77,7 +78,7 @@ module.exports = React.createClass({
               url={'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=' + mb}
               id='mapbox.light'
             />
-            <ReactLeaflet.Circle center={this.state.position} radius={500} color={'rgba(193,202,86,0.0)'} fillColor = {'rgba(223,79,88,1.0)'}/>
+            <ReactLeaflet.Circle center={this.state.position} radius={500} color={'rgba(190,190,190,0.0)'} fillColor = {'rgba(190,190,190,1.0)'}/>
             {this.renderSingleMarkers()}
             {this.renderMultiMarkers()}
           </ReactLeaflet.Map>
@@ -96,6 +97,11 @@ module.exports = React.createClass({
   },
   renderSingleMarkers: function() {
     var pub_solos = [];
+    var tmicon = Leaflet.icon({
+      iconUrl: 'imgs/map-icon.png',
+      iconRetinaUrl: 'imgs/map-icon@2x.png',
+      iconSize: [30, 30]
+    });
     for (var key in this.state.solos_published) {
       var mix = this.state.solos_published[key];
       var markerPosition = mix.markerPosition;
@@ -106,7 +112,7 @@ module.exports = React.createClass({
         <ReactLeaflet.Marker 
         position={markerPosition} 
         key={key}
-        opacity={0.5}
+        icon = {tmicon}
         >
           <ReactLeaflet.Popup>
             <div key={key} onClick={this.handleSinglePopupClick.bind(this, {key})} >
@@ -127,12 +133,17 @@ module.exports = React.createClass({
       var count = mix.mixcount;
       var location_tm_key = mix.location_tm_key;
       var place = mix.drop_name;
+      var tmicon = Leaflet.divIcon({
+        className: 'marker-multi-icon',
+        html: count
+      });
       pub_multis.push(
         <ReactLeaflet.Marker 
         position={markerPosition} 
         key={location_tm_key}
         place={place}
         onClick={this.handleMultiMarkerClick.bind(this, {location_tm_key, place})}
+        icon = {tmicon}
         >
         </ReactLeaflet.Marker>
       );
