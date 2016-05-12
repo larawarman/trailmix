@@ -22,9 +22,7 @@ module.exports = React.createClass({
   render: function() {
     return <div>
       <LeafletGeofireMap />
-      <div className="container">
-        {this.content()}
-      </div>
+      {this.content()}
       <AudioPlayer />
     </div>
   },

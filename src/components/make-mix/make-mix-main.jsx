@@ -63,45 +63,26 @@ module.exports = React.createClass({
   //   }
   // },
   render: function() {
-    return <div className="row make-mix">
-      <div className="col-md-12">
+    return <div className='content-wrap'>
+      <div className="col-md-6 col-md-offset-3 make-mix">
         <h1 className="text-center">
           Drop A New Mix
         </h1>
         <hr />
-      </div>
-      <div className="row">
-        <div className="col-md-6 col-md-offset-3">
-          <div className={"locationerr error-state " + (this.state.locationError ? 'show-error' : '')}>You must select a location for your mix.</div>
-          <LocationTitle mix_url={this.fb_mixRef.toString()} />
-          <LocationDrop loc_url={this.locationRef.toString()} mix_url={this.fb_mixRef.toString()} mix_key={this.fb_mixRef.key()} />
+        <div className={"locationerr error-state " + (this.state.locationError ? 'show-error' : '')}>You must select a location for your mix.</div>
+        <LocationTitle mix_url={this.fb_mixRef.toString()} />
+        <LocationDrop loc_url={this.locationRef.toString()} mix_url={this.fb_mixRef.toString()} mix_key={this.fb_mixRef.key()} />
+
+        <h4>#'s</h4>
+        <Hashtags mix_url={this.fb_mixRef.toString()} />
+        <div className={"songerr error-state " + (this.state.songError ? 'show-error' : '')}>Your mix needs at least 1 song to be published.</div>
+        <MixViewCreate mix_url={this.fb_mixRef.toString()} />
+        <div className="publish button" onClick={this.handlePublish}>
+          Publish
         </div>
-      </div>
-      <div className="row">
-        <div className="col-md-6 col-md-offset-3">
-          <h4>#'s</h4>
-          <Hashtags mix_url={this.fb_mixRef.toString()} />
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-md-6 col-md-offset-3">
-          <div className={"songerr error-state " + (this.state.songError ? 'show-error' : '')}>Your mix needs at least 1 song to be published.</div>
-          <MixViewCreate mix_url={this.fb_mixRef.toString()} />
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-md-6 col-md-offset-3">
-          <div className="publish button" onClick={this.handlePublish}>
-            Publish
-          </div>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-md-6 col-md-offset-3">
-          <Link to="/" className="publish button" onClick={this.handleCancel}>
-            Cancel
-          </Link>
-        </div>
+        <Link to="/" className="publish button" onClick={this.handleCancel}>
+          Cancel
+        </Link>
       </div>
     </div>
   },

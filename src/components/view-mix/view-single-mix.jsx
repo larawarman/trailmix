@@ -24,7 +24,7 @@ module.exports = React.createClass({
     Actions.getMixData(id);
   },
   render: function() {
-    return <div>
+    return <div className='content-wrap'>
       {this.state.the_mix ? this.renderContent() : null}
     </div>
   },

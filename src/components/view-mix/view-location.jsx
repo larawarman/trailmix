@@ -20,12 +20,14 @@ module.exports = React.createClass({
     Actions.getDB();
   },
   render: function() {
-    return <div className="location-mixes col-md-6 col-md-offset-3">
-      <h1>{this.state.place_name}</h1>
-      <h3>{this.state.num_mixes} mixes here</h3>
-      <ul className="mix-list">
-        {this.renderMixList()}
-      </ul>
+    return <div className='content-wrap'>
+      <div className="sub-container location-mixes col-md-6 col-md-offset-3">
+        <h1>{this.state.place_name}</h1>
+        <h3>{this.state.num_mixes} mixes here</h3>
+        <ul className="mix-list">
+          {this.renderMixList()}
+        </ul>
+      </div>
     </div>
   },
   renderMixList: function(){

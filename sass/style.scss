@@ -28,3 +28,18 @@ a {
 .icon-left {
   margin-right: 5px;
 }
+
+.content-wrap {
+  width: 100%;
+  background: rgba(255,255,255,0.4);
+  position:relative;
+  height:100%;
+  &.home {
+    height: initial;
+  }
+  .sub-container {
+    background:white;
+    height:100%;
+    padding:20px;
+  }
+}

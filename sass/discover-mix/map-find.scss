@@ -31,8 +31,11 @@
 .top-nav {
   position: relative;
   text-align: center;
+  padding: 20px;
   h1 {
     display:block;
+    padding:0;
+    margin:0;
   }
   .make-mix-btn {
     background: $tm-blue;
@@ -41,8 +44,8 @@
     text-transform:uppercase;
     cursor:pointer;
     position: absolute;
-    top:0;
-    right:0;
+    top:20px;
+    right:20px;
     &:hover {
       background: $tm-blueH;
     }
