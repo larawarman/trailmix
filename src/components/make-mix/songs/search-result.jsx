@@ -3,8 +3,8 @@ var ReactFire = require('reactfire');
 var StateMixin = require('reflux-state-mixin');
 var Firebase = require('firebase');
 
-var Actions = require('../../actions');
-var CreateMixStore = require('../../stores/createMix-store');
+var Actions = require('../../../actions');
+var CreateMixStore = require('../../../stores/createMix-store');
 var SongPreview = require('./song-preview');
 
 var fireUrl = 'https://trailmix0.firebaseio.com/';

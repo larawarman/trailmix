@@ -1,9 +1,10 @@
 var React = require('react');
 var Reflux = require('reflux');
 var StateMixin = require('reflux-state-mixin');
-var Actions = require('../../actions');
 
-var CreateMixStore = require('../../stores/createMix-store');
+var Actions = require('../../../actions');
+
+var CreateMixStore = require('../../../stores/createMix-store');
 var SearchResult = require('./search-result');
 
 

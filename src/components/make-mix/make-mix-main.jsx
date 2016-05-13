@@ -18,9 +18,8 @@ var fireUrl = 'https://trailmix0.firebaseio.com/';
 var CreateMixStore = require('../../stores/createMix-store');
 var CreateLocationStore = require('../../stores/createLocation-store');
 var LocationDrop = require('./location-drop');
-var LocationTitle = require('./location-title');
 var Hashtags = require('./hashtag-add');
-var MixViewCreate = require('./mix-view-create');
+var SongsViewCreate = require('./songs-view-create');
 
 
 module.exports = React.createClass({
@@ -66,26 +65,25 @@ module.exports = React.createClass({
         <Link to="/" className="publish button" onClick={this.handleCancel}>
           Cancel
         </Link>
-        <div className="title-area">
+        <div className="title-area section">
           <h1 className="text-center">
             Drop A New Mix
           </h1>
-          <hr />
         </div>
-        <div className="location-area">
+        <div className="location-area section">
           <div className={"locationerr error-state " + (this.state.locationError ? 'show-error' : '')}>You must select a location for your mix.</div>
           <h4>{this.state.localLat} / {this.state.localLng}</h4>
           <LocationDrop loc_url={this.locationRef.toString()} mix_url={this.fb_mixRef.toString()} mix_key={this.fb_mixRef.key()} />
         </div>
-        <div className="hashtag-area">
+        <div className="hashtag-area section">
           <h4>#'s</h4>
           <Hashtags mix_url={this.fb_mixRef.toString()} />
         </div>
-        <div className="song-area">
+        <div className="song-area section">
           <div className={"songerr error-state " + (this.state.songError ? 'show-error' : '')}>Your mix needs at least 1 song to be published.</div>
-          <MixViewCreate mix_url={this.fb_mixRef.toString()} />
+          <SongsViewCreate mix_url={this.fb_mixRef.toString()} />
         </div>
-        <div className="publish-button" onClick={this.handlePublish}>
+        <div className="publish-button section" onClick={this.handlePublish}>
           Publish
         </div>
       </div>
@@ -113,7 +111,6 @@ module.exports = React.createClass({
         this.context.router.push('/');
       }
       else {
-        console.log('no location');
         this.setState({locationError: true});
       }
     } else {

@@ -7,8 +7,8 @@ var Firebase = require('firebase');
 var fireUrl = 'https://trailmix0.firebaseio.com/';
 
 var CreateMixStore = require('../../stores/createMix-store');
-var SongArea = require('./song-area');
-var MixListItem = require('./mix-list-item');
+var SongArea = require('./songs/song-area');
+var MixListItem = require('./songs/mix-list-item');
 var MixArt = require('./mix-art');
 
 

@@ -3,10 +3,8 @@ var ReactFire = require('reactfire');
 var Firebase = require('firebase');
 var StateMixin = require('reflux-state-mixin');
 
-var Actions = require('../../actions');
-var CreateMixStore = require('../../stores/createMix-store');
-
-//var fireUrl = 'https://trailmix0.firebaseio.com/';
+var Actions = require('../../../actions');
+var CreateMixStore = require('../../../stores/createMix-store');
 
 module.exports = React.createClass({
   mixins:[
