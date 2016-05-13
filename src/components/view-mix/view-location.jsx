@@ -3,6 +3,10 @@ var React = require('react');
 var Reflux = require('reflux');
 var StateMixin = require('reflux-state-mixin');
 
+var ReactRouter = require('react-router');
+// var Router = ReactRouter.Router;
+// var browserHistory = ReactRouter.browserHistory;
+var hashHistory = ReactRouter.hashHistory;
 
 var Actions = require('../../actions');
 
@@ -22,6 +26,7 @@ module.exports = React.createClass({
   render: function() {
     return <div className='content-wrap'>
       <div className="sub-container location-mixes col-md-6 col-md-offset-3">
+        <div className='back-btn' onClick={this.goBack}>Back</div>
         <h1>{this.state.place_name}</h1>
         <h3>{this.state.num_mixes} mixes here</h3>
         <ul className="mix-list">
@@ -46,5 +51,8 @@ module.exports = React.createClass({
       );
     }
     return mix_list_render;
+  },
+  goBack: function(){
+    hashHistory.push('/');
   }
 });

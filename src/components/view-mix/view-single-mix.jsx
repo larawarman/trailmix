@@ -3,6 +3,11 @@ var React = require('react');
 var Reflux = require('reflux');
 var StateMixin = require('reflux-state-mixin');
 
+var ReactRouter = require('react-router');
+// var Router = ReactRouter.Router;
+// var browserHistory = ReactRouter.browserHistory;
+var hashHistory = ReactRouter.hashHistory;
+
 var TimeAgo = require('react-timeago');
 
 var Actions = require('../../actions');
@@ -30,6 +35,7 @@ module.exports = React.createClass({
   },
   renderContent: function() {
     return <div className="sub-container view-mix col-md-6 col-md-offset-3">
+      <div className='back-btn' onClick={this.goBack}>Back</div>
       <ViewMixArt mixid={this.props.params.id} size={1} />
       <div className="play-mix" onClick={this.addMixToPlay}>play</div>
       <ul className="hashtags">{this.renderHashtags()}</ul>
@@ -73,5 +79,8 @@ module.exports = React.createClass({
       mainQueue.unshift(id);
     }
     return mainQueue;
+  },
+  goBack: function(){
+    hashHistory.push('/place/' + this.state.mix_location_id);
   }
 });
