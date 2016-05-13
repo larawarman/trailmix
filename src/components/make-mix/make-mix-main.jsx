@@ -1,8 +1,9 @@
 var React = require('react');
 
-var Router = require('react-router');
-var Link = Router.Link;
-// var browserHistory = Router.browserHistory;
+var ReactRouter = require('react-router');
+var Link = ReactRouter.Link;
+var hashHistory = ReactRouter.hashHistory;
+// var browserHistory = ReactRouter.browserHistory;
 
 var Reflux = require('reflux');
 var StateMixin = require('reflux-state-mixin');
@@ -108,7 +109,7 @@ module.exports = React.createClass({
           published: true,
           publish_date: Firebase.ServerValue.TIMESTAMP
         });
-        this.context.router.push('/');
+        hashHistory.push('/');
       }
       else {
         this.setState({locationError: true});

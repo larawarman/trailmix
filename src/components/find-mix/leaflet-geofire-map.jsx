@@ -3,9 +3,9 @@ var ReactDOM = require('react-dom');
 
 var Actions = require('../../actions');
 
-var Router = require('react-router');
+var ReactRouter = require('react-router');
+var hashHistory = ReactRouter.hashHistory;
 // var browserHistory = Router.browserHistory;
-// var Link = Router.Link;
 
 var Reflux = require('reflux');
 var StateMixin = require('reflux-state-mixin');
@@ -152,7 +152,7 @@ module.exports = React.createClass({
   },
   handleSinglePopupClick: function(id) {
     var mixRoute = id.key;
-    this.context.router.push({
+    hashHistory.push({
       pathname: '/mix/' + mixRoute,
       id: mixRoute
     });
@@ -164,7 +164,7 @@ module.exports = React.createClass({
   handleMultiMarkerClick:function(id) {
     var locRoute = id.location_tm_key;
     var place = id.place;
-    this.context.router.push({
+    hashHistory.push({
       pathname: '/place/' + locRoute,
       id: locRoute,
       place: place
