@@ -4,7 +4,6 @@ var Router = require('react-router');
 var Link = Router.Link;
 // var browserHistory = Router.browserHistory;
 
-
 var Reflux = require('reflux');
 var StateMixin = require('reflux-state-mixin');
 
@@ -50,7 +49,6 @@ module.exports = React.createClass({
     this.locationRef = this.locationsRef.push();
     this.locationRef.set({ 'verfied': false });
     this.locationKey = this.locationRef.key();
-    console.log(this.locationKey);
 
     this.geofireRef = this.firebaseRef.child('geofire');
     this.geoFire = new GeoFire(this.geofireRef);
@@ -64,25 +62,32 @@ module.exports = React.createClass({
   // },
   render: function() {
     return <div className='content-wrap'>
-      <div className="col-md-6 col-md-offset-3 make-mix">
-        <h1 className="text-center">
-          Drop A New Mix
-        </h1>
-        <hr />
-        <div className={"locationerr error-state " + (this.state.locationError ? 'show-error' : '')}>You must select a location for your mix.</div>
-        <LocationTitle mix_url={this.fb_mixRef.toString()} />
-        <LocationDrop loc_url={this.locationRef.toString()} mix_url={this.fb_mixRef.toString()} mix_key={this.fb_mixRef.key()} />
-
-        <h4>#'s</h4>
-        <Hashtags mix_url={this.fb_mixRef.toString()} />
-        <div className={"songerr error-state " + (this.state.songError ? 'show-error' : '')}>Your mix needs at least 1 song to be published.</div>
-        <MixViewCreate mix_url={this.fb_mixRef.toString()} />
-        <div className="publish button" onClick={this.handlePublish}>
-          Publish
-        </div>
+      <div className="sub-container col-md-6 col-md-offset-3 make-mix">
         <Link to="/" className="publish button" onClick={this.handleCancel}>
           Cancel
         </Link>
+        <div className="title-area">
+          <h1 className="text-center">
+            Drop A New Mix
+          </h1>
+          <hr />
+        </div>
+        <div className="location-area">
+          <div className={"locationerr error-state " + (this.state.locationError ? 'show-error' : '')}>You must select a location for your mix.</div>
+          <h4>{this.state.localLat} / {this.state.localLng}</h4>
+          <LocationDrop loc_url={this.locationRef.toString()} mix_url={this.fb_mixRef.toString()} mix_key={this.fb_mixRef.key()} />
+        </div>
+        <div className="hashtag-area">
+          <h4>#'s</h4>
+          <Hashtags mix_url={this.fb_mixRef.toString()} />
+        </div>
+        <div className="song-area">
+          <div className={"songerr error-state " + (this.state.songError ? 'show-error' : '')}>Your mix needs at least 1 song to be published.</div>
+          <MixViewCreate mix_url={this.fb_mixRef.toString()} />
+        </div>
+        <div className="publish-button" onClick={this.handlePublish}>
+          Publish
+        </div>
       </div>
     </div>
   },

@@ -40,8 +40,14 @@ module.exports = React.createClass({
   },
   renderHashtags:function() {
     var tagArr = this.state.value.split(' ');
-      CreateMixStore.setState({tags: tagArr});
-    },
+    var cleanTagArr = [];
+    for (var i in tagArr) {
+      var tag = tagArr[i];
+      tag = tag.replace('#', '');
+      cleanTagArr.push(tag);
+    }
+    CreateMixStore.setState({tags: cleanTagArr});
+  },
   handleBlur: function() {
     this.fbtags.update({
       tags: this.state.tags

@@ -1,4 +1,5 @@
 var React = require('react');
+
 var Reflux = require('reflux');
 var StateMixin = require('reflux-state-mixin');
 var CreateLocationStore = require('../../stores/createLocation-store');
@@ -27,6 +28,9 @@ module.exports = React.createClass({
     this.locationRef = new Firebase(this.props.loc_url);
   },
   componentWillReceiveProps: function() {
+  },
+  componentDidMount: function() {
+    this.refs.geosuggest.focus();
   },
   componentDidUpdate:function() {
     if(this.state.drop_name === '') {
@@ -67,16 +71,16 @@ module.exports = React.createClass({
     return <div className="location-drop">
       <div id="hidemap"></div>
       <Geosuggest 
-        placeholder="+ drop location"
+        placeholder="add your drop location"
         fixtures={fixtures}
-        onChange={this.onChange}
         location={new google.maps.LatLng(this.state.localLat,this.state.localLng)}
         radius= '1'
         onSuggestSelect={this.onSuggestSelect}
         autoActivateFirstSuggest = {true}
         onFocus={this.handleFocus}
         onBlur={this.handleBlur}
-        className={this.state.open === true ? 'open' : ''}
+        className={this.state.open == true ? 'open' : ''}
+        ref="geosuggest"
       />
     </div>
   },
@@ -106,7 +110,7 @@ module.exports = React.createClass({
           exists: ''
         });
       }
-      this.setState({open: false})
+      CreateLocationStore.setState({open: false})
     }
   },
   locationExists: function(gmaps_id) {
@@ -147,9 +151,9 @@ module.exports = React.createClass({
     }
   },
   handleFocus: function(){
-    this.setState({open: true})
+    CreateLocationStore.setState({open: true})
   },
   handleBlur: function() {
-    this.setState({open: false});
+    CreateLocationStore.setState({open: false});
   }
 });

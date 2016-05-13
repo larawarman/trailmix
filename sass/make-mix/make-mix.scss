@@ -1,5 +1,8 @@
 @import '../variables';
 @import '../mixins';
+#hidemap {
+  display:none;
+}
 .mix-art-container {
     ul {
       list-style: none;
@@ -91,9 +94,11 @@
       padding:0;
       margin:0;
       opacity:0;
+      display:none;
     }
     &.open {
       ul {
+        display:block;
         opacity: 1.0;
         height: auto;
         transform: all 0.3s ease-out;
