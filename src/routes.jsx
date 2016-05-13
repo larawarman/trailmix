@@ -1,7 +1,8 @@
 var React = require('react');
 var ReactRouter = require('react-router');
 var Router = ReactRouter.Router;
-var hashHistory = ReactRouter.browserHistory;
+// var browserHistory = ReactRouter.browserHistory;
+var hashHistory = ReactRouter.hashHistory;
 var Route = ReactRouter.Route;
 
 var Main = require('./components/main');
