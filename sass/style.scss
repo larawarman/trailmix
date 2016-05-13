@@ -33,9 +33,9 @@ a {
   width: 100%;
   background: rgba(255,255,255,0.4);
   position:relative;
-  height:100%;
+  min-height:100%;
   &.home {
-    height: initial;
+    min-height: initial;
   }
   .sub-container {
     background:white;

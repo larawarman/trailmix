@@ -29,28 +29,12 @@ module.exports = React.createClass({
     </div>
   },
   renderContent: function() {
-    return <div className="view-mix">
-      <div className="row">
-        <div className="col-md-6 col-md-offset-3">
-          <ViewMixArt mixid={this.props.params.id} size={1} />
-          <div className="play-mix" onClick={this.addMixToPlay}>play</div>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-md-6 col-md-offset-3">
-          <ul className="hashtags">{this.renderHashtags()}</ul>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-md-6 col-md-offset-3">
-          {this.renderPlaceTime()}
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-md-6 col-md-offset-3">
-        <MixSongList />
-        </div>
-      </div>
+    return <div className="sub-container view-mix col-md-6 col-md-offset-3">
+      <ViewMixArt mixid={this.props.params.id} size={1} />
+      <div className="play-mix" onClick={this.addMixToPlay}>play</div>
+      <ul className="hashtags">{this.renderHashtags()}</ul>
+      {this.renderPlaceTime()}
+      <MixSongList />
     </div>
   },
   renderHashtags: function() {

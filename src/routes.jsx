@@ -1,7 +1,6 @@
 var React = require('react');
 var ReactRouter = require('react-router');
 var Router = ReactRouter.Router;
-var browserHistory = ReactRouter.browserHistory;
 var hashHistory = ReactRouter.browserHistory;
 var Route = ReactRouter.Route;
 
@@ -11,8 +10,7 @@ var ViewSingleMix = require('./components/view-mix/view-single-mix');
 var ViewLocation = require('./components/view-mix/view-location')
 
 module.exports = (
-  // <Router history={browserHistory}>
-  <Router>
+  <Router history={hashHistory}>
     <Route path="/" component={Main}>
       <Route path="make-mix/new" component={MakeMix} />
       <Route path="mix/:id" component={ViewSingleMix} />

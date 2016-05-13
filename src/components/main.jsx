@@ -1,6 +1,6 @@
 var React = require('react');
-var Router = require('react-router');
-var Link = Router.Link;
+// var Router = require('react-router');
+// var Link = Router.Link;
 
 var Reflux = require('reflux');
 var StateMixin = require('reflux-state-mixin');
