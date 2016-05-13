@@ -89,7 +89,12 @@ var ViewMixStore = module.exports = Reflux.createStore({
         if (mix.published === true) {
           var markerPosition = [mix.location.drop_lat, mix.location.drop_lng]
           if(mix.tags){
-            var tags = mix.tags.join(' ');
+            var hashedTags = [];
+            for (var i in mix.tags) {
+              mix.tags[i] = '#' + mix.tags[i];
+              hashedTags.push(mix.tags[i]);
+            }
+            var tags = hashedTags.join(' ');
           } else {
             var tags = null;
           }

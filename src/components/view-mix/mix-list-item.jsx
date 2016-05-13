@@ -39,8 +39,9 @@ module.exports = React.createClass({
     var tags = [];
     for(var key in this.props.tags) {
       tag = this.props.tags[key];
+      tag = '#' + tag;
       tags.push(
-        <li key={'tags'+ key}>{'#' + tag}</li>
+        <li key={'tags'+ key}>{tag}</li>
       );
     }
     return  <ul className="mix-tags">

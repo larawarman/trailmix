@@ -41,6 +41,7 @@ module.exports = React.createClass({
     var tags = [];
     for (var key in this.state.mix_tags) {
       var tag = this.state.mix_tags[key];
+      tag = '#' + tag;
       tags.push(
         <li key={key}>{tag}</li>
       );
