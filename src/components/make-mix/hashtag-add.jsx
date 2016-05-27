@@ -11,7 +11,7 @@ var CreateMixStore = require('../../stores/createMix-store');
 module.exports = React.createClass({
   mixins: [ 
     StateMixin.connect(CreateMixStore),
-    ReactFire 
+    ReactFire.ReactFireMixin 
   ],
   getInitialState: function(){
     return {
@@ -19,8 +19,9 @@ module.exports = React.createClass({
     }
   },
   componentWillMount: function() {
-    this.fbtags = new Firebase(this.props.mix_url);
-    this.bindAsObject(this.fbtags, 'tags');
+    // this.fbtags = new Firebase(this.props.mix_url);
+    this.fbtags = mixesRef.child(this.props.mix_key);
+    // this.bindAsObject(this.fbtags, 'tags');
   },
   render: function() {
     return <input

@@ -11,4 +11,24 @@
   <div class="main-site">
   </div>
 </body>
+<script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCBhuQSEpfOfF3YWyELzu2NzJXWqVgbUyY",
+    authDomain: "trailmix0.firebaseapp.com",
+    databaseURL: "https://trailmix0.firebaseio.com",
+    storageBucket: "project-954998813211916556.appspot.com",
+  };
+  firebase.initializeApp(config);
+  var rootRef = firebase.database().ref();
+  var geofireRef = firebase.database().ref('geofire');
+  var locationsRef = firebase.database().ref('locations');
+  var mixesRef = firebase.database().ref('mixes');
+  var songsRef = firebase.database().ref('songs');
+
+  //map
+  var mb = 'pk.eyJ1IjoibGFyYXdhcm1hbiIsImEiOiJjaW05ZDc3ZHEwM21qdG5tNm1lNnc5enBiIn0.5qqJjeDHM2t7FKHoHWlu2Q';
+
+</script>
 <script src="main.js"></script>

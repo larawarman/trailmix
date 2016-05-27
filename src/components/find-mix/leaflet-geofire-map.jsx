@@ -13,8 +13,7 @@ var CreateLocationStore = require('../../stores/createLocation-store');
 var ViewMixStore = require('../../stores/viewMix-store');
 
 var ReactFire = require('reactfire');
-var Firebase = require('firebase');
-var fireUrl = 'https://trailmix0.firebaseio.com/';
+// var fireUrl = 'https://trailmix0.firebaseio.com/';
 var GeoFire = require('geofire');
 
 var Leaflet = require('leaflet');
@@ -42,9 +41,8 @@ module.exports = React.createClass({
   },
   componentWillMount: function() {
     this.state.position = [this.state.localLat, this.state.localLng]
-    this.geofireRef = new Firebase(fireUrl + '/geofire');
-    this.geoFire = new GeoFire(this.geofireRef);
-    Actions.getAllMixesLocations();
+    this.geoFire = new GeoFire(geofireRef);
+    // Actions.getAllMixesLocations();
   },
   componentDidMount:function() {
     Actions.getLocation();
@@ -53,12 +51,12 @@ module.exports = React.createClass({
     this.state.position = [this.state.localLat, this.state.localLng];
     this.geoQuery = this.geoFire.query({
       center: this.state.position,
-      radius: 0.5
+      // radius: 0.5
+      radius: 10
     });
     this.getLocalLocations();
   },
   render: function() {
-    var mb = 'pk.eyJ1IjoibGFyYXdhcm1hbiIsImEiOiJjaW05ZDc3ZHEwM21qdG5tNm1lNnc5enBiIn0.5qqJjeDHM2t7FKHoHWlu2Q';
     if (this.state.localLat === 0 && this.state.localLng === 0) {
       return <div className="map-container">
         <h1>Loading location...</h1>

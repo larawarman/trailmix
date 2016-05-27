@@ -97,14 +97,13 @@ var AudioStore = module.exports = Reflux.createStore({
     }
   },
   getSongsFromDB: function() {
-    this.song_ref = new Firebase(fireUrl + '/songs');
-    this.song_ref.on('value', Actions.getNewSongQueue);
+    songsRef.on('value', Actions.getNewSongQueue);
   },
   getNewSongQueue: function(){
     var songs_queue = [];
     for(var key in this.state.queue_song_ids){
       songid = this.state.queue_song_ids[key];
-      this.song_ref.orderByChild('spotify_id').equalTo(songid).once('value', function(songs){
+      songsRef.orderByChild('spotify_id').equalTo(songid).once('value', function(songs){
         songs.forEach(function(song){
           song= song.val();
           songs_queue.push({

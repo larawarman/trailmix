@@ -11,6 +11,9 @@ var FindMixMain = require('./find-mix/find-mix-main');
 var AudioPlayer = require('./listen/audio-player');
 var LeafletGeofireMap = require('./find-mix/leaflet-geofire-map');
 
+var ReactFire = require('reactfire');
+var Firebase = require('firebase');
+
 
 module.exports = React.createClass({
   mixins:[

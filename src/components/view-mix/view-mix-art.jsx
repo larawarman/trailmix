@@ -2,7 +2,7 @@ var React = require('react');
 
 var ReactFire = require('reactfire');
 var Firebase = require('firebase');
-var fireUrl = 'https://trailmix0.firebaseio.com/';
+// var fireUrl = 'https://trailmix0.firebaseio.com/';
 
 
 
@@ -17,7 +17,7 @@ module.exports = React.createClass({
   },
   componentWillMount: function() {
     var id=this.props.mixid;
-    this.fb_mixRef = new Firebase(fireUrl + '/mixes/' + id);
+    this.fb_mixRef = mixesRef.child(id);
     this.fb_mixRef.on('value', this.handleMixDataLoaded);
   },
   render: function() {

@@ -21,19 +21,29 @@ module.exports = React.createClass({
   ],
   componentWillMount: function() {
     LocMixesStore.setState({location_key: this.props.params.id });
-    Actions.getDB();
+    Actions.getMixLoc();
   },
   render: function() {
-    return <div className='content-wrap'>
-      <div className="sub-container location-mixes col-md-6 col-md-offset-3">
-        <div className='back-btn' onClick={this.goBack}>Back</div>
-        <h1>{this.state.place_name}</h1>
-        <h3>{this.state.num_mixes} mixes here</h3>
-        <ul className="mix-list">
-          {this.renderMixList()}
-        </ul>
+    if(this.state.mix_list.length > 1) {
+      return <div className='content-wrap'>
+        <div className="sub-container location-mixes col-md-6 col-md-offset-3">
+          <div className='back-btn' onClick={this.goBack}>Back</div>
+          <h1>{this.state.place_name}</h1>
+          <h3>{this.state.num_mixes} mixes here</h3>
+          <ul className="mix-list">
+            {this.renderMixList()}
+          </ul>
+        </div>
       </div>
-    </div>
+    } else if (this.state.mix_list.length === 1) {
+      hashHistory.push('/');
+      return <div>
+      </div>
+    } else {
+      return <div>
+      </div>
+    }
+    
   },
   renderMixList: function(){
     mix_list_render = [];

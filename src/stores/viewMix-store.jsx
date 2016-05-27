@@ -4,7 +4,6 @@ var StateMixin = require('reflux-state-mixin');
 var Actions = require('../actions');
 
 var ReactFire = require('reactfire');
-var Firebase = require('firebase');
 var fireUrl = 'https://trailmix0.firebaseio.com/';
 
 var ViewMixStore = module.exports = Reflux.createStore({
@@ -42,21 +41,14 @@ var ViewMixStore = module.exports = Reflux.createStore({
       Actions.setSingleMixes();
     }
     if(this.state.multi_mixes !== prevState.multi_mixes){
+      // console.log(this.state.multi_mixes);
       Actions.setMultiMixes();
     }
-  },
-  getAllMixesLocations: function() {
-    this.mix_loc_ref = new Firebase(fireUrl);
-    this.mix_loc_ref.on('value', this.handleMixLocLoaded);
-  },
-  handleMixLocLoaded:function(data) {
-    this.fb_mixesRef = this.mix_loc_ref.child('mixes');
-    this.locationsRef = this.mix_loc_ref.child('locations');
   },
   sortLocalMixes: function() {
     for (var key in this.state.local_mix_locations){
       placeid = this.state.local_mix_locations[key];
-      this.locationsRef.child(placeid).once('value', function(place) {
+      locationsRef.child(placeid).once('value', function(place) {
         var singles = ViewMixStore.state.single_mixes;
         var multis = ViewMixStore.state.multi_mixes;
         var num_mixes = place.child('mixes_here').numChildren();
@@ -85,7 +77,7 @@ var ViewMixStore = module.exports = Reflux.createStore({
     for (var key in this.state.single_mixes){
       mix = this.state.single_mixes[key];
       key = mix;
-      this.fb_mixesRef.child(mix).on('value', function(mix){
+      mixesRef.child(mix).on('value', function(mix){
         mix = mix.val();
         if (mix.published === true) {
           var markerPosition = [mix.location.drop_lat, mix.location.drop_lng]
@@ -109,11 +101,11 @@ var ViewMixStore = module.exports = Reflux.createStore({
     ViewMixStore.setState({solos_published: solos_published});
   },
   setMultiMixes: function() {
-    var multis_published = [];
+    var multis_publishedArr = [];
     for (var key in this.state.multi_mixes){
       mix = this.state.multi_mixes[key];
       id = mix; //gmaps_id where there is more than one mix
-      this.fb_mixesRef.orderByChild('location/drop_gmaps_id').equalTo(id).on('value', function(mixes){
+      mixesRef.orderByChild('location/drop_gmaps_id').equalTo(id).on('value', function(mixes){
         var mixcount = 0;
         var drop_gmaps_id = id;
         var drop_lat;
@@ -130,15 +122,15 @@ var ViewMixStore = module.exports = Reflux.createStore({
             mixcount ++;
           }
         })
-        multis_published.push({
+        multis_publishedArr.push({
           drop_gmaps_id, drop_name, location_tm_key, drop_lat, drop_lng, mixcount
         });
+        ViewMixStore.setState({multis_published : multis_publishedArr});
       });
     }
-    ViewMixStore.setState({multis_published : multis_published});
   },
   getMixData: function(id) {
-    this.fb_mixRef = new Firebase(fireUrl + '/mixes/' + id);
+    this.fb_mixRef = mixesRef.child(id);
     this.fb_mixRef.on('value', this.handleMixDataLoaded);
   },
   handleMixDataLoaded: function(snapshot) {

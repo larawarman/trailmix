@@ -19,13 +19,18 @@ module.exports = React.createClass({
     ReactFire
   ],
   componentWillMount: function() {
-    this.fbRef = new Firebase(fireUrl);
-    this.locationsRef = this.fbRef.child('locations');
-    this.geofireRef = this.fbRef.child('geofire');
-    this.geoFire = new GeoFire(this.geofireRef);
+    // this.fbRef = new Firebase(fireUrl);
+    // this.locationsRef = this.fbRef.child('locations');
+    // this.geofireRef = this.fbRef.child('geofire');
+    this.geoFire = new GeoFire(geofireRef);
 
-    this.mixLocationRef = new Firebase(this.props.mix_url + '/location');
-    this.locationRef = new Firebase(this.props.loc_url);
+    // this.mixLocationRef = new Firebase(this.props.mix_url + '/location');
+    // console.log(this.props.loc_key);
+    // this.locationRef = new Firebase(this.props.loc_url);
+    this.mixLocationRef = mixesRef.child(this.props.mix_key);
+    this.locationRef = locationsRef.child(this.props.loc_key);
+    console.log(this.mixLocationRef.toString());
+    console.log(this.locationRef.toString());
   },
   componentWillReceiveProps: function() {
   },
@@ -68,21 +73,22 @@ module.exports = React.createClass({
     var fixtures = [
       {label: 'Drop It Here', location: {lat: this.state.localLat, lng: this.state.localLng}, className: 'drop-here'}        
     ];
-    return <div className="location-drop">
-      <div id="hidemap"></div>
-      <Geosuggest 
-        placeholder="add your drop location"
-        fixtures={fixtures}
-        location={new google.maps.LatLng(this.state.localLat,this.state.localLng)}
-        radius= '1'
-        onSuggestSelect={this.onSuggestSelect}
-        autoActivateFirstSuggest = {true}
-        onFocus={this.handleFocus}
-        onBlur={this.handleBlur}
-        className={this.state.open == true ? 'open' : ''}
-        ref="geosuggest"
-      />
-    </div>
+    return <div></div>
+    // return <div className="location-drop">
+    //   <div id="hidemap"></div>
+    //   <Geosuggest 
+    //     placeholder="add your drop location"
+    //     fixtures={fixtures}
+    //     location={new google.maps.LatLng(this.state.localLat,this.state.localLng)}
+    //     radius= '1'
+    //     onSuggestSelect={this.onSuggestSelect}
+    //     autoActivateFirstSuggest = {true}
+    //     onFocus={this.handleFocus}
+    //     onBlur={this.handleBlur}
+    //     className={this.state.open == true ? 'open' : ''}
+    //     ref="geosuggest"
+    //   />
+    // </div>
   },
   onSuggestSelect: function(suggest) {
     //need an error if we have no location AND user selects drop it here

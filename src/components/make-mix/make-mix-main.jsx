@@ -40,18 +40,18 @@ module.exports = React.createClass({
     }
   },
   componentWillMount: function() {
-    this.firebaseRef = new Firebase(fireUrl);
-    this.fb_mixesRef = this.firebaseRef.child('mixes');
-    this.fb_mixRef = this.fb_mixesRef.push();
+    // this.firebaseRef = new Firebase(fireUrl);
+    // this.fb_mixesRef = this.firebaseRef.child('mixes');
+    this.fb_mixRef = mixesRef.push();
     this.fb_mixRef.set({ 'published': false });
     
-    this.locationsRef = this.firebaseRef.child('locations');
-    this.locationRef = this.locationsRef.push();
+    // this.locationsRef = this.firebaseRef.child('locations');
+    this.locationRef = locationsRef.push();
     this.locationRef.set({ 'verfied': false });
-    this.locationKey = this.locationRef.key();
+    this.locationKey = this.locationRef.key;
 
-    this.geofireRef = this.firebaseRef.child('geofire');
-    this.geoFire = new GeoFire(this.geofireRef);
+    // this.geofireRef = this.firebaseRef.child('geofire');
+    this.geoFire = new GeoFire(geofireRef);
 
     CreateMixStore.setState({mix_path: this.fb_mixRef.toString()});
   },
@@ -74,11 +74,11 @@ module.exports = React.createClass({
         <div className="location-area section">
           <div className={"locationerr error-state " + (this.state.locationError ? 'show-error' : '')}>You must select a location for your mix.</div>
           <h4>{this.state.localLat} / {this.state.localLng}</h4>
-          <LocationDrop loc_url={this.locationRef.toString()} mix_url={this.fb_mixRef.toString()} mix_key={this.fb_mixRef.key()} />
+          <LocationDrop loc_url={this.locationRef.toString()} loc_key={this.locationRef.key} mix_url={this.fb_mixRef.toString()} mix_key={this.fb_mixRef.key} />
         </div>
         <div className="hashtag-area section">
           <h4>#'s</h4>
-          <Hashtags mix_url={this.fb_mixRef.toString()} />
+          <Hashtags mix_key={this.fb_mixRef.key} />
         </div>
         <div className="song-area section">
           <div className={"songerr error-state " + (this.state.songError ? 'show-error' : '')}>Your mix needs at least 1 song to be published.</div>

@@ -13,13 +13,12 @@ module.exports = Reflux.createActions([
 
   //VIEW MIX STORE
   'sortLocalMixes',
-  'getAllMixesLocations',
   'setSingleMixes',
   'setMultiMixes',
   'getMixData',
 
   //VIEW TRAILMIX LOCATION STORE
-  'getDB',
+  'getMixLoc',
   'loadLocationDetails',
   'getMixListItems',
 
