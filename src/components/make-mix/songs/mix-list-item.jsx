@@ -1,6 +1,5 @@
 var React = require('react');
 var ReactFire = require('reactfire');
-var Firebase = require('firebase');
 var StateMixin = require('reflux-state-mixin');
 
 var Actions = require('../../../actions');
@@ -9,11 +8,10 @@ var CreateMixStore = require('../../../stores/createMix-store');
 module.exports = React.createClass({
   mixins:[
     StateMixin.connect(CreateMixStore),
-    ReactFire
+    ReactFire.ReactFireMixin
   ],
   componentWillMount: function() {
-    this.fb_songRef = new Firebase(this.state.mix_path + '/songs/' + this.props.song.key);
-    this.bindAsObject(this.fb_songRef, 'mixSongs');
+    this.fb_songRef = mixesRef.child(this.state.mix_key + '/songs/' + this.props.song.key);
   },
   render: function() {
     return <li 

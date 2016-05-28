@@ -6,8 +6,8 @@ var Actions = require('../actions');
 var Api = require('../utils/api');
 
 var ReactFire = require('reactfire');
-var Firebase = require('firebase');
-var fireUrl = 'https://trailmix0.firebaseio.com/';
+// var Firebase = require('firebase');
+// var fireUrl = 'https://trailmix0.firebaseio.com/';
 
 var CreateMixStore = module.exports = Reflux.createStore({
   mixins: [
@@ -26,7 +26,8 @@ var CreateMixStore = module.exports = Reflux.createStore({
 
       //CREATE MIX
       tags: [], //hashtags as an array
-      mix_path: '', //path to the mix
+      mix_key: '', //key to the mix,
+      mix_path: '', //NEED TO GET RID OF THIS
 
       //CREATE SONG
       track_name: '',
@@ -45,10 +46,12 @@ var CreateMixStore = module.exports = Reflux.createStore({
     if(this.state.spotify_id !== prevState.spotify_id){
       Actions.addSong();
     }
+    if(this.state.mixSongs !== prevState.mixSongs){
+      console.log('mixSongs: ' + this.state.mixSongs);
+    }
   },
   addSong: function(spotify_id) {
-    this.songs_ref = new Firebase(fireUrl + '/songs');
-    this.songs_ref.push({
+    songsRef.push({
       track_name: this.state.track_name,
       artists_arr: this.state.artists_arr,
       artistJoined: this.state.artistJoined,

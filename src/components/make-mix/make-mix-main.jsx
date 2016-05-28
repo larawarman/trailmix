@@ -30,7 +30,7 @@ module.exports = React.createClass({
   mixins: [ 
     StateMixin.connect(CreateLocationStore),
     StateMixin.connect(CreateMixStore),
-    ReactFire 
+    ReactFire.ReactFireMixin
   ],
   getInitialState: function() {
     return {
@@ -40,20 +40,17 @@ module.exports = React.createClass({
     }
   },
   componentWillMount: function() {
-    // this.firebaseRef = new Firebase(fireUrl);
-    // this.fb_mixesRef = this.firebaseRef.child('mixes');
     this.fb_mixRef = mixesRef.push();
     this.fb_mixRef.set({ 'published': false });
-    
-    // this.locationsRef = this.firebaseRef.child('locations');
+
     this.locationRef = locationsRef.push();
     this.locationRef.set({ 'verfied': false });
     this.locationKey = this.locationRef.key;
 
-    // this.geofireRef = this.firebaseRef.child('geofire');
     this.geoFire = new GeoFire(geofireRef);
-
-    CreateMixStore.setState({mix_path: this.fb_mixRef.toString()});
+  },
+  componentDidMount: function() {
+    CreateMixStore.setState({mix_key: this.fb_mixRef.key});
   },
   // componentWillUnmount:function() {
   //   if(!this.state.published){
@@ -61,8 +58,8 @@ module.exports = React.createClass({
   //   }
   // },
   render: function() {
-    return <div className='content-wrap'>
-      <div className="sub-container col-md-6 col-md-offset-3 make-mix">
+    return <div className = 'content-wrap'>
+      <div className='sub-container col-md-6 col-md-offset-3 make-mix'>
         <Link to="/" className="publish button" onClick={this.handleCancel}>
           Cancel
         </Link>
@@ -82,13 +79,41 @@ module.exports = React.createClass({
         </div>
         <div className="song-area section">
           <div className={"songerr error-state " + (this.state.songError ? 'show-error' : '')}>Your mix needs at least 1 song to be published.</div>
-          <SongsViewCreate mix_url={this.fb_mixRef.toString()} />
+          <SongsViewCreate mix_key={this.fb_mixRef.key} />
         </div>
         <div className="publish-button section" onClick={this.handlePublish}>
           Publish
-        </div>
+        </div>        
       </div>
     </div>
+    // return <div className='content-wrap'>
+    //   <div className="sub-container col-md-6 col-md-offset-3 make-mix">
+    //     <Link to="/" className="publish button" onClick={this.handleCancel}>
+    //       Cancel
+    //     </Link>
+    //     <div className="title-area section">
+    //       <h1 className="text-center">
+    //         Drop A New Mix
+    //       </h1>
+    //     </div>
+    //     <div className="location-area section">
+    //       <div className={"locationerr error-state " + (this.state.locationError ? 'show-error' : '')}>You must select a location for your mix.</div>
+    //       <h4>{this.state.localLat} / {this.state.localLng}</h4>
+    //       <LocationDrop loc_url={this.locationRef.toString()} loc_key={this.locationRef.key} mix_url={this.fb_mixRef.toString()} mix_key={this.fb_mixRef.key} />
+    //     </div>
+    //     <div className="hashtag-area section">
+    //       <h4>#'s</h4>
+    //       <Hashtags mix_key={this.fb_mixRef.key} />
+    //     </div>
+    //     <div className="song-area section">
+    //       <div className={"songerr error-state " + (this.state.songError ? 'show-error' : '')}>Your mix needs at least 1 song to be published.</div>
+    //       <SongsViewCreate mix_key={this.fb_mixRef.key} />
+    //     </div>
+    //     <div className="publish-button section" onClick={this.handlePublish}>
+    //       Publish
+    //     </div>
+    //   </div>
+    // </div>
   },
   songsCheck: function() {
     if(_.isEmpty(this.state.mixSongs)) {
@@ -107,7 +132,7 @@ module.exports = React.createClass({
       if (CreateLocationStore.state.drop_name !== '') {
         this.fb_mixRef.update({ 
           published: true,
-          publish_date: Firebase.ServerValue.TIMESTAMP
+          // publish_date: ServerValue.TIMESTAMP
         });
         hashHistory.push('/');
       }
@@ -119,7 +144,7 @@ module.exports = React.createClass({
     }
   },
   handleCancel:function() {
-    this.geoFire.remove(this.locationRef.key());
+    this.geoFire.remove(this.locationRef.key);
     this.fb_mixRef.remove();
     this.locationRef.remove();
   }

@@ -1,23 +1,20 @@
 var React = require('react');
 var ReactFire = require('reactfire');
 var StateMixin = require('reflux-state-mixin');
-var Firebase = require('firebase');
 
 var Actions = require('../../../actions');
 var CreateMixStore = require('../../../stores/createMix-store');
 var SongPreview = require('./song-preview');
 
-var fireUrl = 'https://trailmix0.firebaseio.com/';
 
 module.exports = React.createClass({
   mixins: [ 
     StateMixin.connect(CreateMixStore),
-    ReactFire 
+    ReactFire.ReactFireMixin
   ],
   componentWillMount: function() {
-    this.fbsonglist = new Firebase(this.state.mix_path + '/songs/');
+    this.fbsonglist = mixesRef.child(this.state.mix_key + '/songs/');
     this.artistNames();
-    this.songs_ref = new Firebase(fireUrl + '/songs');
   },
   render: function() {
     return <div className="search-result">
@@ -59,7 +56,7 @@ module.exports = React.createClass({
     });
   },
   songExists: function(){
-    this.songs_ref.orderByChild('spotify_id').equalTo(this.props.id).once('value', function(song) {
+    songsRef.orderByChild('spotify_id').equalTo(this.props.id).once('value', function(song) {
       if(!song.exists()){
         CreateMixStore.setState({
           track_name: this.track_name,

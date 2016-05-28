@@ -4,7 +4,6 @@ var Reflux = require('reflux');
 var StateMixin = require('reflux-state-mixin');
 
 var ReactFire = require('reactfire');
-var Firebase = require('firebase');
 
 var CreateMixStore = require('../../stores/createMix-store');
 
@@ -19,9 +18,7 @@ module.exports = React.createClass({
     }
   },
   componentWillMount: function() {
-    // this.fbtags = new Firebase(this.props.mix_url);
     this.fbtags = mixesRef.child(this.props.mix_key);
-    // this.bindAsObject(this.fbtags, 'tags');
   },
   render: function() {
     return <input

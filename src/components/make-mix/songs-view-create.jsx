@@ -3,8 +3,6 @@ var Reflux = require('reflux');
 var StateMixin = require('reflux-state-mixin');
 
 var ReactFire = require('reactfire');
-var Firebase = require('firebase');
-var fireUrl = 'https://trailmix0.firebaseio.com/';
 
 var CreateMixStore = require('../../stores/createMix-store');
 var SongArea = require('./songs/song-area');
@@ -15,11 +13,10 @@ var MixArt = require('./mix-art');
 module.exports = React.createClass({
   mixins:[
     StateMixin.connect(CreateMixStore),
-    ReactFire
+    ReactFire.ReactFireMixin
   ],
   componentWillMount: function() {
-    this.fb_songsRef = new Firebase(this.props.mix_url + '/songs/');
-    this.bindAsObject(this.fb_songsRef, 'mixSongs');
+    this.fb_songsRef = mixesRef.child(this.props.mix_key + '/songs/');
     this.fb_songsRef.on('value', this.handleDataLoaded);
   },
   render: function(){
@@ -33,7 +30,7 @@ module.exports = React.createClass({
       </div>
       <div className="row">
         <div className="col-md-12">
-          <SongArea mix_url={this.props.mix_url} />
+          <SongArea />
         </div>
       </div>
       <div className="row">
@@ -54,6 +51,7 @@ module.exports = React.createClass({
           song={song}
           key={key}
           index={index}
+          mix_key={this.fb_songsRef.key}
         />
       );
       index++;

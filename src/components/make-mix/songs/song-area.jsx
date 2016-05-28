@@ -47,7 +47,6 @@ module.exports = React.createClass({
     Actions.closeResults();
   },
   handleFocus: function() {
-    CreateMixStore.setState({mix_path: this.props.mix_url})
     this.setState({
       query: ''
     });

@@ -9,8 +9,8 @@ var Firebase = require('firebase');
 var fireUrl = 'https://trailmix0.firebaseio.com/';
 
 var Actions = require('../../actions');
-var Geosuggest = require('react-geosuggest');
 var GeoFire = require('geofire');
+var Geosuggest = require('react-geosuggest');
 
 
 module.exports = React.createClass({
@@ -29,13 +29,11 @@ module.exports = React.createClass({
     // this.locationRef = new Firebase(this.props.loc_url);
     this.mixLocationRef = mixesRef.child(this.props.mix_key);
     this.locationRef = locationsRef.child(this.props.loc_key);
-    console.log(this.mixLocationRef.toString());
-    console.log(this.locationRef.toString());
   },
   componentWillReceiveProps: function() {
   },
   componentDidMount: function() {
-    this.refs.geosuggest.focus();
+    // this.refs.geosuggest.focus();
   },
   componentDidUpdate:function() {
     if(this.state.drop_name === '') {
@@ -73,7 +71,11 @@ module.exports = React.createClass({
     var fixtures = [
       {label: 'Drop It Here', location: {lat: this.state.localLat, lng: this.state.localLng}, className: 'drop-here'}        
     ];
-    return <div></div>
+    return <div>
+      <div className="location-drop">
+        <div id="hidemap"></div>
+      </div>
+    </div>
     // return <div className="location-drop">
     //   <div id="hidemap"></div>
     //   <Geosuggest 
@@ -146,7 +148,7 @@ module.exports = React.createClass({
         drop_gmaps_types: this.state.drop_gmaps_types,
       });
       this.locationRef.child('mixes_here').push(this.props.mix_key);
-      this.geoFire.set(this.locationRef.key(), [this.state.drop_lat, this.state.drop_lng]).then(function() {
+      this.geoFire.set(this.locationRef.key, [this.state.drop_lat, this.state.drop_lng]).then(function() {
       }, function(error) {
         console.log("Error: " + error);
       });
