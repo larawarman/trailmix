@@ -132,7 +132,7 @@ module.exports = React.createClass({
       if (CreateLocationStore.state.drop_name !== '') {
         this.fb_mixRef.update({ 
           published: true,
-          // publish_date: ServerValue.TIMESTAMP
+          publish_date: Date.now()
         });
         hashHistory.push('/');
       }
