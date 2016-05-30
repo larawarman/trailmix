@@ -8,7 +8,6 @@ var hashHistory = ReactRouter.hashHistory;
 var Reflux = require('reflux');
 var StateMixin = require('reflux-state-mixin');
 
-var Geosuggest = require('react-geosuggest');
 var ReactFire = require('reactfire');
 var Firebase = require('firebase');
 var _ = require('lodash');

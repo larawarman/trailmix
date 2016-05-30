@@ -6,34 +6,27 @@ var CreateLocationStore = require('../../stores/createLocation-store');
 
 var ReactFire = require('reactfire');
 var Firebase = require('firebase');
-var fireUrl = 'https://trailmix0.firebaseio.com/';
 
 var Actions = require('../../actions');
 var GeoFire = require('geofire');
-var Geosuggest = require('react-geosuggest');
+// var Geosuggest = require('react-geosuggest');
+const Geosuggest = require('react-geosuggest').default;
 
 
 module.exports = React.createClass({
   mixins:[
     StateMixin.connect(CreateLocationStore),
-    ReactFire
+    ReactFire.ReactFireMixin
   ],
   componentWillMount: function() {
-    // this.fbRef = new Firebase(fireUrl);
-    // this.locationsRef = this.fbRef.child('locations');
-    // this.geofireRef = this.fbRef.child('geofire');
     this.geoFire = new GeoFire(geofireRef);
-
-    // this.mixLocationRef = new Firebase(this.props.mix_url + '/location');
-    // console.log(this.props.loc_key);
-    // this.locationRef = new Firebase(this.props.loc_url);
     this.mixLocationRef = mixesRef.child(this.props.mix_key);
     this.locationRef = locationsRef.child(this.props.loc_key);
   },
   componentWillReceiveProps: function() {
   },
   componentDidMount: function() {
-    // this.refs.geosuggest.focus();
+    this.refs.geosuggest.focus();
   },
   componentDidUpdate:function() {
     if(this.state.drop_name === '') {
@@ -55,11 +48,11 @@ module.exports = React.createClass({
       drop_lat: this.state.drop_lat,
       drop_lng: this.state.drop_lng,
       drop_gmaps_id: this.state.drop_gmaps_id,
-      drop_location_id: this.locationRef.key()
+      drop_location_id: this.locationRef.key
     });
     if(this.state.exists === '') {
       this.mixLocationRef.update({
-        location_tm_key: this.locationRef.key()
+        location_tm_key: this.locationRef.key
       });
     } else {
       this.mixLocationRef.update({
@@ -71,26 +64,21 @@ module.exports = React.createClass({
     var fixtures = [
       {label: 'Drop It Here', location: {lat: this.state.localLat, lng: this.state.localLng}, className: 'drop-here'}        
     ];
-    return <div>
-      <div className="location-drop">
-        <div id="hidemap"></div>
-      </div>
+    return <div className="location-drop">
+      <div id="hidemap"></div>
+      <Geosuggest 
+        placeholder="add your drop location"
+        fixtures={fixtures}
+        location={new google.maps.LatLng(this.state.localLat,this.state.localLng)}
+        radius= '1'
+        onSuggestSelect={this.onSuggestSelect}
+        // autoActivateFirstSuggest = {true}
+        onFocus={this.handleFocus}
+        onBlur={this.handleBlur}
+        className={this.state.open == true ? 'open' : ''}
+        ref="geosuggest"
+      />
     </div>
-    // return <div className="location-drop">
-    //   <div id="hidemap"></div>
-    //   <Geosuggest 
-    //     placeholder="add your drop location"
-    //     fixtures={fixtures}
-    //     location={new google.maps.LatLng(this.state.localLat,this.state.localLng)}
-    //     radius= '1'
-    //     onSuggestSelect={this.onSuggestSelect}
-    //     autoActivateFirstSuggest = {true}
-    //     onFocus={this.handleFocus}
-    //     onBlur={this.handleBlur}
-    //     className={this.state.open == true ? 'open' : ''}
-    //     ref="geosuggest"
-    //   />
-    // </div>
   },
   onSuggestSelect: function(suggest) {
     //need an error if we have no location AND user selects drop it here
@@ -122,9 +110,9 @@ module.exports = React.createClass({
     }
   },
   locationExists: function(gmaps_id) {
-    this.locationsRef.once('value', function(snapshot){
+    this.locationRef.once('value', function(snapshot){
       snapshot.forEach(function(childSnapshot) {
-        var key = childSnapshot.key();
+        var key = childSnapshot.key;
         var childData = childSnapshot.val();
         if (childData.drop_gmaps_id === gmaps_id) {
           existsKey = key;
@@ -159,9 +147,11 @@ module.exports = React.createClass({
     }
   },
   handleFocus: function(){
+    console.log('handle focus');
     CreateLocationStore.setState({open: true})
   },
   handleBlur: function() {
+    console.log('handle blur');
     CreateLocationStore.setState({open: false});
   }
 });
