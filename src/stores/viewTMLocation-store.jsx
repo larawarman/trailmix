@@ -4,8 +4,6 @@ var StateMixin = require('reflux-state-mixin');
 var Actions = require('../actions');
 
 var ReactFire = require('reactfire');
-// var Firebase = require('firebase');
-// var fireUrl = 'https://trailmix0.firebaseio.com/';
 
 var LocMixesStore = module.exports = Reflux.createStore({
   mixins: [StateMixin.store],
@@ -37,7 +35,6 @@ var LocMixesStore = module.exports = Reflux.createStore({
     });
   },
   getMixListItems: function() {
-    LocMixesStore.setState({mixes_loaded: true});
     var mix_list = [];
     mixesRef.orderByChild('location/location_tm_key').equalTo(this.state.location_key).on('value', function(mixes) {
       mixes.forEach(function(mix){
@@ -64,7 +61,7 @@ var LocMixesStore = module.exports = Reflux.createStore({
           return null
         }
       });
+      LocMixesStore.setState({mixes_loaded: true, mix_list : mix_list});
     });
-    LocMixesStore.setState({mix_list : mix_list});
   },
 });
