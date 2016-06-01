@@ -43,7 +43,7 @@ module.exports = React.createClass({
   },
   componentWillUnmount: function() {
     this.addLocation();
-    this.mixLocationRef.update({
+    this.mixLocationRef.child('location').update({
       drop_name: this.state.drop_name,
       drop_lat: this.state.drop_lat,
       drop_lng: this.state.drop_lng,
@@ -51,11 +51,11 @@ module.exports = React.createClass({
       drop_location_id: this.locationRef.key
     });
     if(this.state.exists === '') {
-      this.mixLocationRef.update({
+      this.mixLocationRef.child('location').update({
         location_tm_key: this.locationRef.key
       });
     } else {
-      this.mixLocationRef.update({
+      this.mixLocationRef.child('location').update({
         location_tm_key: this.state.exists
       });
     }

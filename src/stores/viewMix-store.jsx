@@ -41,7 +41,6 @@ var ViewMixStore = module.exports = Reflux.createStore({
       Actions.setSingleMixes();
     }
     if(this.state.multi_mixes !== prevState.multi_mixes){
-      // console.log(this.state.multi_mixes);
       Actions.setMultiMixes();
     }
   },
@@ -76,8 +75,8 @@ var ViewMixStore = module.exports = Reflux.createStore({
     var solos_published = [];
     for (var key in this.state.single_mixes){
       mix = this.state.single_mixes[key];
-      key = mix;
       mixesRef.child(mix).on('value', function(mix){
+        key = mix.key;
         mix = mix.val();
         if (mix.published === true) {
           var markerPosition = [mix.location.drop_lat, mix.location.drop_lng]
@@ -95,19 +94,18 @@ var ViewMixStore = module.exports = Reflux.createStore({
           solos_published.push({
             key, place, tags, markerPosition
           });
+          ViewMixStore.setState({solos_published: solos_published});
         }
       });
     }
-    ViewMixStore.setState({solos_published: solos_published});
   },
   setMultiMixes: function() {
-    var multis_publishedArr = [];
+    var multis_published = [];
     for (var key in this.state.multi_mixes){
-      mix = this.state.multi_mixes[key];
-      id = mix; //gmaps_id where there is more than one mix
-      mixesRef.orderByChild('location/drop_gmaps_id').equalTo(id).on('value', function(mixes){
+      gmaps_id = this.state.multi_mixes[key];
+      mixesRef.orderByChild('location/drop_gmaps_id').equalTo(gmaps_id).on('value', function(mixes){
         var mixcount = 0;
-        var drop_gmaps_id = id;
+        var drop_gmaps_id = gmaps_id;
         var drop_lat;
         var drop_lng;
         var drop_loc_tmid;
@@ -121,11 +119,11 @@ var ViewMixStore = module.exports = Reflux.createStore({
           if (themix.published === true) {
             mixcount ++;
           }
-        })
-        multis_publishedArr.push({
+        });
+        multis_published.push({
           drop_gmaps_id, drop_name, location_tm_key, drop_lat, drop_lng, mixcount
         });
-        ViewMixStore.setState({multis_published : multis_publishedArr});
+        ViewMixStore.setState({multis_published : multis_published});
       });
     }
   },

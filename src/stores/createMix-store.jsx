@@ -6,8 +6,6 @@ var Actions = require('../actions');
 var Api = require('../utils/api');
 
 var ReactFire = require('reactfire');
-// var Firebase = require('firebase');
-// var fireUrl = 'https://trailmix0.firebaseio.com/';
 
 var CreateMixStore = module.exports = Reflux.createStore({
   mixins: [
@@ -47,7 +45,6 @@ var CreateMixStore = module.exports = Reflux.createStore({
       Actions.addSong();
     }
     if(this.state.mixSongs !== prevState.mixSongs){
-      console.log('mixSongs: ' + this.state.mixSongs);
     }
   },
   addSong: function(spotify_id) {

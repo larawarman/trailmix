@@ -131,6 +131,7 @@ module.exports = React.createClass({
       var count = mix.mixcount;
       var location_tm_key = mix.location_tm_key;
       var place = mix.drop_name;
+      // console.log('location_tm_key: ' + location_tm_key + ' / place: ' + place);
       var tmicon = Leaflet.divIcon({
         className: 'marker-multi-icon',
         html: count
