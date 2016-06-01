@@ -18,7 +18,7 @@ module.exports = React.createClass({
   },
   render: function() {
     return <div className="search-result">
-      <SongPreview songUrl={this.props.preview_url} imgUrl= {this.props.album.images[1].url}/>
+      <SongPreview songUrl={this.props.preview_url} imgUrl= {this.props.album.images[0].url}/>
       <div onClick={this.handleClick} className= "song-meta">
         <div className="track-name">
           {this.props.name}

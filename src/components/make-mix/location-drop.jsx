@@ -43,7 +43,7 @@ module.exports = React.createClass({
   },
   componentWillUnmount: function() {
     this.addLocation();
-    this.mixLocationRef.set({
+    this.mixLocationRef.update({
       drop_name: this.state.drop_name,
       drop_lat: this.state.drop_lat,
       drop_lng: this.state.drop_lng,
@@ -110,7 +110,7 @@ module.exports = React.createClass({
     }
   },
   locationExists: function(gmaps_id) {
-    this.locationRef.once('value', function(snapshot){
+    locationsRef.once('value', function(snapshot){
       snapshot.forEach(function(childSnapshot) {
         var key = childSnapshot.key;
         var childData = childSnapshot.val();
@@ -142,16 +142,14 @@ module.exports = React.createClass({
       });
     } else {
       this.locationRef.remove();
-      existing_locationRef = this.locationsRef.child(this.state.exists + '/mixes_here');
+      existing_locationRef = locationsRef.child(this.state.exists + '/mixes_here');
       existing_locationRef.push(this.props.mix_key);
     }
   },
   handleFocus: function(){
-    console.log('handle focus');
     CreateLocationStore.setState({open: true})
   },
   handleBlur: function() {
-    console.log('handle blur');
     CreateLocationStore.setState({open: false});
   }
 });

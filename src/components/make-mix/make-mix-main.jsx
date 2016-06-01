@@ -85,34 +85,6 @@ module.exports = React.createClass({
         </div>        
       </div>
     </div>
-    // return <div className='content-wrap'>
-    //   <div className="sub-container col-md-6 col-md-offset-3 make-mix">
-    //     <Link to="/" className="publish button" onClick={this.handleCancel}>
-    //       Cancel
-    //     </Link>
-    //     <div className="title-area section">
-    //       <h1 className="text-center">
-    //         Drop A New Mix
-    //       </h1>
-    //     </div>
-    //     <div className="location-area section">
-    //       <div className={"locationerr error-state " + (this.state.locationError ? 'show-error' : '')}>You must select a location for your mix.</div>
-    //       <h4>{this.state.localLat} / {this.state.localLng}</h4>
-    //       <LocationDrop loc_url={this.locationRef.toString()} loc_key={this.locationRef.key} mix_url={this.fb_mixRef.toString()} mix_key={this.fb_mixRef.key} />
-    //     </div>
-    //     <div className="hashtag-area section">
-    //       <h4>#'s</h4>
-    //       <Hashtags mix_key={this.fb_mixRef.key} />
-    //     </div>
-    //     <div className="song-area section">
-    //       <div className={"songerr error-state " + (this.state.songError ? 'show-error' : '')}>Your mix needs at least 1 song to be published.</div>
-    //       <SongsViewCreate mix_key={this.fb_mixRef.key} />
-    //     </div>
-    //     <div className="publish-button section" onClick={this.handlePublish}>
-    //       Publish
-    //     </div>
-    //   </div>
-    // </div>
   },
   songsCheck: function() {
     if(_.isEmpty(this.state.mixSongs)) {
