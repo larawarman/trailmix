@@ -59,7 +59,9 @@ module.exports = React.createClass({
   render: function() {
     if (this.state.localLat === 0 && this.state.localLng === 0) {
       return <div className="map-container">
-        <h1>Loading location...</h1>
+        <div className="loading-area">
+          <h1>Loading location...</h1>
+        </div>
       </div>
     } else {
       return <div className='map-container'>
@@ -76,7 +78,7 @@ module.exports = React.createClass({
               url={'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=' + mb}
               id='mapbox.light'
             />
-            <ReactLeaflet.Circle center={this.state.position} radius={500} color={'rgba(190,190,190,0.0)'} fillColor = {'rgba(190,190,190,1.0)'}/>
+            <ReactLeaflet.Circle center={this.state.position} radius={10000} color={'rgba(190,190,190,0.0)'} fillColor = {'rgba(190,190,190,1.0)'}/>
             {this.renderSingleMarkers()}
             {this.renderMultiMarkers()}
           </ReactLeaflet.Map>

@@ -38,6 +38,11 @@ var CreateLocationStore = module.exports = Reflux.createStore({
     console.warn('ERROR(' + err.code + '): ' + err.message);
     if (err.code === 3) {
       this.getLocation();
+    } else if (err.code === 1) {
+      CreateLocationStore.setState({
+        localLat: 40.6814851,
+        localLng: -73.95555769999999
+      });
     }
   },
   getPlaceName: function(id) {

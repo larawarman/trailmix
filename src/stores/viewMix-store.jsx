@@ -35,6 +35,8 @@ var ViewMixStore = module.exports = Reflux.createStore({
   },
   storeDidUpdate: function(prevState) {
     if(this.state.local_mix_locations !== prevState.local_mix_locations){
+      //why do i need to sort here? can't i just link to location page if mixes_here > 1,
+      //and do the same for the markers?
       Actions.sortLocalMixes();
     }
     if(this.state.single_mixes !== prevState.single_mixes){
