@@ -52,7 +52,7 @@ module.exports = React.createClass({
     this.geoQuery = this.geoFire.query({
       center: this.state.position,
       // radius: 0.5
-      radius: 10
+      radius: 1000
     });
     this.getLocalLocations();
   },
